@@ -61,7 +61,7 @@ udisks_sdbus_cpp_proj = subproject(
     # NOTE: you may need to change this, depending on your setup.
     'udisks_dbus_interface=/usr/share/dbus-1/interfaces/org.freedesktop.UDisks2.xml',
   ],
-  version: ['>=2.10.0', '<3.0.0'] # matches UDisks MAJOR (X.0.0) bumps,,
+  version: '=2.10-0' # unstable
 )
 udisks_sdbus_cpp_dep = udisks_sdbus_cpp_proj.get_variable('udisks_sdbus_cpp_dep')
 
