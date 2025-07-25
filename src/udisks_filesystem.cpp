@@ -41,7 +41,6 @@ UdisksFilesystem::UdisksFilesystem(sdbus::IConnection& connection,
   registerProxy();
 }
 
-// TODO(xlacroixx): check whether we are allowed to automount.
 auto UdisksFilesystem::Automount() -> std::vector<std::string> {
   // If mount points already exist, no need to automount it...
   // TODO(xlacroixx): ...unless other paths are given to udisken and it should
@@ -50,14 +49,22 @@ auto UdisksFilesystem::Automount() -> std::vector<std::string> {
     return conversions::ConvertArrayArrayByte(MountPoints());
   }
 
-  const auto mount_path = Mount({});
+  try {
+    const auto mount_path = Mount({});
 
   // FIXME(xlacroixx): getObjectPath() returns a literal array of bytes. Convert
   // that. See run.log in data/
   std::println(std::cerr, "Mounted {} at {}", getProxy().getObjectPath(),
                mount_path);
 
-  return {mount_path};
+    return {mount_path};
+  } catch (const sdbus::Error&
+               e) {  // TODO(xlacroixx): handle what we can, throw the rest.
+    std::println("Failed to automount: [{}] {}", e.getName().c_str(),
+                 e.getMessage());
+
+    return {};
+  }
 }
 
 }  // namespace udisken

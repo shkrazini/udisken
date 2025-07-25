@@ -18,6 +18,7 @@
 
 #include "udisks_manager.hpp"
 
+#include "udisks_drive.hpp"
 #include "udisks_filesystem.hpp"
 #include "udisks_globals.hpp"
 
@@ -37,7 +38,10 @@ namespace udisken {
 UdisksManager::UdisksManager(sdbus::IConnection& connection)
     : ProxyInterfaces(connection, sdbus::ServiceName{kInterfaceName},
                       sdbus::ObjectPath{kObjectPath}) {
-  // TODO(xlacroixx): manage existing objects.
+  for (auto managed_objects = GetManagedObjects();
+       const auto& [object_path, interfaces_and_properties] : managed_objects) {
+    onInterfacesAdded(object_path, interfaces_and_properties);
+  }
   registerProxy();
 }
 
@@ -46,13 +50,12 @@ void UdisksManager::onInterfacesAdded(
     const std::map<sdbus::InterfaceName,
                    std::map<sdbus::PropertyName, sdbus::Variant>>&
         interfaces_and_properties) {
+  // TODO(xlacroixx): debug log
+  std::println("Object {}", object_path.c_str());
   for (const auto& [interface, properties] : interfaces_and_properties) {
-    if (interface == UdisksFilesystem::INTERFACE_NAME) {
-      // XXX(xlacroixx): is pre-existing key even a possibility, in case
-      // try_emplace inserts no key?
-      filesystems_.try_emplace(object_path,
-                               std::make_unique<UdisksFilesystem>(
-                                   getProxy().getConnection(), object_path));
+    std::println("- {}", interface.c_str());
+    for (const auto& [member_name, value] : properties) {
+      std::println("\t{}: {}", member_name.c_str(), value.peekValueType());
     }
   }
 }
@@ -67,7 +70,7 @@ void UdisksManager::onInterfacesRemoved(
       // this.
       //
       // Erases no key if udisken unmounted the filesystem.
-      std::size_t keys_erased{filesystems_.erase(object_path)};
+      auto keys_erased = filesystems_.erase(object_path);
 
       if (keys_erased >= 1) {
         std::println(std::cerr, "{} disappeared", object_path);

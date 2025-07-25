@@ -1,6 +1,7 @@
 udisken_sources = [
-  'main.cpp',
   'conversions.cpp',
+  'main.cpp',
+  'udisks_drive.cpp',
   'udisks_filesystem.cpp',
   'udisks_manager.cpp',
 ]

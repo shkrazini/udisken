@@ -19,6 +19,7 @@
 #ifndef UDISKEN_UDISKS_MANAGER_HPP_
 #define UDISKEN_UDISKS_MANAGER_HPP_
 
+#include "udisks_drive.hpp"
 #include "udisks_filesystem.hpp"
 
 #include <sdbus-c++/IConnection.h>
