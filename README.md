@@ -1,6 +1,6 @@
 # udisken
 
-An automounter that stays quite quiet.
+A Linux automounter that stays quite quiet.
 
 ## Requires
 
