@@ -18,6 +18,7 @@
 
 #include "udisks_filesystem.hpp"
 
+#include "conversions.hpp"
 #include "udisks_globals.hpp"
 
 #include <iostream>
@@ -49,13 +50,12 @@ UdisksFilesystem::~UdisksFilesystem() noexcept {
 }
 
 auto UdisksFilesystem::Automount() -> std::vector<std::string> {
-  // TODO(xlacroixx): re-enable the check.
   // If mount points already exist, no need to automount it...
   // TODO(xlacroixx): ...unless other paths are given to udisken and it should
   // mount?)
-  // if (!MountPoints().empty()) {
-  //   return conversions::AAYToVectorString(MountPoints());
-  // }
+  if (!MountPoints().empty()) {
+    return conversions::ConvertArrayArrayByte(MountPoints());
+  }
 
   const auto mount_path = Mount({});
 
