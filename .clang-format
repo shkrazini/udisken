@@ -1,11 +1,29 @@
+---
 BasedOnStyle: Google
 
+Language: Cpp
+
+# Google style guide does not define an alignment style.
+# We choose to align left.
 DerivePointerAlignment: false
 PointerAlignment: Left
+QualifierAlignment: Left
 
-# Use "west const", most natural for novel programmers.
-# Leaving on "Leave" due to the warning on Clang-Format's documentation.
-QualifierAlignment: Leave
+IncludeBlocks: Regroup
+IncludeCategories:
+  # Headers in the same directory
+  # (e.g. "foo.hpp")
+  - Regex: '^"[^/]+\.h.*'
+    Priority: 1
 
-IncludeBlocks: Preserve
-SortIncludes: Never
+  # Project subdirectory headers (e.g. "bar/bar.hpp")
+  - Regex: '^".+/[^/]+\.h.*"'
+    Priority: 2
+
+  # System library headers (e.g. <gtk/gtk.h>)
+  - Regex: '^<.+\.h.*'
+    Priority: 3
+
+  # Standard library headers (e.g. <vector>)
+  - Regex: "^<[[:alnum:].]+>"
+    Priority: 4
