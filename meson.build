@@ -65,7 +65,7 @@ endif
 udisks_sdbus_cpp_proj = subproject(
 	'udisks-sdbus-c++',
 	default_options : [
-		# NOTE: you may need to change this, depending on your setup.
+		# NOTE: you likely need to change this.
 		'udisks_dbus_interface=/home/sofian/source/udisken/dbus/org.freedesktop.UDisks2.xml',
 	],
 	version : '=2.10-0' # unstable
