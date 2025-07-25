@@ -16,8 +16,8 @@
 
 // UDisks filesystem proxy: automounting
 
-#ifndef UDISKEN_FILESYSTEM_PROXY_HPP_
-#define UDISKEN_FILESYSTEM_PROXY_HPP_
+#ifndef UDISKEN_UDISKS_FILESYSTEM_HPP_
+#define UDISKEN_UDISKS_FILESYSTEM_HPP_
 
 #include "udisks_proxy.hpp"
 
@@ -53,7 +53,7 @@ class UdisksFilesystem final
 
 }  // namespace udisken
 
-#endif  // UDISKEN_FILESYSTEM_PROXY_HPP_
+#endif  // UDISKEN_UDISKS_FILESYSTEM_HPP_
 
 // TEST(xlacroixx): constructing an UdisksFilesystem mounts the filesystem, if
 // automounting is enabled; do not fail if filesystem is already mounted (e.g.

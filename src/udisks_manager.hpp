@@ -16,8 +16,8 @@
 
 // UDisks manager proxy: handles changes on interfaces and properties.
 
-#ifndef UDISKEN_PROXY_HPP_
-#define UDISKEN_PROXY_HPP_
+#ifndef UDISKEN_UDISKS_MANAGER_HPP_
+#define UDISKEN_UDISKS_MANAGER_HPP_
 
 #include "udisks_filesystem.hpp"
 
@@ -60,4 +60,4 @@ class UdisksManager final
 
 }  // namespace udisken
 
-#endif  // UDISKEN_PROXY_HPP_
+#endif  // UDISKEN_UDISKS_MANAGER_HPP_
