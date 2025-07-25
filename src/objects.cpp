@@ -25,10 +25,11 @@
 #include <spdlog/spdlog.h>
 #include <udisks-sdbus-c++/udisks_errors.hpp>
 
-#include <format>
 #include <memory>
-#include <optional>
+#include <string>
 #include <utility>
+
+#include <string_view>
 
 namespace objects {
 
@@ -38,31 +39,86 @@ BlockDevice::BlockDevice(
     std::unique_ptr<interfaces::UdisksFilesystem> filesystem,
     std::unique_ptr<interfaces::UdisksLoop> loop,
     std::unique_ptr<interfaces::UdisksLoop> partition)
-    : block_{std::move(block)},
+    : object_path_{object_path},
+      block_{std::move(block)},
       filesystem_{std::move(filesystem)},
       loop_{std::move(loop)},
-      partition_{std::move(partition)} {
-  if (!filesystem_) {
-    spdlog::info("Not automounting {}: block device has no filesystem",
-                 object_path.c_str());
-    return;
-  }
+      partition_{std::move(partition)} {}
 
-  if (block_->HintAuto()) {
-    if (auto mnt_point = Automount(*filesystem_); mnt_point.has_value()) {
-      spdlog::info("Automounted {}", *mnt_point);
-      utils::Notification notif{
-          .summary = "Mounted disk",
-          .body = std::format("{} at {}", block_->HintName(), *mnt_point),
-          .icon = "drive-removable-media"};
-      utils::Notify(notif);
+namespace {
 
-      return;
+namespace udisks = org::freedesktop::UDisks2;
+
+auto Automount(interfaces::UdisksFilesystem& fs) -> std::optional<std::string> {
+  try {
+    auto mnt_point = fs.Mount({});
+
+    interfaces::PrintMountPoints(interfaces::GetMountPoints(fs));
+
+    return mnt_point;
+  } catch (const sdbus::Error& e) {
+    if (e.getName() ==
+        std::get<udisks::UdisksErrors::kUdisksErrorAlreadyMounted>(
+            udisks::udisks_error_names)) {
+      spdlog::warn(
+          "{} is already mounted but UDisks initially returned no mount paths;",
+          fs.getProxy().getObjectPath().c_str());
+      interfaces::PrintMountPoints(interfaces::GetMountPoints(fs));
+
+      return std::nullopt;
     }
 
-    spdlog::debug("Not automounting {}: automount hint was false",
-                  object_path_.c_str());
+    spdlog::error("Failed to automount:\n({}) {}", e.getName().c_str(),
+                  e.getMessage());
+
+    throw;
   }
+}
+
+}  // namespace
+
+auto TryAutomount(objects::BlockDevice& blk_device)
+    -> std::optional<std::string> {
+  auto print_not_automounting = [&blk_device](std::string_view reason) {
+    spdlog::debug("Not automounting {}: {}", blk_device.ObjectPath().c_str(),
+                  reason);
+  };
+
+  if (!blk_device.Block().HintAuto()) {
+    print_not_automounting("automount hint was false");
+
+    return std::nullopt;
+  }
+
+  // Can there even be a filesystem if HintAuto was false?
+  if (!blk_device.HasFilesystem()) {
+    print_not_automounting("no filesystem found");
+
+    return std::nullopt;
+  }
+
+  // If mount points already exist, no need to automount it...
+  // TODO(blackma9ick): ...unless other paths are given to UDISKEN and it
+  // should mount?)
+  if (!blk_device.Filesystem().MountPoints().empty()) {
+    print_not_automounting("already mounted");
+
+    return std::nullopt;
+  }
+
+  auto mnt_point = Automount(blk_device.Filesystem());
+
+  if (mnt_point.has_value()) {
+    spdlog::info("Automounted {}", *mnt_point);
+    utils::Notification notif{
+        .summary = "Mounted disk",
+        .body =
+            std::format("{} at {}", blk_device.Block().HintName(), *mnt_point),
+        .icon = "drive-removable-media"};
+    utils::Notify(notif);
+  }
+
+  return mnt_point;
 }
 
 }  // namespace objects

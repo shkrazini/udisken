@@ -24,6 +24,8 @@
 #include <sdbus-c++/Types.h>
 
 #include <memory>
+#include <stdexcept>
+#include <string>
 
 namespace objects {
 
@@ -41,6 +43,54 @@ class BlockDevice {
       std::unique_ptr<interfaces::UdisksLoop> loop = nullptr,
       std::unique_ptr<interfaces::UdisksLoop> partition = nullptr);
 
+  [[nodiscard]] auto ObjectPath() const -> const sdbus::ObjectPath& {
+    return object_path_;
+  }
+
+  /// @brief Get the block interface proxy; this proxy always exists as long as
+  /// the block device is valid.
+  ///
+  /// @returns Reference to the block interface proxy, not the pointer.
+  [[nodiscard]] auto Block() -> interfaces::UdisksBlock& { return *block_; }
+
+  /// @brief Get the filesystem interface proxy.
+  ///
+  /// @throws InterfaceNotImplemented if trying to access a non-existent
+  /// interface
+  ///
+  /// @returns Reference to the filesystem interface proxy, not the pointer.
+  [[nodiscard]] auto Filesystem() -> interfaces::UdisksFilesystem& {
+    if (!HasFilesystem()) {
+      throw std::logic_error("interface does not exist");
+    }
+
+    return *filesystem_;
+  }
+  [[nodiscard]] auto HasFilesystem() -> bool { return filesystem_ != nullptr; }
+
+  /// @brief Get the loop device interface proxy.
+  ///
+  /// @returns Reference to the loop device interface proxy, not the pointer.
+  [[nodiscard]] auto Loop() -> interfaces::UdisksLoop& {
+    if (!HasLoop()) {
+      throw std::logic_error("interface does not exist");
+    }
+    return *loop_;
+  }
+  [[nodiscard]] auto HasLoop() -> bool { return loop_ != nullptr; }
+
+  /// @brief Get the partition interface proxy.
+  ///
+  /// @returns Reference to the partition interface proxy, not the pointer.
+  [[nodiscard]] auto Partition() -> interfaces::UdisksLoop& {
+    if (!HasPartition()) {
+      throw std::logic_error("interface does not exist");
+    }
+
+    return *partition_;
+  }
+  [[nodiscard]] auto HasPartition() -> bool { return partition_ != nullptr; }
+
  private:
   /// Object path, as found in /org/freedesktop/UDisks2/block_devices/.
   sdbus::ObjectPath object_path_;
@@ -56,6 +106,16 @@ class BlockDevice {
   std::unique_ptr<interfaces::UdisksLoop> partition_;
 };
 
-#endif  // UDISKEN_OBJECTS_HPP_
+/// Automount, TODO(blackma9ick): if UDISKEN is configured to do so.
+///
+/// @return Path to mount point after mounting, or nothing if the
+/// filesystem is already mounted somewhere.
+///
+/// @throws sdbus::Error Error returned by UDisks if automounting
+/// failed. Does not throw if filesystem is already mounted somewhere.
+auto TryAutomount(objects::BlockDevice& blk_device)
+    -> std::optional<std::string>;
 
 }  // namespace objects
+
+#endif  // UDISKEN_OBJECTS_HPP_
