@@ -8,24 +8,10 @@ project(
     # minimum: c++23
     'cpp_std=c++23',
     'warning_level=3',
-    # BUG(xlacroixx): not ignored for subprojects, even if werror=false is
-    # specified in subproject default_options.
-    # NOTE(xlacroixx): CMake doesn't cause this issue.
-    #'werror=true',
   ],
 )
 
 add_project_arguments(
-  # BUG(xlacroixx): not ignored for subprojects, even if werror=false is
-  # specified in subproject default_options.
-  # NOTE(xlacroixx): CMake doesn't cause this issue.
-  #'-pedantic-errors',
-
-  # Too many "member should be initialized in member initialization list"
-  # irrealistic warnings, that are not worth fixing.
-  # '-Weffc++',
-  # Re-enable -Wnon-virtual-dtor when disabling -Weffc++.
-  '-Wnon-virtual-dtor',
   '-Wcast-align',
   '-Wcast-qual',
   '-Wconversion',
@@ -38,10 +24,11 @@ add_project_arguments(
   '-Wmissing-declarations',
   '-Wmissing-include-dirs',
   '-Wnoexcept',
-  '-Wold-style-cast',
+  '-Wnon-virtual-dtor',
+  # Triggers whenever including C headers (e.g. glib).
+  # Nowadays it is exceptionally rare to see C-style casts in modern C++.
+  # '-Wold-style-cast',
   '-Woverloaded-virtual',
-  # Decreases readability, only relevant for low-memory constraints.
-  #'-Wpadded',
   '-Wredundant-decls',
   '-Wshadow',
   '-Wsign-conversion',
@@ -53,6 +40,7 @@ add_project_arguments(
   '-Wundef',
   '-Wuseless-cast',
   '-Wzero-as-null-pointer-constant',
+  '-DUDISKEN_NAME="' + meson.project_name() + '"',
   '-DUDISKEN_VERSION="' + meson.project_version() + '"',
   language: 'cpp',
 )
@@ -61,17 +49,17 @@ if get_option('debug')
   add_project_arguments('-D_GLIBCXX_DEBUG=1', language: 'cpp')
 endif
 
-libnotify_dep = dependency('libnotify', version: ['>=0.8.4'])
+glib_dep = dependency('glib-2.0', version: ['>=2.84.0', '<3.0.0'])
 sdbus_cpp_dep = dependency('sdbus-c++', version: ['>=2.1.0', '<3.0.0']) # SemVer
-# NOTE: probably not a hard dependency.
-# udisken will still need UDisks to perform any action, but this is clearly not
-# a build dependency. The dependency should be enforced in packages by distros.
-#udisks = dependency('udisks2', version: ['>=2.10.0', '<3.0.0']) # MAJOR (X.0.0) bumps
 # BUG(xlacroixx): werror=false does not work.
 # See <https://github.com/mesonbuild/meson/issues/13600>
-# NOTE(xlacroixx): CMake doesn't cause this issue.
 spdlog_proj = subproject('spdlog', default_options: 'werror=false')
 spdlog_dep = spdlog_proj.get_variable('spdlog_dep')
+
+libnotify_dep = dependency('libnotify', version: ['>=0.8.0', '<1.0.0'], required : get_option('notify'))
+if libnotify_dep.found()
+  add_project_arguments('-DFEATURE_NOTIFY', language: 'cpp')
+endif
 
 udisks_sdbus_cpp_proj = subproject(
   'udisks-sdbus-c++',

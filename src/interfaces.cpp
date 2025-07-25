@@ -21,6 +21,7 @@
 #include "conversions.hpp"
 #include "globals.hpp"
 
+#include <libnotify/notification.h>
 #include <sdbus-c++/Error.h>
 #include <sdbus-c++/IConnection.h>
 #include <sdbus-c++/ProxyInterfaces.h>
@@ -68,7 +69,6 @@ auto UdisksFilesystem::Automount() -> std::optional<std::string> {
 
   try {
     auto mnt_point = Mount({});
-    spdlog::info("Automounted {}", mnt_point);
 
     if (std::ranges::find(mount_points_, mnt_point) != mount_points_.end()) {
       spdlog::warn(

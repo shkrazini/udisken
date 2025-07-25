@@ -7,7 +7,8 @@ You will need to have the
 installed in order to build udisken.
 
 Additionally, you will need the dependencies listed in
-[README.md](../README.md#Requires).
+[README.md](../README.md#Requires). Some dependencies are optional, and you can
+choose to enable or disable the features that require them in `meson.options`.
 
 Finally, using [mold] as linker is
 **recommended**:

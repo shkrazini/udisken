@@ -1,12 +1,14 @@
 # udisken
 
-A Linux automounter that stays quite quiet.
+Desktop removable media automounter that stays quite quiet.
 
 ## Requires
 
+- [glib2](https://www.gtk.org/) 2.84.0 or later (_only for building_)
+- [libnotify](https://gitlab.gnome.org/GNOME/libnotify) 0.8.0 or later
 - [UDisks](https://github.com/storaged-project/udisks) 2.10.0 or later
 - [sdbus-c++](https://github.com/Kistler-Group/sdbus-cpp) 2.1.0 or later
-- [spdlog](https://github.com/gabime/spdlog) (provided as subproject)
+- [spdlog](https://github.com/gabime/spdlog) (_provided as subproject_)
 
 ## Getting started
 

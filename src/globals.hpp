@@ -21,8 +21,16 @@
 
 namespace globals {
 
-static constexpr auto kInterfaceName = "org.freedesktop.UDisks2";
-static constexpr auto kObjectPath = "/org/freedesktop/UDisks2";
+/// Whether desktop notifications are enabled.
+#ifdef FEATURE_NOTIFY
+constexpr bool kNotify{true};
+#else
+constexpr bool kNotify{false};
+#endif
+
+constexpr auto kAppName = UDISKEN_NAME;
+constexpr auto kInterfaceName = "org.freedesktop.UDisks2";
+constexpr auto kObjectPath = "/org/freedesktop/UDisks2";
 
 }  // namespace globals
 

@@ -16,11 +16,19 @@
 
 /// Main entrypoint; initiates connection to D-Bus and UDisks.
 
+#include "globals.hpp"
 #include "managers.hpp"
 
 #include <sdbus-c++/IConnection.h>
 #include <spdlog/common.h>
 #include <spdlog/spdlog.h>
+
+#ifdef FEATURE_NOTIFY
+#include <glib.h>
+#include <libnotify/notify.h>
+
+#include <cstdlib>
+#endif  // FEATURE_NOTIFY
 
 // TODO(xlacroixx): make async event loop?
 auto main() -> int {
@@ -29,6 +37,21 @@ auto main() -> int {
 #endif  // !NDEBUG
 
   spdlog::info("udisken - {} - GPLv3", UDISKEN_VERSION);
+
+#ifdef FEATURE_NOTIFY
+  if (notify_init(globals::kAppName) == FALSE) {
+    spdlog::critical("libnotify initialization failed!");
+
+    return EXIT_FAILURE;
+  }
+
+  if (std::atexit([] noexcept { notify_uninit(); }) != 0) {
+    spdlog::critical("libnotify uninitialization registration failed!");
+
+    return EXIT_FAILURE;
+  }
+#endif  // FEATURE_NOTIFY
+  spdlog::info("libnotify: {}", globals::kNotify);
 
   const auto connection = sdbus::createSystemBusConnection();
 
