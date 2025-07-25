@@ -4,7 +4,7 @@
 
 You will need to have the
 [Meson](https://mesonbuild.com/SimpleStart.html#installing-meson) build system
-installed in order to build udisken.
+installed in order to build UDISKEN.
 
 Additionally, you will need the dependencies listed in
 [README.md](../README.md#Requires). Some dependencies are optional, and you can
@@ -41,7 +41,6 @@ provides the `sdbus-c++-xml2cpp` program required for this step.
    ```
 
    The file's location may vary depending on your distribution.
-
    - In the [UDisks upstream repository], it is located at
      [data/org.freedesktop.UDisks2.xml]
 

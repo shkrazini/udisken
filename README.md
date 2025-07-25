@@ -1,14 +1,29 @@
-# udisken
+# UDISKEN
 
-Desktop removable media automounter that stays quite quiet.
+LINUX DRIVE AUTOMOUNTER FOR THE IMPATIENT.
+
+---
+
+GNU/Linux desktop removable media mounting daemon and associated utilities using
+UDisks.
+
+Mount automatically, browse, eject, and unmount your...:
+
+- USB drive
+- CD or DVD disk
+- encrypted drive
+- loop devices
+
+Low on memory usage, lightweight footprint, fast.
 
 ## Requires
 
-- [glib2](https://www.gtk.org/) 2.84.0 or later (_only for building_)
-- [libnotify](https://gitlab.gnome.org/GNOME/libnotify) 0.8.0 or later
-- [UDisks](https://github.com/storaged-project/udisks) 2.10.0 or later
 - [sdbus-c++](https://github.com/Kistler-Group/sdbus-cpp) 2.1.0 or later
-- [spdlog](https://github.com/gabime/spdlog) (_provided as subproject_)
+- [UDisks](https://github.com/storaged-project/udisks) 2.10.0 or later
+- [libnotify](https://gitlab.gnome.org/GNOME/libnotify) 0.8.0 or later
+  (optional)
+- [glib2](https://www.gtk.org/) 2.84.0 or later (only for building)
+- [spdlog](https://github.com/gabime/spdlog) (provided as subproject)
 
 ## Getting started
 
@@ -20,9 +35,6 @@ The project consists of two main parts:
   - `udiskie-mount` -> `udisken mount`
   - `udiskie-unmount` -> `udisken unmount` (alias: `udisken umount`)
   - `udiskie-info` -> `udisken show` (alias: `udisken info`)
-- (soon) the (?) toolkit interface: `udiskengtk`
-
-The CLI interface uses udisken's D-Bus front end to communicate with it (?).
 
 ## Install
 
@@ -53,6 +65,10 @@ pacman -S --asdeps libnotify sdbus-cpp udisks2
 
 See [BUILDING.md](./docs/BUILDING.md).
 
-## License
+## Copyright
 
 Licensed under the [GNU General Public License Version 3](./LICENSE) (GPLv3).
+
+---
+
+_~BLACKM_GICK (black magic)_

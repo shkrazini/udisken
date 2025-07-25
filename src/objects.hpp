@@ -1,4 +1,4 @@
-// udisken: an automounter that stays quite quiet.
+// UDISKEN: Linux drive automounter for the impatient.
 // Copyright (C) 2025 xlacroixx
 //
 // This program is free software: you can redistribute it and/or modify it
@@ -27,7 +27,7 @@
 
 namespace objects {
 
-/// Block device object, upon which most udisken actions take effect.
+/// Block device object, upon which most UDISKEN actions take effect.
 class BlockDevice {
  public:
   /// Create a Block device that will take ownership of the unique_ptrs to the

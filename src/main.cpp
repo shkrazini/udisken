@@ -1,4 +1,4 @@
-// udisken: an automounter that stays quite quiet.
+// UDISKEN: Linux drive automounter for the impatient.
 // Copyright (C) 2025 xlacroixx
 //
 // This program is free software: you can redistribute it and/or modify it
@@ -36,7 +36,7 @@ auto main() -> int {
   spdlog::set_level(spdlog::level::debug);
 #endif  // !NDEBUG
 
-  spdlog::info("udisken - {} - GPLv3", UDISKEN_VERSION);
+  spdlog::info("UDISKEN - {} - GPLv3", UDISKEN_VERSION);
 
 #ifdef FEATURE_NOTIFY
   if (notify_init(globals::kAppName) == FALSE) {

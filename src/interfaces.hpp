@@ -1,4 +1,4 @@
-// udisken: an automounter that stays quite quiet.
+// UDISKEN: Linux drive automounter for the impatient.
 // Copyright (C) 2025 xlacroixx
 //
 // This program is free software: you can redistribute it and/or modify it
@@ -83,7 +83,7 @@ class UdisksFilesystem final
 
   ~UdisksFilesystem() noexcept { unregisterProxy(); }
 
-  /// Automount, TODO(xlacroixx): if udisken is configured to do so.
+  /// Automount, TODO(xlacroixx): if UDISKEN is configured to do so.
   ///
   /// @return Path to mount point after mounting, or nothing if the filesystem
   /// is already mounted somewhere.
@@ -96,7 +96,7 @@ class UdisksFilesystem final
 
  private:
   /// List of mount paths for this filesystem.
-  /// Can be empty, if udisken cannot or will not mount this filesystem.
+  /// Can be empty, if UDISKEN cannot or will not mount this filesystem.
   std::vector<std::string> mount_points_;
 };
 
