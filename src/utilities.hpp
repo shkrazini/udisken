@@ -51,7 +51,7 @@ namespace conversions {
 /// to a vector of strings.
 ///
 /// @param aay The array of array of bytes.
-[[nodiscard("Creates moved-to converted vector")]]
+[[nodiscard("Creates a converted vector")]]
 auto ConvertArrayArrayByte(const std::vector<std::vector<uint8_t>>& aay)
     -> std::vector<std::string>;
 
