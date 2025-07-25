@@ -14,7 +14,8 @@
 // You should have received a copy of the GNU General Public License along
 // with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-// UDisks manager proxy: handles changes on interfaces and properties.
+/// @file
+/// @brief Manager proxy: bridges interfaces to other proxies.
 
 #ifndef UDISKEN_UDISKS_MANAGER_HPP_
 #define UDISKEN_UDISKS_MANAGER_HPP_
@@ -32,9 +33,14 @@
 
 namespace udisken {
 
+/// @class UdisksManager
+/// @brief Bridges the UDisks ObjectManager and interfaces.
 class UdisksManager final
     : public sdbus::ProxyInterfaces<sdbus::ObjectManager_proxy> {
  public:
+  /// @brief Connect to UDisks using a system bus connection.
+  ///
+  /// @param connection System bus connection.
   explicit UdisksManager(sdbus::IConnection& connection);
 
   UdisksManager(UdisksManager&&) = delete;
@@ -55,6 +61,7 @@ class UdisksManager final
       const sdbus::ObjectPath& object_path,
       const std::vector<sdbus::InterfaceName>& interfaces) final;
 
+  /// @brief Filesystem proxies handled by udisken.
   std::map<sdbus::ObjectPath, std::unique_ptr<UdisksFilesystem>> filesystems_{};
 };
 

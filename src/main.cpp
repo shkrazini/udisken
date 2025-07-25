@@ -14,6 +14,9 @@
 // You should have received a copy of the GNU General Public License along
 // with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+/// @file
+/// @brief Main entrypoint; initiates connection to D-Bus and UDisks.
+
 #include "udisks_manager.hpp"
 
 #include <sdbus-c++/IConnection.h>

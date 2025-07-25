@@ -15,8 +15,7 @@
 // with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 /// @file
-/// @brief Implementation for functions converting sdbus-c++ types to usual C++
-///        types.
+/// @brief Functions converting sdbus-c++ types to usual C++ types.
 
 #include "conversions.hpp"
 

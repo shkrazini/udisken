@@ -14,7 +14,8 @@
 // You should have received a copy of the GNU General Public License along
 // with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-// UDisks manager proxy: handles changes on interfaces and properties.
+/// @file
+/// @brief Manager proxy: bridges interfaces to other proxies.
 
 #include "udisks_manager.hpp"
 
