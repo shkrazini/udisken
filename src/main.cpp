@@ -25,7 +25,7 @@
 
 // TODO(xlacroixx): make async event loop so we can test properly.
 auto main() -> int {
-  std::println("udisken {} ", UDISKEN_VERSION);
+  std::println("udisken {} - VERY WIP, WILL BREAK LOL!! ", UDISKEN_VERSION);
 
   const auto connection = sdbus::createSystemBusConnection();
 
