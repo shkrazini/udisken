@@ -50,7 +50,7 @@ provides the `sdbus-c++-xml2cpp` program required for this step.
 > run `CC_LD=mold CXX_LD=mold meson setup build` instead of `meson setup build`.
 
 ```sh
-git clone https://codeberg.org/xlacroixx/udisken
+git clone https://github.com/blackma9ick/udisken
 cd udisken
 meson wrap update-db
 meson setup build

@@ -1,5 +1,5 @@
 // UDISKEN: Linux drive automounter for the impatient.
-// Copyright (C) 2025 xlacroixx
+// Copyright (C) BlackMa9ick
 //
 // This program is free software: you can redistribute it and/or modify it
 // under the terms of the GNU General Public License as published by the
@@ -30,7 +30,7 @@
 #include <cstdlib>
 #endif  // FEATURE_NOTIFY
 
-// TODO(xlacroixx): make async event loop?
+// TODO(blackma9ick): make async event loop?
 auto main() -> int {
   if constexpr (globals::kDebug) {
     spdlog::set_level(spdlog::level::debug);

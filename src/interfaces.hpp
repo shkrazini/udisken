@@ -1,5 +1,5 @@
 // UDISKEN: Linux drive automounter for the impatient.
-// Copyright (C) 2025 xlacroixx
+// Copyright (C) BlackMa9ick
 //
 // This program is free software: you can redistribute it and/or modify it
 // under the terms of the GNU General Public License as published by the
@@ -83,7 +83,7 @@ class UdisksFilesystem final
 
   ~UdisksFilesystem() noexcept { unregisterProxy(); }
 
-  /// Automount, TODO(xlacroixx): if UDISKEN is configured to do so.
+  /// Automount, TODO(blackma9ick): if UDISKEN is configured to do so.
   ///
   /// @return Path to mount point after mounting, or nothing if the
   /// filesystem is already mounted somewhere. mount_paths_ (private) may

@@ -51,7 +51,8 @@ endif
 
 glib_dep = dependency('glib-2.0', version : ['>=2.84.0', '<3.0.0'])
 sdbus_cpp_dep = dependency('sdbus-c++', version : ['>=2.1.0', '<3.0.0']) # SemVer
-# BUG(xlacroixx): werror=false does not work.
+
+# BUG(blackma9ick): werror=false does not work.
 # See <https://github.com/mesonbuild/meson/issues/13600>
 spdlog_proj = subproject('spdlog', default_options : 'werror=false')
 spdlog_dep = spdlog_proj.get_variable('spdlog_dep')
