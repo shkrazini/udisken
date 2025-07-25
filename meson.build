@@ -59,7 +59,7 @@ udisks_sdbus_cpp_proj = subproject(
   'udisks-sdbus-c++',
   default_options: [
     # NOTE: you may need to change this, depending on your setup.
-    'udisks_dbus_interface=/usr/share/dbus-1/interfaces/org.freedesktop.UDisks2.xml',
+    'udisks_dbus_interface=/home/xlacroixx/source/udisken/dbus/org.freedesktop.UDisks2.xml',
   ],
   version: '=2.10-0' # unstable
 )
