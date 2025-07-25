@@ -17,8 +17,8 @@
 /// Drive proxy: information (e.g. model, size) and methods on an existing
 /// drive.
 
-#ifndef UDISKEN_UDISKS_DRIVE_HPP_
-#define UDISKEN_UDISKS_DRIVE_HPP_
+#ifndef UDISKEN_DRIVE_HPP_
+#define UDISKEN_DRIVE_HPP_
 
 #include <sdbus-c++/IConnection.h>
 #include <sdbus-c++/ProxyInterfaces.h>
@@ -46,4 +46,4 @@ class UdisksDrive final : public sdbus::ProxyInterfaces<udisks::Drive_proxy> {
 
 }  // namespace proxies
 
-#endif  // UDISKEN_UDISKS_DRIVE_HPP_
+#endif  // UDISKEN_DRIVE_HPP_

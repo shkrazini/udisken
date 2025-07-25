@@ -16,8 +16,8 @@
 
 /// Filesystem proxy and associated actions, e.g. automounting.
 
-#ifndef UDISKEN_UDISKS_FILESYSTEM_HPP_
-#define UDISKEN_UDISKS_FILESYSTEM_HPP_
+#ifndef UDISKEN_FILESYSTEM_HPP_
+#define UDISKEN_FILESYSTEM_HPP_
 
 #include <sdbus-c++/IConnection.h>
 #include <sdbus-c++/ProxyInterfaces.h>
@@ -66,4 +66,4 @@ class UdisksFilesystem final
 
 }  // namespace proxies
 
-#endif  // UDISKEN_UDISKS_FILESYSTEM_HPP_
+#endif  // UDISKEN_FILESYSTEM_HPP_

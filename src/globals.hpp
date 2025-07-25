@@ -16,8 +16,8 @@
 
 /// Global variables for UDisks D-Bus API.
 
-#ifndef UDISKEN_UDISKS_GLOBALS_HPP_
-#define UDISKEN_UDISKS_GLOBALS_HPP_
+#ifndef UDISKEN_GLOBALS_HPP_
+#define UDISKEN_GLOBALS_HPP_
 
 namespace globals {
 
@@ -26,4 +26,4 @@ static constexpr auto kObjectPath = "/org/freedesktop/UDisks2";
 
 }  // namespace globals
 
-#endif  // UDISKEN_UDISKS_GLOBALS_HPP_
+#endif  // UDISKEN_GLOBALS_HPP_
