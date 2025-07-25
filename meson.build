@@ -10,6 +10,7 @@ project(
     'werror=true',
   ],
 )
+
 add_project_arguments(
   '-pedantic-errors',
   '-Weffc++',
@@ -42,5 +43,22 @@ add_project_arguments(
   '-DUDISKEN_VERSION="' + meson.project_version() + '"',
   language: 'cpp',
 )
+
+libnotify_dep = dependency('libnotify', version: ['>=0.8.4'])
+sdbus_cpp_dep = dependency('sdbus-c++', version: ['>=2.1.0', '<3.0.0']) # SemVer
+# NOTE: probably not a hard dependency.
+# udisken will still need UDisks to perform any action, but this is clearly not
+# a build dependency. The dependency should be enforced in packages by distros.
+# udisks = dependency('udisks2', version: ['>=2.10.0', '<3.0.0']) # MAJOR (X.0.0) bumps
+
+udisks_sdbus_cpp_proj = subproject(
+  'udisks-sdbus-c++',
+  default_options: [
+    # NOTE: you may need to change this, depending on your setup.
+    'udisks_dbus_interface=/usr/share/dbus-1/interfaces/org.freedesktop.UDisks2.xml',
+  ],
+  version: ['>=2.10.0', '<3.0.0'] # matches UDisks MAJOR (X.0.0) bumps,,
+)
+udisks_sdbus_cpp_dep = udisks_sdbus_cpp_proj.get_variable('udisks_sdbus_cpp_dep')
 
 subdir('src')
