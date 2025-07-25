@@ -45,8 +45,6 @@ class UdisksBlock final : public sdbus::ProxyInterfaces<udisks::Block_proxy> {
   auto operator=(const UdisksBlock&) -> UdisksBlock& = delete;
 
   ~UdisksBlock() noexcept { unregisterProxy(); };
-
- private:
 };
 
 /// Proxy to a UDisks disk drive interface.
@@ -61,8 +59,6 @@ class UdisksDrive final : public sdbus::ProxyInterfaces<udisks::Drive_proxy> {
   auto operator=(UdisksDrive&&) -> UdisksDrive& = delete;
 
   ~UdisksDrive() noexcept { unregisterProxy(); }
-
- private:
 };
 
 /// Proxy to a UDisks mountable filesystem interface, contained in a @ref
@@ -87,12 +83,12 @@ class UdisksFilesystem final
   auto operator=(const UdisksFilesystem&) -> UdisksFilesystem& = delete;
 
   ~UdisksFilesystem() noexcept { unregisterProxy(); }
-
- private:
-  /// List of mount paths for this filesystem.
-  /// Can be empty, if UDISKEN cannot or will not mount this filesystem.
-  std::vector<std::string> mount_points_;
 };
+
+using MountPoints = std::vector<std::string>;
+
+auto GetMountPoints(UdisksFilesystem& fs) -> MountPoints;
+void PrintMountPoints(const MountPoints& mnt_points);
 
 /// Proxy to a UDisks loop device interface.
 ///
@@ -125,15 +121,6 @@ class UdisksPartition : public sdbus::ProxyInterfaces<udisks::Partition_proxy> {
 
   ~UdisksPartition() noexcept { unregisterProxy(); }
 };
-
-/// Automount, TODO(blackma9ick): if UDISKEN is configured to do so.
-///
-/// @return Path to mount point after mounting, or nothing if the
-/// filesystem is already mounted somewhere.
-///
-/// @throws sdbus::Error Error returned by UDisks if automounting
-/// failed. Does not throw if filesystem is already mounted somewhere.
-auto Automount(interfaces::UdisksFilesystem& fs) -> std::optional<std::string>;
 
 }  // namespace interfaces
 
