@@ -14,22 +14,24 @@
 // You should have received a copy of the GNU General Public License along
 // with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-/// Drive proxy: information (e.g. model, size) and methods on an existing
-/// drive.
+#include "filesystem.hpp"
 
-#include "udisks_drive.hpp"
+#include <sdbus-c++/Types.h>
 
-#include "udisks_globals.hpp"
-
-#include <sdbus-c++/IConnection.h>
+#include <memory>
 
 namespace proxies {
 
-UdisksDrive::UdisksDrive(sdbus::IConnection& connection,
-                         const sdbus::ObjectPath& object_path)
-    : ProxyInterfaces(connection, sdbus::ServiceName(globals::kInterfaceName),
-                      object_path) {
-  registerProxy();
-}
+/// Block device object, upon which most udisken actions take effect.
+struct BlockDevice {
+  /// Object path, as found in /org/freedesktop/UDisks2/block_devices/.
+  sdbus::ObjectPath object_path;
+  /// Corresponding Drive interface for this block device.
+  // std::unique_ptr<UdisksDrive> drive;
+  /// Proxy to the Block interface of this block device object.
+  std::unique_ptr<UdisksBlock> block;
+  /// Proxy to the Filesystem present on the block device.
+  std::unique_ptr<UdisksFilesystem> filesystem;
+};
 
 }  // namespace proxies

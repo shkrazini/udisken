@@ -19,8 +19,8 @@
 #ifndef UDISKEN_UDISKS_MANAGER_HPP_
 #define UDISKEN_UDISKS_MANAGER_HPP_
 
-#include "udisks_drive.hpp"
-#include "udisks_filesystem.hpp"
+#include "drive.hpp"
+#include "filesystem.hpp"
 
 #include <sdbus-c++/IConnection.h>
 #include <sdbus-c++/ProxyInterfaces.h>

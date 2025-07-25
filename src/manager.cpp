@@ -16,11 +16,11 @@
 
 /// Manager proxy: bridges interfaces to other proxies.
 
-#include "udisks_manager.hpp"
+#include "manager.hpp"
 
-#include "udisks_drive.hpp"
-#include "udisks_filesystem.hpp"
-#include "udisks_globals.hpp"
+#include "drive.hpp"
+#include "filesystem.hpp"
+#include "globals.hpp"
 
 #include <sdbus-c++/IConnection.h>
 #include <sdbus-c++/ProxyInterfaces.h>

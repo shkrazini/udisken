@@ -16,10 +16,10 @@
 
 /// Filesystem proxy and associated actions, e.g. automounting.
 
-#include "udisks_filesystem.hpp"
+#include "filesystem.hpp"
 
 #include "conversions.hpp"
-#include "udisks_globals.hpp"
+#include "globals.hpp"
 
 #include <sdbus-c++/Error.h>
 #include <sdbus-c++/IConnection.h>

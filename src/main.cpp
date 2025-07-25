@@ -17,7 +17,7 @@
 /// @file
 /// @brief Main entrypoint; initiates connection to D-Bus and UDisks.
 
-#include "udisks_manager.hpp"
+#include "manager.hpp"
 
 #include <sdbus-c++/IConnection.h>
 
