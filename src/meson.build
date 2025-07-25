@@ -3,7 +3,7 @@ udisken_sources = [
   'main.cpp',
   'managers.cpp',
   'objects.cpp',
-  'proxies.cpp',
+  'interfaces.cpp',
 ]
 
 executable(

@@ -14,10 +14,10 @@
 // You should have received a copy of the GNU General Public License along
 // with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-/// Proxies with some automatic methods executed.
+/// Interfaces proxies with some automatic methods executed.
 
-#ifndef UDISKEN_PROXIES_HPP_
-#define UDISKEN_PROXIES_HPP_
+#ifndef UDISKEN_INTERFACES_HPP_
+#define UDISKEN_INTERFACES_HPP_
 
 #include <sdbus-c++/IConnection.h>
 #include <sdbus-c++/ProxyInterfaces.h>
@@ -28,7 +28,7 @@
 #include <string>
 #include <vector>
 
-namespace proxies {
+namespace interfaces {
 
 namespace udisks = org::freedesktop::UDisks2;
 
@@ -100,6 +100,6 @@ class UdisksFilesystem final
   std::vector<std::string> mount_points_;
 };
 
-}  // namespace proxies
+}  // namespace interfaces
 
-#endif  // UDISKEN_PROXIES_HPP_
+#endif  // UDISKEN_INTERFACES_HPP_

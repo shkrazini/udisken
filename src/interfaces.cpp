@@ -14,9 +14,9 @@
 // You should have received a copy of the GNU General Public License along
 // with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-/// Proxies with some automatic methods executed.
+/// Interface proxies with some automatic methods executed.
 
-#include "proxies.hpp"
+#include "interfaces.hpp"
 
 #include "conversions.hpp"
 #include "globals.hpp"
@@ -33,7 +33,7 @@
 #include <string>
 #include <vector>
 
-namespace proxies {
+namespace interfaces {
 
 UdisksBlock::UdisksBlock(sdbus::IConnection& connection,
                          const sdbus::ObjectPath& object_path)
@@ -111,7 +111,7 @@ auto UdisksFilesystem::Automount() -> std::optional<std::string> {
   }
 }
 
-}  // namespace proxies
+}  // namespace interfaces
 
 // TEST(xlacroixx): constructing an UdisksFilesystem mounts the filesystem, if
 // automounting is enabled; do not fail if filesystem is already mounted (e.g.

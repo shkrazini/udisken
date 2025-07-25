@@ -18,7 +18,7 @@
 
 #include "objects.hpp"
 
-#include "proxies.hpp"
+#include "interfaces.hpp"
 
 #include <sdbus-c++/Types.h>
 #include <spdlog/spdlog.h>
@@ -29,8 +29,8 @@
 namespace objects {
 
 BlockDevice::BlockDevice(const sdbus::ObjectPath& object_path,
-                         std::unique_ptr<proxies::UdisksBlock> block,
-                         std::unique_ptr<proxies::UdisksFilesystem> filesystem)
+                         std::unique_ptr<interfaces::UdisksBlock> block,
+                         std::unique_ptr<interfaces::UdisksFilesystem> filesystem)
     : object_path_{object_path},
       block_{std::move(block)},
       filesystem_{std::move(filesystem)} {

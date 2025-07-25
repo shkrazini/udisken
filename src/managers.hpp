@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License along
 // with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-/// Manager proxy: bridges interfaces to other proxies.
+/// Manager proxy: bridges interfaces to objects.
 
 #ifndef UDISKEN_MANAGERS_HPP_
 #define UDISKEN_MANAGERS_HPP_

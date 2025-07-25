@@ -14,12 +14,12 @@
 // You should have received a copy of the GNU General Public License along
 // with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-/// Manager proxy: bridges interfaces to other proxies.
+/// Manager proxy: bridges interfaces to objects.
 
 #include "managers.hpp"
 
 #include "globals.hpp"
-#include "proxies.hpp"
+#include "interfaces.hpp"
 
 #include <sdbus-c++/IConnection.h>
 #include <sdbus-c++/ProxyInterfaces.h>
@@ -58,14 +58,14 @@ void UdisksObjectManager::onInterfacesAdded(
   spdlog::debug("New object: {}", object_path.c_str());
 
   if (interfaces_and_properties.contains(
-          sdbus::InterfaceName{proxies::UdisksBlock::INTERFACE_NAME}) &&
+          sdbus::InterfaceName{interfaces::UdisksBlock::INTERFACE_NAME}) &&
       interfaces_and_properties.contains(
-          sdbus::InterfaceName{proxies::UdisksFilesystem::INTERFACE_NAME})) {
+          sdbus::InterfaceName{interfaces::UdisksFilesystem::INTERFACE_NAME})) {
     objects::BlockDevice blk_device{
         object_path,
-        std::make_unique<proxies::UdisksBlock>(getProxy().getConnection(),
+        std::make_unique<interfaces::UdisksBlock>(getProxy().getConnection(),
                                                object_path),
-        std::make_unique<proxies::UdisksFilesystem>(getProxy().getConnection(),
+        std::make_unique<interfaces::UdisksFilesystem>(getProxy().getConnection(),
                                                     object_path)};
 
     block_devices_.try_emplace(object_path, std::move(blk_device));

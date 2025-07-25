@@ -19,7 +19,7 @@
 #ifndef UDISKEN_OBJECTS_HPP_
 #define UDISKEN_OBJECTS_HPP_
 
-#include "proxies.hpp"
+#include "interfaces.hpp"
 
 #include <sdbus-c++/Types.h>
 
@@ -37,8 +37,8 @@ class BlockDevice {
   ///
   /// Unique_ptrs passed to this constructor will be moved to!
   BlockDevice(const sdbus::ObjectPath& object_path,
-              std::unique_ptr<proxies::UdisksBlock> block,
-              std::unique_ptr<proxies::UdisksFilesystem> filesystem);
+              std::unique_ptr<interfaces::UdisksBlock> block,
+              std::unique_ptr<interfaces::UdisksFilesystem> filesystem);
 
  private:
   /// Object path, as found in /org/freedesktop/UDisks2/block_devices/.
@@ -46,9 +46,9 @@ class BlockDevice {
   /// Corresponding Drive interface for this block device.
   // std::unique_ptr<UdisksDrive> drive;
   /// Proxy to the Block interface of this block device object.
-  std::unique_ptr<proxies::UdisksBlock> block_;
+  std::unique_ptr<interfaces::UdisksBlock> block_;
   /// Proxy to the Filesystem present on the block device.
-  std::unique_ptr<proxies::UdisksFilesystem> filesystem_;
+  std::unique_ptr<interfaces::UdisksFilesystem> filesystem_;
 };
 
 #endif  // UDISKEN_OBJECTS_HPP_
