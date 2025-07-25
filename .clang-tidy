@@ -1,14 +1,17 @@
 ---
-# modernize-pass-by-value has unclear advantages and decreases readability.
-# It also triggers on non-standard library expensive types.
-# readability-identifier-length triggers in cases where longer identifiers
-# decrease readability.
-# readability-redundant-member-init might conflict with gcc/clang -Weffc++
-# NOTE: restored because we disabled -Weffc++.
+# - Sometimes, statically constructed objects are unavoidable.
+#	(fuchsia-statically-constructed-objects, cert-err58-cpp)
+# - modernize-pass-by-value has unclear advantages and decreases readability.
+#	It also triggers on non-standard library expensive types.
+# - readability-identifier-length triggers in cases where longer identifiers
+#	decrease readability.
+# - readability-redundant-member-init might conflict with gcc/clang -Weffc++
+#	NOTE: restored because we disabled -Weffc++.
 Checks: "
   -*,
   bugprone-*,
   cert-*,
+  -cert-err58-cpp,
   clang-analyzer-alpha.core.*,
   clang-analyzer-alpha.cplusplus.*,
   clang-analyzer-core.*,
@@ -22,7 +25,7 @@ Checks: "
   clang-analyzer-unix.*,
   concurrency-*,
   cppcoreguidelines-*,
-  fuchsia-statically-constructed-objects,
+  -fuchsia-statically-constructed-objects,
   google-*,
   hicpp-*,
   llvm-header-guard,
@@ -38,8 +41,8 @@ Checks: "
   -google-objc-*,
   "
 
-# Hardcore mode. All warnings should be fixed. Only in extreme cases should they
-# be modified, or disabled here.
+# Hardcore mode. All warnings should be fixed; either that, or they should be
+# turned off here.
 WarningsAsErrors: "*"
 
 # prettier-ignore
