@@ -1,10 +1,8 @@
 # Local files used for scanning D-Bus
-*.pcap
-*.gv
-.cache/
 data/
 
 # Meson WrapDB packages
-subprojects/packagecache
-subprojects/spdlog-*
-subprojects/wrapdb.json
+subprojects/**
+!subprojects/wrapdb.json
+# ...except our own subprojects
+!subprojects/udisks-sdbus-c++
