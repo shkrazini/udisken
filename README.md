@@ -31,10 +31,12 @@ The project consists of two main parts:
 
 - the daemon: `udiskend`
 - the CLI interface/utilities: `udisken COMMAND`, transparent with udiskie:
-	- `udisken eject`
-	- `udiskie-mount` -> `udisken mount`
-	- `udiskie-unmount` -> `udisken unmount` (alias: `udisken umount`)
-	- `udiskie-info` -> `udisken show` (alias: `udisken info`)
+  - `udisken eject`
+  - `udiskie-mount` -> `udisken mount`
+  - `udiskie-unmount` -> `udisken unmount` (alias: `udisken umount`)
+  - `udiskie-info` -> `udisken show` (alias: `udisken info`)
+
+  (udiskie programs are symlinked to UDISKEN and execute the respective actions)
 
 ## Install
 
@@ -63,7 +65,72 @@ pacman -S --asdeps libnotify sdbus-cpp udisks2
 
 ## Building
 
-See [BUILDING.md](./BUILDING.md).
+### Prepare
+
+You will need to have the
+[Meson](https://mesonbuild.com/SimpleStart.html#installing-meson) build system
+installed in order to build UDISKEN.
+
+Additionally, you will need the dependencies [listed above](#requires). Some
+dependencies are optional, and you can choose to enable or disable the features
+that require them in `meson.options`.
+
+Finally, using [mold] as the linker is
+**recommended**:
+
+1. Install [mold]: depends on your distribution.
+2. Set `CC_LD` and `CXX_LD` to use [mold] prior to running
+   `meson setup [builddir]`; run
+
+   ```sh
+   CC_LD=mold CXX_LD=mold meson setup build
+   ```
+
+> [!NOTE]
+> Make sure that the D-Bus API interface file option is correct before running
+> this command: see [Udisks D-Bus API bindings](#udisks-d-bus-api-bindings)
+
+#### UDisks D-Bus API bindings
+
+You absolutely need to have
+[sdbus-cpp](https://github.com/Kistler-Group/sdbus-cpp) installed, which
+provides the `sdbus-c++-xml2cpp` program required for this step.
+
+Simply make sure that the option `udisks_dbus_interface` in the project root
+`meson.build`, points to the correct D-Bus interface XML file: this
+corresponds to the option being yielded to, as mentioned in udisks-sdbus-c++'s
+README file.
+Alternatively, you can provide the `udisks_dbus_interface` option when running
+`meson setup`:
+
+```sh
+meson setup build -Dudisks_dbus_interface=/path/to/org.freedesktop.UDisks2.xml
+```
+
+The file's location may vary depending on your distribution.
+
+- Usually, it is located in the `/usr/share/dbus-1/interfaces/`
+  system directory.
+- In the [UDisks upstream repository], it is located at
+  [data/org.freedesktop.UDisks2.xml]
+- Alternatively, you may change the file location in the root project
+  `meson.build`
+
+For more information, see [udisks-sdbus-c++].
+
+### Build
+
+> [!NOTE]
+> If you are using [mold] ([recommended](#prepare)),
+> run `CC_LD=mold CXX_LD=mold meson setup build` instead of `meson setup build`.
+
+```sh
+git clone https://github.com/blackma9ick/udisken
+cd udisken
+meson wrap update-db
+meson setup build
+meson compile -C build
+```
 
 ## Copyright
 
@@ -72,3 +139,8 @@ Licensed under the [GNU General Public License Version 3](./LICENSE) (GPLv3).
 ---
 
 _~BlackMa9ick (black magic)_
+
+[data/org.freedesktop.UDisks2.xml]: https://github.com/storaged-project/udisks/blob/master/data/org.freedesktop.UDisks2.xml
+[mold]: https://github.com/rui314/mold
+[udisks-sdbus-c++]: https://github.com/blackma9ick/udisks-sdbus-cpp
+[UDisks upstream repository]: https://github.com/storaged-project/udisks
