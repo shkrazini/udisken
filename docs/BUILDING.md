@@ -9,6 +9,17 @@ installed in order to build udisken.
 Additionally, you will need the dependencies listed in
 [README.md](../README.md#Requires).
 
+Finally, using [mold] as linker is
+**recommended**:
+
+1. Install [mold]: depends on your distribution.
+2. Set `CC_LD` and `CXX_LD` to use [mold] prior to running
+   `meson setup [builddir]`; run
+
+   ```sh
+   CC_LD=mold CXX_LD=mold meson setup build
+   ```
+
 ### UDisks D-Bus API bindings
 
 Laborious, but not much other choice. Ideally UDisks would provide the bindings
@@ -55,6 +66,10 @@ decide to update the interface file (maybe version it?).
 
 ## Build
 
+> [!NOTE]
+> If you are using [mold] ([recommended](./BUILDING.md#prepare)),
+> run `CC_LD=mold CXX_LD=mold meson setup build` instead of `meson setup build`.
+
 ```sh
 git clone https://codeberg.org/xlacroixx/udisken
 cd udisken
@@ -63,4 +78,5 @@ meson compile -C build
 ```
 
 [data/org.freedesktop.UDisks2.xml]: https://github.com/storaged-project/udisks/blob/master/data/org.freedesktop.UDisks2.xml
+[mold]: https://github.com/rui314/mold
 [UDisks upstream repository]: https://github.com/storaged-project/udisks
