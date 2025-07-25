@@ -56,6 +56,8 @@ UdisksFilesystem::UdisksFilesystem(sdbus::IConnection& connection,
 }
 
 auto UdisksFilesystem::Automount() -> std::vector<std::string> {
+  // TODO(xlacroixx): mount only if hints says so. Will need to access another
+  // interface..?
   // If mount points already exist, no need to automount it...
   // TODO(xlacroixx): ...unless other paths are given to udisken and it should
   // mount?)

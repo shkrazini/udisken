@@ -16,8 +16,8 @@
 
 /// Manager proxy: bridges interfaces to other proxies.
 
-#ifndef UDISKEN_MANAGER_HPP_
-#define UDISKEN_MANAGER_HPP_
+#ifndef UDISKEN_MANAGERS_HPP_
+#define UDISKEN_MANAGERS_HPP_
 
 #include "objects.hpp"
 
@@ -29,23 +29,45 @@
 #include <map>
 #include <vector>
 
-namespace proxies {
+namespace managers {
 
-/// Bridges the UDisks ObjectManager and interfaces.
+namespace udisks = org::freedesktop::UDisks2;
+
+/// UDisks top-level manager singleton object.
 class UdisksManager final
-    : public sdbus::ProxyInterfaces<sdbus::ObjectManager_proxy> {
+    : public sdbus::ProxyInterfaces<udisks::Manager_proxy> {
  public:
   /// Connect to UDisks using a system bus connection.
   ///
   /// @param connection System bus connection.
   explicit UdisksManager(sdbus::IConnection& connection);
 
-  UdisksManager(UdisksManager&&) = delete;
   UdisksManager(const UdisksManager&) = delete;
-  auto operator=(UdisksManager&&) -> UdisksManager& = delete;
+  UdisksManager(UdisksManager&&) = delete;
   auto operator=(const UdisksManager&) -> UdisksManager& = delete;
+  auto operator=(UdisksManager&&) -> UdisksManager& = delete;
 
   ~UdisksManager() noexcept { unregisterProxy(); }
+
+  /// Object path to the manager singleton.
+  static constexpr auto kObjectPath{"/org/freedesktop/UDisks2/Manager"};
+};
+
+/// Bridges the UDisks ObjectManager and interfaces.
+class UdisksObjectManager final
+    : public sdbus::ProxyInterfaces<sdbus::ObjectManager_proxy> {
+ public:
+  /// Connect to UDisks using a system bus connection.
+  ///
+  /// @param connection System bus connection.
+  explicit UdisksObjectManager(sdbus::IConnection& connection);
+
+  UdisksObjectManager(UdisksObjectManager&&) = delete;
+  UdisksObjectManager(const UdisksObjectManager&) = delete;
+  auto operator=(UdisksObjectManager&&) -> UdisksObjectManager& = delete;
+  auto operator=(const UdisksObjectManager&) -> UdisksObjectManager& = delete;
+
+  ~UdisksObjectManager() noexcept { unregisterProxy(); }
 
  private:
   void onInterfacesAdded(
@@ -61,6 +83,6 @@ class UdisksManager final
   std::map<sdbus::ObjectPath, objects::BlockDevice> block_devices_{};
 };
 
-}  // namespace proxies
+}  // namespace managers
 
-#endif  // UDISKEN_MANAGER_HPP_
+#endif  // UDISKEN_MANAGERS_HPP_

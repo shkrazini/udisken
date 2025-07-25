@@ -16,7 +16,7 @@
 
 /// Manager proxy: bridges interfaces to other proxies.
 
-#include "manager.hpp"
+#include "managers.hpp"
 
 #include "globals.hpp"
 #include "proxies.hpp"
@@ -31,19 +31,26 @@
 #include <utility>
 #include <vector>
 
-namespace proxies {
+namespace managers {
 
 UdisksManager::UdisksManager(sdbus::IConnection& connection)
+    : ProxyInterfaces(connection, sdbus::ServiceName{globals::kInterfaceName},
+                      sdbus::ObjectPath{kObjectPath}) {
+  registerProxy();
+}
+
+UdisksObjectManager::UdisksObjectManager(sdbus::IConnection& connection)
     : ProxyInterfaces(connection, sdbus::ServiceName{globals::kInterfaceName},
                       sdbus::ObjectPath{globals::kObjectPath}) {
   for (auto managed_objects = GetManagedObjects();
        const auto& [object_path, interfaces_and_properties] : managed_objects) {
     onInterfacesAdded(object_path, interfaces_and_properties);
   }
+
   registerProxy();
 }
 
-void UdisksManager::onInterfacesAdded(
+void UdisksObjectManager::onInterfacesAdded(
     const sdbus::ObjectPath& object_path,
     const std::map<sdbus::InterfaceName,
                    std::map<sdbus::PropertyName, sdbus::Variant>>&
@@ -55,11 +62,11 @@ void UdisksManager::onInterfacesAdded(
   for (const auto& [interface, properties] : interfaces_and_properties) {
     std::println("- {}", interface.c_str());
 
-    if (interface == UdisksBlock::INTERFACE_NAME) {
-      blk_device.block = std::make_unique<UdisksBlock>(
+    if (interface == proxies::UdisksBlock::INTERFACE_NAME) {
+      blk_device.block = std::make_unique<proxies::UdisksBlock>(
           getProxy().getConnection(), object_path);
-    } else if (interface == UdisksFilesystem::INTERFACE_NAME) {
-      blk_device.filesystem = std::make_unique<UdisksFilesystem>(
+    } else if (interface == proxies::UdisksFilesystem::INTERFACE_NAME) {
+      blk_device.filesystem = std::make_unique<proxies::UdisksFilesystem>(
           getProxy().getConnection(), object_path);
     }
   }
@@ -69,11 +76,11 @@ void UdisksManager::onInterfacesAdded(
   }
 }
 
-void UdisksManager::onInterfacesRemoved(
+void UdisksObjectManager::onInterfacesRemoved(
     [[maybe_unused]] const sdbus::ObjectPath& object_path,
     [[maybe_unused]] const std::vector<sdbus::InterfaceName>& interfaces) {
   // for (const auto& interface : interfaces) {
   // }
 }
 
-}  // namespace proxies
+}  // namespace managers

@@ -14,24 +14,25 @@
 // You should have received a copy of the GNU General Public License along
 // with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-/// @file
-/// @brief Main entrypoint; initiates connection to D-Bus and UDisks.
+/// Main entrypoint; initiates connection to D-Bus and UDisks.
 
-#include "manager.hpp"
+#include "managers.hpp"
 
 #include <sdbus-c++/IConnection.h>
 
 #include <iostream>
 #include <print>
 
-// TODO(xlacroixx): make async event loop so we can test properly.
+// TODO(xlacroixx): make async event loop?
 auto main() -> int {
   std::println("udisken {} - VERY WIP, WILL BREAK LOL!! ", UDISKEN_VERSION);
 
   const auto connection = sdbus::createSystemBusConnection();
 
-  proxies::UdisksManager manager_proxy{*connection};
-  // std::println("Connected to UDisks2 version {}", );
+  managers::UdisksManager manager{*connection};
+  std::println("Connected to UDisks2 version {} on D-Bus", manager.Version());
+
+  managers::UdisksObjectManager object_manager{*connection};
 
   std::flush(std::cout);
   connection->enterEventLoop();

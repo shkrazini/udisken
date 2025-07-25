@@ -1,7 +1,7 @@
 udisken_sources = [
   'conversions.cpp',
   'main.cpp',
-  'manager.cpp',
+  'managers.cpp',
   'proxies.cpp',
 ]
 
