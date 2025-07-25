@@ -4,7 +4,7 @@ project(
   version: '0.0.1',
   license: 'GPL-3.0-or-later',
   default_options: [
-    # minimum: c++20
+    # minimum: c++23
     'cpp_std=c++26',
     'warning_level=3',
     'werror=true',
