@@ -7,13 +7,24 @@ project(
     # minimum: c++23
     'cpp_std=c++26',
     'warning_level=3',
-    'werror=true',
+    # BUG(xlacroixx): not ignored for subprojects, even if werror=false is
+    # specified in subproject default_options.
+    # NOTE(xlacroixx): CMake doesn't cause this issue.
+    #'werror=true',
   ],
 )
 
 add_project_arguments(
-  '-pedantic-errors',
-  '-Weffc++',
+  # BUG(xlacroixx): not ignored for subprojects, even if werror=false is
+  # specified in subproject default_options.
+  # NOTE(xlacroixx): CMake doesn't cause this issue.
+  #'-pedantic-errors',
+
+  # Too many "member should be initialized in member initialization list"
+  # irrealistic warnings, that are not worth fixing.
+  # '-Weffc++',
+  # Re-enable -Wnon-virtual-dtor when disabling -Weffc++.
+  '-Wnon-virtual-dtor',
   '-Wcast-align',
   '-Wcast-qual',
   '-Wconversion',
@@ -28,7 +39,8 @@ add_project_arguments(
   '-Wnoexcept',
   '-Wold-style-cast',
   '-Woverloaded-virtual',
-  '-Wpadded',
+  # Decreases readability, only relevant for low-memory constraints.
+  #'-Wpadded',
   '-Wredundant-decls',
   '-Wshadow',
   '-Wsign-conversion',
@@ -53,7 +65,7 @@ sdbus_cpp_dep = dependency('sdbus-c++', version: ['>=2.1.0', '<3.0.0']) # SemVer
 # NOTE: probably not a hard dependency.
 # udisken will still need UDisks to perform any action, but this is clearly not
 # a build dependency. The dependency should be enforced in packages by distros.
-# udisks = dependency('udisks2', version: ['>=2.10.0', '<3.0.0']) # MAJOR (X.0.0) bumps
+#udisks = dependency('udisks2', version: ['>=2.10.0', '<3.0.0']) # MAJOR (X.0.0) bumps
 
 udisks_sdbus_cpp_proj = subproject(
   'udisks-sdbus-c++',
