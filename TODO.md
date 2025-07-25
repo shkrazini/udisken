@@ -1,17 +1,16 @@
 # To do
 
-- [ ] Cleanup headers!!!!!!!!!!!!!!
-
 - [x] Automount removable media
 - [ ] Notifications
-- [ ] D-Bus activation (auto-launch on disk connect)
-- [ ] Tray icon
-- [ ] Command line tools for manual un-/mounting
-- [ ] LUKS encrypted devices
-- [ ] Unlocking with keyfiles (requires udisks 2.6.4)
+- [ ] Autolaunch or execute action upon disk connect/mounting (using D-Bus
+      activation)
 - [ ] Loop devices (mounting iso archives)
+- [ ] Tray icon
+- [ ] Unlocking with keyfiles (requires udisks 2.6.4)
+- [ ] LUKS encrypted devices
 - [ ] Password caching (requires python keyutils 0.3)
+- [ ] Command line tools for manual un-/mounting
 
 Most features taken from udiskie.
 
-- [ ] Autolaunch or execute action upon mounting
+- [ ] Cleanup headers!!!!!!!!!!!!!!
