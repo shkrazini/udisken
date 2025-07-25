@@ -16,9 +16,7 @@
 
 #include "udisks_manager.hpp"
 
-#include <sdbus-c++/Error.h>
 #include <sdbus-c++/IConnection.h>
-#include <sdbus-c++/Types.h>
 
 #include <iostream>
 #include <print>
@@ -29,7 +27,6 @@ auto main() -> int {
 
   const auto connection = sdbus::createSystemBusConnection();
 
-  // XXX(xlacroixx): need to send a message to UDisks in order to wake it up?
   udisken::UdisksManager manager_proxy{*connection};
 
   std::flush(std::cout);

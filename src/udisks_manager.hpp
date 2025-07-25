@@ -21,7 +21,9 @@
 
 #include "udisks_filesystem.hpp"
 
-#include <sdbus-c++/sdbus-c++.h>
+#include <sdbus-c++/IConnection.h>
+#include <sdbus-c++/ProxyInterfaces.h>
+#include <sdbus-c++/Types.h>
 #include <udisks-sdbus-c++/udisks_proxy.hpp>
 
 #include <map>

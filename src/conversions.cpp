@@ -20,6 +20,8 @@
 
 #include "conversions.hpp"
 
+#include <sdbus-c++/Types.h>
+
 #include <cstdint>
 #include <ranges>
 #include <string>

@@ -21,6 +21,11 @@
 #include "conversions.hpp"
 #include "udisks_globals.hpp"
 
+#include <sdbus-c++/Error.h>
+#include <sdbus-c++/IConnection.h>
+#include <sdbus-c++/ProxyInterfaces.h>
+#include <sdbus-c++/Types.h>
+
 #include <iostream>
 #include <print>
 #include <string>

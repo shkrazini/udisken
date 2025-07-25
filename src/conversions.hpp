@@ -20,6 +20,8 @@
 #ifndef UDISKEN_CONVERSIONS_HPP_
 #define UDISKEN_CONVERSIONS_HPP_
 
+#include <sdbus-c++/Types.h>
+
 #include <cstdint>
 #include <string>
 #include <vector>
