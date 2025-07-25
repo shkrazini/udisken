@@ -26,7 +26,10 @@
 #include <sdbus-c++/ProxyInterfaces.h>
 #include <sdbus-c++/Types.h>
 #include <spdlog/spdlog.h>
+#include <udisks-sdbus-c++/udisks_errors.hpp>
 
+#include <algorithm>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -49,34 +52,62 @@ UdisksDrive::UdisksDrive(sdbus::IConnection& connection,
 UdisksFilesystem::UdisksFilesystem(sdbus::IConnection& connection,
                                    const sdbus::ObjectPath& object_path)
     : ProxyInterfaces(connection, sdbus::ServiceName(globals::kInterfaceName),
-                      object_path),
-      mount_paths_{Automount()} {
+                      object_path) {
   registerProxy();
 }
 
-auto UdisksFilesystem::Automount() -> std::vector<std::string> {
-  // TODO(xlacroixx): mount only if hints says so. Will need to access another
-  // interface..?
+auto UdisksFilesystem::Automount() -> std::optional<std::string> {
   // If mount points already exist, no need to automount it...
   // TODO(xlacroixx): ...unless other paths are given to udisken and it should
   // mount?)
   if (!MountPoints().empty()) {
-    return conversions::ConvertArrayArrayByte(MountPoints());
+    mount_points_ = conversions::ConvertArrayArrayByte(MountPoints());
+
+    return std::nullopt;
   }
 
   try {
-    const auto mount_path = Mount({});
+    auto mnt_point = Mount({});
+    spdlog::info("Automounted {}", mnt_point);
 
-    spdlog::info("Mounted {} at {}", getProxy().getObjectPath().c_str(),
-                 mount_path);
+    if (std::ranges::find(mount_points_, mnt_point) != mount_points_.end()) {
+      spdlog::warn(
+          "UDisks succesfully mounted, but it already had a mount point");
 
-    return {mount_path};
+      return std::nullopt;
+    }
+
+    mount_points_.push_back(mnt_point);
+    spdlog::debug("Current mount points:");
+    for (const auto& current_mnt_points : mount_points_) {
+      spdlog::debug("- {}", current_mnt_points);
+    }
+
+    return mnt_point;
   } catch (const sdbus::Error& e) {
-    // TODO(xlacroixx): handle what we can, throw the rest.
+    if (e.getName() ==
+        std::get<udisks::UdisksErrors::kUdisksErrorAlreadyMounted>(
+            udisks::udisks_error_names)) {
+      // Should have been caught at the guard at the beginning of the function,
+      // so this is weird.
+
+      mount_points_ = conversions::ConvertArrayArrayByte(MountPoints());
+
+      spdlog::warn(
+          "{} is already mounted but UDisks initially returned no mount "
+          "paths;\nMount paths after asking again:",
+          getProxy().getObjectPath().c_str());
+      for (const auto& mount_point : mount_points_) {
+        spdlog::warn("- {}", mount_point);
+      }
+
+      return std::nullopt;
+    }
+
     spdlog::error("Failed to automount:\n({}) {}", e.getName().c_str(),
                   e.getMessage());
 
-    return {};
+    throw;
   }
 }
 

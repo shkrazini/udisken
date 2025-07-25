@@ -55,26 +55,22 @@ void UdisksObjectManager::onInterfacesAdded(
     const std::map<sdbus::InterfaceName,
                    std::map<sdbus::PropertyName, sdbus::Variant>>&
         interfaces_and_properties) {
-  spdlog::debug("Interfaces added for object {}", object_path.c_str());
+  spdlog::debug("New object: {}", object_path.c_str());
 
-  objects::BlockDevice blk_device{};
+  if (interfaces_and_properties.contains(
+          sdbus::InterfaceName{proxies::UdisksBlock::INTERFACE_NAME}) &&
+      interfaces_and_properties.contains(
+          sdbus::InterfaceName{proxies::UdisksFilesystem::INTERFACE_NAME})) {
+    objects::BlockDevice blk_device{
+        object_path,
+        std::make_unique<proxies::UdisksBlock>(getProxy().getConnection(),
+                                               object_path),
+        std::make_unique<proxies::UdisksFilesystem>(getProxy().getConnection(),
+                                                    object_path)};
 
-  for (const auto& [interface, properties] : interfaces_and_properties) {
-    spdlog::debug("- {}", interface.c_str());
-
-    if (interface == proxies::UdisksBlock::INTERFACE_NAME) {
-      blk_device.block = std::make_unique<proxies::UdisksBlock>(
-          getProxy().getConnection(), object_path);
-    } else if (interface == proxies::UdisksFilesystem::INTERFACE_NAME) {
-      blk_device.filesystem = std::make_unique<proxies::UdisksFilesystem>(
-          getProxy().getConnection(), object_path);
-    }
-  }
-
-  if (blk_device.block != nullptr && blk_device.filesystem != nullptr) {
     block_devices_.try_emplace(object_path, std::move(blk_device));
 
-    spdlog::info("Added Block device at {}", object_path.c_str());
+    spdlog::debug("Added Block device at {}", object_path.c_str());
   }
 }
 

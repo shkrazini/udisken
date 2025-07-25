@@ -16,22 +16,41 @@
 
 /// Concrete objects implementing many UDisks interfaces.
 
+#ifndef UDISKEN_OBJECTS_HPP_
+#define UDISKEN_OBJECTS_HPP_
+
 #include "proxies.hpp"
+
+#include <sdbus-c++/Types.h>
 
 #include <memory>
 
 namespace objects {
 
 /// Block device object, upon which most udisken actions take effect.
-struct BlockDevice {
+class BlockDevice {
+ public:
+  /// Create a Block device that will take ownership of the unique_ptrs to the
+  /// proxy interfaces.
+  ///
+  /// Some automatic actions, such as automounting, will be executed.
+  ///
+  /// Unique_ptrs passed to this constructor will be moved to!
+  BlockDevice(const sdbus::ObjectPath& object_path,
+              std::unique_ptr<proxies::UdisksBlock> block,
+              std::unique_ptr<proxies::UdisksFilesystem> filesystem);
+
+ private:
   /// Object path, as found in /org/freedesktop/UDisks2/block_devices/.
-  sdbus::ObjectPath object_path;
+  sdbus::ObjectPath object_path_;
   /// Corresponding Drive interface for this block device.
   // std::unique_ptr<UdisksDrive> drive;
   /// Proxy to the Block interface of this block device object.
-  std::unique_ptr<proxies::UdisksBlock> block;
+  std::unique_ptr<proxies::UdisksBlock> block_;
   /// Proxy to the Filesystem present on the block device.
-  std::unique_ptr<proxies::UdisksFilesystem> filesystem;
+  std::unique_ptr<proxies::UdisksFilesystem> filesystem_;
 };
+
+#endif  // UDISKEN_OBJECTS_HPP_
 
 }  // namespace objects

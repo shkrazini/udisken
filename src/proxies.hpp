@@ -24,6 +24,7 @@
 #include <sdbus-c++/Types.h>
 #include <udisks-sdbus-c++/udisks_proxy.hpp>
 
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -82,16 +83,21 @@ class UdisksFilesystem final
 
   ~UdisksFilesystem() noexcept { unregisterProxy(); }
 
- private:
-  /// Automount, if udisken is configured to do so.
+  /// Automount, TODO(xlacroixx): if udisken is configured to do so.
   ///
-  /// @return Path to the mount point after mounting, or nothing if the
-  ///         filesystem is already mounted somewhere.
-  auto Automount() -> std::vector<std::string>;
+  /// @return Path to mount point after mounting, or nothing if the filesystem
+  /// is already mounted somewhere.
+  /// mount_paths_ (private) may contain multiple paths before or after
+  /// mounting.
+  ///
+  /// @throws sdbus::Error Error returned by UDisks if automounting failed.
+  /// Does not throw if filesystem is already mounted somewhere.
+  auto Automount() -> std::optional<std::string>;
 
+ private:
   /// List of mount paths for this filesystem.
   /// Can be empty, if udisken cannot or will not mount this filesystem.
-  std::vector<std::string> mount_paths_{};
+  std::vector<std::string> mount_points_;
 };
 
 }  // namespace proxies

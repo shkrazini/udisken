@@ -1,20 +1,10 @@
 # To do
 
-- [ ] Program structure revamp:
-
-  Instead of having proxies representing each existing interface in UDisks2, we
-  will change to a "object-very-oriented" structure, where a struct either
-  represents:
-
-  - a block device (`block_devices/`), with one `Block` interface and zero or
-    one `Filesystem` interfaces
-  - a drive device, linked to the block device, and one `Device` interface.
-
 - [ ] Cleanup headers!!!!!!!!!!!!!!
 
-- [ ] Automount removable media
-- [ ] D-Bus activation (auto-launch on disk connect)
+- [x] Automount removable media
 - [ ] Notifications
+- [ ] D-Bus activation (auto-launch on disk connect)
 - [ ] Tray icon
 - [ ] Command line tools for manual un-/mounting
 - [ ] LUKS encrypted devices

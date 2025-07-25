@@ -14,29 +14,31 @@
 // You should have received a copy of the GNU General Public License along
 // with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-/// Main entrypoint; initiates connection to D-Bus and UDisks.
+/// Concrete objects implementing many UDisks interfaces.
 
-#include "managers.hpp"
+#include "objects.hpp"
 
-#include <sdbus-c++/IConnection.h>
-#include <spdlog/common.h>
+#include "proxies.hpp"
+
+#include <sdbus-c++/Types.h>
 #include <spdlog/spdlog.h>
 
-// TODO(xlacroixx): make async event loop?
-auto main() -> int {
-#ifndef NDEBUG
-  spdlog::set_level(spdlog::level::debug);
-#endif  // !NDEBUG
+#include <memory>
+#include <utility>
 
-  spdlog::info("udisken - {} - GPLv3", UDISKEN_VERSION);
+namespace objects {
 
-  const auto connection = sdbus::createSystemBusConnection();
+BlockDevice::BlockDevice(const sdbus::ObjectPath& object_path,
+                         std::unique_ptr<proxies::UdisksBlock> block,
+                         std::unique_ptr<proxies::UdisksFilesystem> filesystem)
+    : object_path_{object_path},
+      block_{std::move(block)},
+      filesystem_{std::move(filesystem)} {
+  if (block_->HintAuto()) {
+    filesystem->Automount();
+  }
 
-  managers::UdisksManager manager{*connection};
-  spdlog::info("Connected to UDisks version {} on D-Bus", manager.Version());
-
-  managers::UdisksObjectManager object_manager{*connection};
-
-  spdlog::debug("Entering event loop");
-  connection->enterEventLoop();
+  spdlog::debug("Got hint to not automount {}", object_path_.c_str());
 }
+
+}  // namespace objects

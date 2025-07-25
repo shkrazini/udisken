@@ -1,7 +1,10 @@
 ---
+# modernize-pass-by-value has unclear advantages and decreases readability.
+# It also triggers on non-standard library expensive types.
 # readability-identifier-length triggers in cases where longer identifiers
 # decrease readability.
 # readability-redundant-member-init might conflict with gcc/clang -Weffc++
+# NOTE: restored because we disabled -Weffc++.
 Checks: "
   -*,
   bugprone-*,
@@ -27,11 +30,11 @@ Checks: "
   llvm-namespace-comment,
   misc-*,
   modernize-*,
+  -modernize-pass-by-value,
   performance-*,
   portability-*,
   readability-*,
   -readability-identifier-length,
-  -readability-redundant-member-init,
   -google-objc-*,
   "
 

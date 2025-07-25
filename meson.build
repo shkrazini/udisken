@@ -7,7 +7,7 @@ project(
   meson_version: '>=0.64.0',
   default_options: [
     # minimum: c++23
-    'cpp_std=c++26',
+    'cpp_std=c++23',
     'warning_level=3',
     # BUG(xlacroixx): not ignored for subprojects, even if werror=false is
     # specified in subproject default_options.
