@@ -51,7 +51,7 @@ auto main() -> int {
     return EXIT_FAILURE;
   }
 #endif  // FEATURE_NOTIFY
-  spdlog::info("libnotify: {}", globals::kNotify);
+  spdlog::debug("libnotify: {}", globals::kNotify);
 
   const auto connection = sdbus::createSystemBusConnection();
 
