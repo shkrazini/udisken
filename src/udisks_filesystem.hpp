@@ -45,25 +45,17 @@ class UdisksFilesystem final
   ~UdisksFilesystem() noexcept;
 
  private:
-  // TODO(xlacroixx): check whether we are allowed to automount.
   /// @brief Automount, if udisken is configured to do so.
   ///
   /// @return Path to the mount point after mounting, or nothing if the
-  /// filesystem is already mounted somewhere.
+  ///         filesystem is already mounted somewhere.
   auto Automount() -> std::vector<std::string>;
 
   /// @brief List of mount paths for this filesystem.
-  /// Guaranteed to have at least one element.
+  ///        Guaranteed to have at least one element.
   std::vector<std::string> mount_paths_{};
 };
 
 }  // namespace udisken
 
 #endif  // UDISKEN_UDISKS_FILESYSTEM_HPP_
-
-// TEST(xlacroixx): constructing an UdisksFilesystem mounts the filesystem, if
-// automounting is enabled; do not fail if filesystem is already mounted (e.g.
-// by user)
-// TEST(xlacroixx): destructing an UdisksFilesystem unmounts the filesystem, if
-// automounting if enabled; do not fail if filesystem is already unmounted (e.g.
-// by external program).

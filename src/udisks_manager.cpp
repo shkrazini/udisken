@@ -65,7 +65,8 @@ void UdisksManager::onInterfacesRemoved(
       // Such filesystem may have disappeared without being unmounted, either by
       // udisken or an external source. Unfortunately there is no way to check
       // this.
-
+      //
+      // Erases no key if udisken unmounted the filesystem.
       std::size_t keys_erased{filesystems_.erase(object_path)};
 
       if (keys_erased >= 1) {
