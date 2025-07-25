@@ -28,9 +28,11 @@
 
 namespace udisken::conversions {
 
-/// @brief Converts an array of array of bytes (a{a{y}}) to a vector of strings.
+/// @brief Converts an array of array of bytes (D-Bus equivalent type: a{a{y}})
+/// to a vector of strings.
 ///
 /// @param aay The array of array of bytes.
+[[nodiscard("Creates moved-to converted vector")]]
 auto ConvertArrayArrayByte(const std::vector<std::vector<uint8_t>>& aay)
     -> std::vector<std::string>;
 
