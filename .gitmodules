@@ -1,0 +1,3 @@
+[submodule "subprojects/udisks-sdbus-cpp"]
+	path = subprojects/udisks-sdbus-cpp
+	url = https://codeberg.org/xlacroixx/udisks-sdbus-cpp
