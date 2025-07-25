@@ -14,7 +14,9 @@
 // You should have received a copy of the GNU General Public License along
 // with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#include "filesystem_proxy.hpp"
+// UDisks filesystem proxy: automounting
+
+#include "udisks_filesystem.hpp"
 
 #include <iostream>
 #include <print>

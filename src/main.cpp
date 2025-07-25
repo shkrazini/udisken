@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License along
 // with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#include "proxy.hpp"
+#include "udisks_manager.hpp"
 
 #include <sdbus-c++/Error.h>
 #include <sdbus-c++/IConnection.h>

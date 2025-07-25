@@ -14,9 +14,11 @@
 // You should have received a copy of the GNU General Public License along
 // with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#include "proxy.hpp"
+// UDisks manager proxy: handles changes on interfaces and properties.
 
-#include "filesystem_proxy.hpp"
+#include "udisks_manager.hpp"
+
+#include "udisks_filesystem.hpp"
 
 #include <sdbus-c++/Types.h>
 #include <sdbus-c++/sdbus-c++.h>

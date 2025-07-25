@@ -14,12 +14,12 @@
 // You should have received a copy of the GNU General Public License along
 // with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-// Interfacing logic for UDisks2 D-Bus API: monitoring, basic actions, ...
+// UDisks manager proxy: handles changes on interfaces and properties.
 
 #ifndef UDISKEN_PROXY_HPP_
 #define UDISKEN_PROXY_HPP_
 
-#include "filesystem_proxy.hpp"
+#include "udisks_filesystem.hpp"
 
 #include <sdbus-c++/sdbus-c++.h>
 #include <udisks-sdbus-c++/udisks_proxy.hpp>

@@ -1,4 +1,8 @@
-udisken_sources = ['main.cpp', 'proxy.cpp']
+udisken_sources = [
+  'main.cpp',
+  'udisks_filesystem.cpp',
+  'udisks_manager.cpp',
+]
 
 executable(
   'udisken',
