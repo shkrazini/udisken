@@ -18,8 +18,8 @@ You absolutely need to have
 [sdbus-cpp](https://github.com/Kistler-Group/sdbus-cpp) installed, which
 provides the `sdbus-c++-xml2cpp` program required for this step.
 
-1. Make sure the version of the UDisks dependency matches your system-installed
-   UDisks.
+1. Make sure the MAJOR version of the UDisks dependency matches your
+   system-installed UDisks.
    - Otherwise you can go to the
      [UDisks upstream repository]
 2. Copy the interface description file to `dbus/`. For example:
@@ -32,14 +32,6 @@ provides the `sdbus-c++-xml2cpp` program required for this step.
 
    - In the [UDisks upstream repository], it is located at
      [data/org.freedesktop.UDisks2.xml]
-
-3. Update the version in `dbus/version.txt` accordingly
-
-   <!-- TODO(xlacroixx): confirm this is required -->
-
-4. Run `meson setup --reconfigure`, and `meson compile -C build` (assuming your
-   current directory is at the project root) at least once, in order to generate
-   the D-Bus API bindings.
 
 #### Discussion detail about retrieving the interface file
 
