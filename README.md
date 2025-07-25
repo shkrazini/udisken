@@ -86,7 +86,7 @@ Finally, using [mold] as the linker is
    CC_LD=mold CXX_LD=mold meson setup build
    ```
 
-> [!NOTE]
+> [!IMPORTANT]
 > Make sure that the D-Bus API interface file option is correct before running
 > this command: see [Udisks D-Bus API bindings](#udisks-d-bus-api-bindings)
 
@@ -120,8 +120,8 @@ For more information, see [udisks-sdbus-c++].
 
 ### Build
 
-> [!NOTE]
-> If you are using [mold] ([recommended](#prepare)),
+> [!TIP]
+> If you want to use [mold] ([recommended](#prepare)),
 > run `CC_LD=mold CXX_LD=mold meson setup build` instead of `meson setup build`.
 
 ```sh
