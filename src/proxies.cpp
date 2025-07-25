@@ -73,7 +73,7 @@ auto UdisksFilesystem::Automount() -> std::vector<std::string> {
     return {mount_path};
   } catch (const sdbus::Error& e) {
     // TODO(xlacroixx): handle what we can, throw the rest.
-    spdlog::error("Failed to automount: ({});\n{}", e.getName().c_str(),
+    spdlog::error("Failed to automount:\n({}) {}", e.getName().c_str(),
                   e.getMessage());
 
     return {};
