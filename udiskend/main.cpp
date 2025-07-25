@@ -1,5 +1,5 @@
 // UDISKEN: Linux drive automounter for the impatient.
-// Copyright (C) BlackMa9ick
+// Copyright (C) BlackMa8ick
 //
 // This program is free software: you can redistribute it and/or modify it
 // under the terms of the GNU General Public License as published by the
@@ -20,8 +20,11 @@
 #include "managers.hpp"
 
 #include <sdbus-c++/IConnection.h>
+#include <sdbus-c++/ProxyInterfaces.h>
+#include <sdbus-c++/Types.h>
 #include <spdlog/common.h>
 #include <spdlog/spdlog.h>
+#include <udisks-sdbus-c++/udisks_proxy.hpp>
 
 #ifdef FEATURE_NOTIFY
 #include <glib.h>

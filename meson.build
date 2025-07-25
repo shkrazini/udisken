@@ -7,6 +7,7 @@ project(
 	default_options : [
 		# minimum: c++23
 		'cpp_std=c++23',
+		'default_library=static',
 		'warning_level=3',
 	],
 )
@@ -72,4 +73,6 @@ udisks_sdbus_cpp_proj = subproject(
 )
 udisks_sdbus_cpp_dep = udisks_sdbus_cpp_proj.get_variable('udisks_sdbus_cpp_dep')
 
-subdir('src')
+subdir('common')
+subdir('udisken')
+subdir('udiskend')

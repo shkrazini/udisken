@@ -14,20 +14,22 @@
 // You should have received a copy of the GNU General Public License along
 // with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-/// Manager proxy: bridges interfaces to objects.
-
-#ifndef UDISKEN_MANAGERS_HPP_
-#define UDISKEN_MANAGERS_HPP_
+/// Manager proxies for UDisks interfaces.
 
 #include "objects.hpp"
 
 #include <sdbus-c++/IConnection.h>
 #include <sdbus-c++/ProxyInterfaces.h>
 #include <sdbus-c++/Types.h>
+#include <spdlog/common.h>
+#include <spdlog/spdlog.h>
 #include <udisks-sdbus-c++/udisks_proxy.hpp>
 
 #include <map>
 #include <vector>
+
+#ifndef UDISKEN_COMMON_MANAGERS_HPP_
+#define UDISKEN_COMMON_MANAGERS_HPP_
 
 namespace managers {
 
@@ -50,6 +52,7 @@ class UdisksManager final
   ~UdisksManager() noexcept { unregisterProxy(); }
 
   /// Object path to the manager singleton.
+  // TODO(blackma9ick): construct this with globals::kObjectPath?
   static constexpr auto kObjectPath{"/org/freedesktop/UDisks2/Manager"};
 };
 
@@ -77,12 +80,13 @@ class UdisksObjectManager final
           interfaces_and_properties) final;
 
   void onInterfacesRemoved(
-      const sdbus::ObjectPath& object_path,
-      const std::vector<sdbus::InterfaceName>& interfaces) final;
+      [[maybe_unused]] const sdbus::ObjectPath& object_path,
+      [[maybe_unused]] const std::vector<sdbus::InterfaceName>& interfaces)
+      final;
 
-  std::map<sdbus::ObjectPath, objects::BlockDevice> block_devices_{};
+  std::map<sdbus::ObjectPath, objects::BlockDevice> block_devices_;
 };
 
 }  // namespace managers
 
-#endif  // UDISKEN_MANAGERS_HPP_
+#endif  // UDISKEN_COMMON_MANAGERS_HPP_

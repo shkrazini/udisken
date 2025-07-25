@@ -14,17 +14,20 @@
 // You should have received a copy of the GNU General Public License along
 // with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-/// Manager proxy: bridges interfaces to objects.
+/// Manager proxies for UDisks interfaces.
 
 #include "managers.hpp"
 
 #include "globals.hpp"
 #include "interfaces.hpp"
+#include "objects.hpp"
 
 #include <sdbus-c++/IConnection.h>
 #include <sdbus-c++/ProxyInterfaces.h>
 #include <sdbus-c++/Types.h>
+#include <spdlog/common.h>
 #include <spdlog/spdlog.h>
+#include <udisks-sdbus-c++/udisks_proxy.hpp>
 
 #include <map>
 #include <memory>
@@ -71,6 +74,8 @@ void UdisksObjectManager::onInterfacesAdded(
     block_devices_.try_emplace(object_path, std::move(blk_device));
 
     spdlog::debug("Added Block device at {}", object_path.c_str());
+
+    objects::TryAutomount(block_devices_.at(object_path));
   }
 }
 
