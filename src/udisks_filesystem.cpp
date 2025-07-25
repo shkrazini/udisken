@@ -18,12 +18,22 @@
 
 #include "udisks_filesystem.hpp"
 
+#include "udisks_globals.hpp"
+
 #include <iostream>
 #include <print>
 #include <string>
 #include <vector>
 
 namespace udisken {
+
+UdisksFilesystem::UdisksFilesystem(sdbus::IConnection& connection,
+                                   const sdbus::ObjectPath& object_path)
+    : ProxyInterfaces(connection, sdbus::ServiceName(kInterfaceName),
+                      object_path),
+      mount_paths_{Automount()} {
+  registerProxy();
+}
 
 // FIXME(xlacroixx): currently this destructor will fail if the device is busy.
 // To prevent that, we need to Unmount using the `force` option.

@@ -19,8 +19,6 @@
 #ifndef UDISKEN_UDISKS_FILESYSTEM_HPP_
 #define UDISKEN_UDISKS_FILESYSTEM_HPP_
 
-#include "udisks_globals.hpp"
-
 #include <sdbus-c++/IConnection.h>
 #include <sdbus-c++/ProxyInterfaces.h>
 #include <sdbus-c++/Types.h>
@@ -37,12 +35,7 @@ class UdisksFilesystem final
     : public sdbus::ProxyInterfaces<udisks::Filesystem_proxy> {
  public:
   UdisksFilesystem(sdbus::IConnection& connection,
-                   const sdbus::ObjectPath& object_path)
-      : ProxyInterfaces(connection, sdbus::ServiceName(kInterfaceName),
-                        object_path),
-        mount_paths_{Automount()} {
-    registerProxy();
-  }
+                   const sdbus::ObjectPath& object_path);
 
   UdisksFilesystem(UdisksFilesystem&&) = delete;
   UdisksFilesystem(const UdisksFilesystem&) = delete;
@@ -59,7 +52,8 @@ class UdisksFilesystem final
   /// filesystem is already mounted somewhere.
   auto Automount() -> std::vector<std::string>;
 
-  /// Guaranteed to have at least one path (element).
+  /// @brief List of mount paths for this filesystem.
+  /// Guaranteed to have at least one element.
   std::vector<std::string> mount_paths_{};
 };
 
