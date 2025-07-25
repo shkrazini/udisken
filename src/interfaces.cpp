@@ -59,8 +59,8 @@ UdisksFilesystem::UdisksFilesystem(sdbus::IConnection& connection,
 
 auto UdisksFilesystem::Automount() -> std::optional<std::string> {
   // If mount points already exist, no need to automount it...
-  // TODO(xlacroixx): ...unless other paths are given to UDISKEN and it should
-  // mount?)
+  // TODO(xlacroixx): ...unless other paths are given to UDISKEN and it
+  // should mount?)
   if (!MountPoints().empty()) {
     mount_points_ = conversions::ConvertArrayArrayByte(MountPoints());
 
@@ -72,7 +72,8 @@ auto UdisksFilesystem::Automount() -> std::optional<std::string> {
 
     if (std::ranges::find(mount_points_, mnt_point) != mount_points_.end()) {
       spdlog::warn(
-          "UDisks succesfully mounted, but it already had a mount point");
+          "UDisks succesfully mounted, but it already had a "
+          "mount point");
 
       return std::nullopt;
     }
@@ -88,13 +89,14 @@ auto UdisksFilesystem::Automount() -> std::optional<std::string> {
     if (e.getName() ==
         std::get<udisks::UdisksErrors::kUdisksErrorAlreadyMounted>(
             udisks::udisks_error_names)) {
-      // Should have been caught at the guard at the beginning of the function,
-      // so this is weird.
+      // Should have been caught at the guard at the beginning
+      // of the function, so this is weird.
 
       mount_points_ = conversions::ConvertArrayArrayByte(MountPoints());
 
       spdlog::warn(
-          "{} is already mounted but UDisks initially returned no mount "
+          "{} is already mounted but UDisks initially "
+          "returned no mount "
           "paths;\nMount paths after asking again:",
           getProxy().getObjectPath().c_str());
       for (const auto& mount_point : mount_points_) {

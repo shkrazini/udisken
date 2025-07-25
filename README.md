@@ -31,10 +31,10 @@ The project consists of two main parts:
 
 - the daemon: `udiskend`
 - the CLI interface/utilities: `udisken COMMAND`, transparent with udiskie:
-  - `udisken eject`
-  - `udiskie-mount` -> `udisken mount`
-  - `udiskie-unmount` -> `udisken unmount` (alias: `udisken umount`)
-  - `udiskie-info` -> `udisken show` (alias: `udisken info`)
+	- `udisken eject`
+	- `udiskie-mount` -> `udisken mount`
+	- `udiskie-unmount` -> `udisken unmount` (alias: `udisken umount`)
+	- `udiskie-info` -> `udisken show` (alias: `udisken info`)
 
 ## Install
 
@@ -63,7 +63,7 @@ pacman -S --asdeps libnotify sdbus-cpp udisks2
 
 ## Building
 
-See [BUILDING.md](./docs/BUILDING.md).
+See [BUILDING.md](./BUILDING.md).
 
 ## Copyright
 
@@ -71,4 +71,4 @@ Licensed under the [GNU General Public License Version 3](./LICENSE) (GPLv3).
 
 ---
 
-_~BLACKM_GICK (black magic)_
+_~BlackMa9ick (black magic)_

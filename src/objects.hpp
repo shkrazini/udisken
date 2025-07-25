@@ -30,8 +30,8 @@ namespace objects {
 /// Block device object, upon which most UDISKEN actions take effect.
 class BlockDevice {
  public:
-  /// Create a Block device that will take ownership of the unique_ptrs to the
-  /// proxy interfaces.
+  /// Create a Block device that will take ownership of the unique_ptrs to
+  /// the proxy interfaces.
   ///
   /// Some automatic actions, such as automounting, will be executed.
   ///

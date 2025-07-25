@@ -70,8 +70,8 @@ class UdisksFilesystem final
   /// Construct a filesystem proxy and execute actions on it, e.g.,
   /// automounting.
   ///
-  /// @param connection System bus connection. Should be the same as used to
-  /// construct the manager proxy (UdisksManager).
+  /// @param connection System bus connection. Should be the same as used
+  /// to construct the manager proxy (UdisksManager).
   /// @param object_path Object path to a UDisks Filesystem interface.
   UdisksFilesystem(sdbus::IConnection& connection,
                    const sdbus::ObjectPath& object_path);
@@ -85,13 +85,12 @@ class UdisksFilesystem final
 
   /// Automount, TODO(xlacroixx): if UDISKEN is configured to do so.
   ///
-  /// @return Path to mount point after mounting, or nothing if the filesystem
-  /// is already mounted somewhere.
-  /// mount_paths_ (private) may contain multiple paths before or after
-  /// mounting.
+  /// @return Path to mount point after mounting, or nothing if the
+  /// filesystem is already mounted somewhere. mount_paths_ (private) may
+  /// contain multiple paths before or after mounting.
   ///
-  /// @throws sdbus::Error Error returned by UDisks if automounting failed.
-  /// Does not throw if filesystem is already mounted somewhere.
+  /// @throws sdbus::Error Error returned by UDisks if automounting
+  /// failed. Does not throw if filesystem is already mounted somewhere.
   auto Automount() -> std::optional<std::string>;
 
  private:

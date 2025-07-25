@@ -8,13 +8,13 @@ Post-study of udiskie:
 - Do not do things in the constructors... Just, don't.
 - Object classes (BlockDevice, Drive, ...) and (all) their interfaces pointers
 - Implement as macro-ed functions:
-  - Notifications
-  - Tray icon
+	- Notifications
+	- Tray icon
 
 - [x] Automount removable media
 - [x] Notifications
 - [ ] Autolaunch or execute action upon disk connect/mounting (using D-Bus
-      activation)
+  activation)
 - [ ] Unlocking with keyfiles (requires udisks 2.6.4)
 - [ ] LUKS encrypted devices
 - [ ] Loop devices (mounting iso archives)

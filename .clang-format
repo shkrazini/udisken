@@ -13,19 +13,19 @@ QualifierAlignment: Left
 # (low-level) headers. Most reliably detects missing header inclusions.
 IncludeBlocks: Regroup
 IncludeCategories:
-  # Headers in the same directory
-  # (e.g. "foo.hpp")
-  - Regex: '^"[^/]+\.h.*'
-    Priority: 1
+    # Headers in the same directory
+    # (e.g. "foo.hpp")
+    -   Regex: '^"[^/]+\.h.*'
+        Priority: 1
 
-  # Project subdirectory headers (e.g. "bar/bar.hpp")
-  - Regex: '^".+/[^/]+\.h.*"'
-    Priority: 2
+    # Project subdirectory headers (e.g. "bar/bar.hpp")
+    -   Regex: '^".+/[^/]+\.h.*"'
+        Priority: 2
 
-  # System library headers (e.g. <gtk/gtk.h>)
-  - Regex: '^<.+\.h.*'
-    Priority: 3
+    # System library headers (e.g. <gtk/gtk.h>)
+    -   Regex: '^<.+\.h.*'
+        Priority: 3
 
-  # Standard library headers (e.g. <vector>)
-  - Regex: "^<[[:alnum:].]+>"
-    Priority: 4
+    # Standard library headers (e.g. <vector>)
+    -   Regex: "^<[[:alnum:].]+>"
+        Priority: 4
