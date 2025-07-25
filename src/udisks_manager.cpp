@@ -19,6 +19,7 @@
 #include "udisks_manager.hpp"
 
 #include "udisks_filesystem.hpp"
+#include "udisks_globals.hpp"
 
 #include <sdbus-c++/Types.h>
 #include <sdbus-c++/sdbus-c++.h>
@@ -27,6 +28,7 @@
 #include <cstddef>
 #include <iostream>
 #include <map>
+#include <memory>
 #include <print>
 #include <vector>
 
@@ -46,10 +48,11 @@ void UdisksManager::onInterfacesAdded(
         interfaces_and_properties) {
   for (const auto& [interface, properties] : interfaces_and_properties) {
     if (interface == UdisksFilesystem::INTERFACE_NAME) {
-      // XXX(xlacroixx): is pre-existing key even a possibility?
-      filesystems_.try_emplace(
-          object_path,
-          UdisksFilesystem(getProxy().getConnection(), object_path));
+      // XXX(xlacroixx): is pre-existing key even a possibility, in case
+      // try_emplace inserts no key?
+      filesystems_.try_emplace(object_path,
+                               std::make_unique<UdisksFilesystem>(
+                                   getProxy().getConnection(), object_path));
     }
   }
 }

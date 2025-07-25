@@ -25,6 +25,7 @@
 #include <udisks-sdbus-c++/udisks_proxy.hpp>
 
 #include <map>
+#include <memory>
 #include <vector>
 
 namespace udisken {
@@ -52,10 +53,7 @@ class UdisksManager final
       const sdbus::ObjectPath& object_path,
       const std::vector<sdbus::InterfaceName>& interfaces) final;
 
-  static constexpr auto kInterfaceName = "org.freedesktop.UDisks2";
-  static constexpr auto kObjectPath = "/org/freedesktop/UDisks2";
-
-  std::map<sdbus::ObjectPath, UdisksFilesystem> filesystems_;
+  std::map<sdbus::ObjectPath, std::unique_ptr<UdisksFilesystem>> filesystems_{};
 };
 
 }  // namespace udisken

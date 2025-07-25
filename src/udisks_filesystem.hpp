@@ -19,13 +19,15 @@
 #ifndef UDISKEN_UDISKS_FILESYSTEM_HPP_
 #define UDISKEN_UDISKS_FILESYSTEM_HPP_
 
-#include "udisks_proxy.hpp"
+#include "udisks_globals.hpp"
 
 #include <sdbus-c++/IConnection.h>
 #include <sdbus-c++/ProxyInterfaces.h>
 #include <sdbus-c++/Types.h>
+#include <udisks-sdbus-c++/udisks_proxy.hpp>
 
 #include <string>
+#include <vector>
 
 namespace udisken {
 
@@ -35,7 +37,12 @@ class UdisksFilesystem final
     : public sdbus::ProxyInterfaces<udisks::Filesystem_proxy> {
  public:
   UdisksFilesystem(sdbus::IConnection& connection,
-                   const sdbus::ObjectPath& object_path);
+                   const sdbus::ObjectPath& object_path)
+      : ProxyInterfaces(connection, sdbus::ServiceName(kInterfaceName),
+                        object_path),
+        mount_paths_{Automount()} {
+    registerProxy();
+  }
 
   UdisksFilesystem(UdisksFilesystem&&) = delete;
   UdisksFilesystem(const UdisksFilesystem&) = delete;
@@ -45,10 +52,15 @@ class UdisksFilesystem final
   ~UdisksFilesystem() noexcept;
 
  private:
-  static constexpr auto kInterfaceName = "org.freedesktop.UDisks2";
+  // TODO(xlacroixx): check whether we are allowed to automount.
+  /// @brief Automount, if udisken is configured to do so.
+  ///
+  /// @return Path to the mount point after mounting, or nothing if the
+  /// filesystem is already mounted somewhere.
+  auto Automount() -> std::vector<std::string>;
 
-  // TODO(xlacroixx): should be public?
-  std::string mount_path_;
+  /// Guaranteed to have at least one path (element).
+  std::vector<std::string> mount_paths_{};
 };
 
 }  // namespace udisken

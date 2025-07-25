@@ -20,30 +20,10 @@
 
 #include <iostream>
 #include <print>
+#include <string>
+#include <vector>
 
 namespace udisken {
-
-// TODO(xlacroixx): refactor the mount + check into (member) function.
-UdisksFilesystem::UdisksFilesystem(sdbus::IConnection& connection,
-                                   const sdbus::ObjectPath& object_path)
-    : ProxyInterfaces(connection, sdbus::ServiceName(kInterfaceName),
-                      object_path) {
-  if (!MountPoints().empty()) {
-    // Mount points already exist, so no need to automount.
-
-    registerProxy();
-
-    return;
-  }
-
-  // TODO(xlacroixx): check whether we are allowed to automount.
-  mount_path_ = Mount({});
-
-  std::println(std::cerr, "Mounted {} at {}", getProxy().getObjectPath(),
-               mount_path_);
-
-  registerProxy();
-}
 
 // FIXME(xlacroixx): currently this destructor will fail if the device is busy.
 // To prevent that, we need to Unmount using the `force` option.
@@ -51,10 +31,30 @@ UdisksFilesystem::UdisksFilesystem(sdbus::IConnection& connection,
 UdisksFilesystem::~UdisksFilesystem() noexcept {
   Unmount({});
 
+  // TODO(xlacroixx): iterate over all mount points
   std::println(std::cerr, "Unmounted {} at {}", getProxy().getObjectPath(),
-               mount_path_);
+               mount_paths_[0]);
 
   unregisterProxy();
+}
+
+auto UdisksFilesystem::Automount() -> std::vector<std::string> {
+  // TODO(xlacroixx): re-enable the check.
+  // If mount points already exist, no need to automount it...
+  // TODO(xlacroixx): ...unless other paths are given to udisken and it should
+  // mount?)
+  // if (!MountPoints().empty()) {
+  //   return conversions::AAYToVectorString(MountPoints());
+  // }
+
+  const auto mount_path = Mount({});
+
+  // FIXME(xlacroixx): getObjectPath() returns a literal array of bytes. Convert
+  // that. See run.log in data/
+  std::println(std::cerr, "Mounted {} at {}", getProxy().getObjectPath(),
+               mount_path);
+
+  return {mount_path};
 }
 
 }  // namespace udisken
