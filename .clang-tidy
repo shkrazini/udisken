@@ -35,7 +35,9 @@ Checks: "
   -google-objc-*,
   "
 
-WarningsAsErrors: "*" # Hardcore mode.
+# Hardcore mode. All warnings should be fixed. Only in extreme cases should they
+# be modified, or disabled here.
+WarningsAsErrors: "*"
 
 # prettier-ignore
 CheckOptions:

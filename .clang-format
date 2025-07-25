@@ -9,6 +9,8 @@ DerivePointerAlignment: false
 PointerAlignment: Left
 QualifierAlignment: Left
 
+# Sort header inclusions from "user-code" (top-level) headers to system
+# (low-level) headers. Most reliably detects missing header inclusions.
 IncludeBlocks: Regroup
 IncludeCategories:
   # Headers in the same directory
