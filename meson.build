@@ -44,6 +44,10 @@ add_project_arguments(
   language: 'cpp',
 )
 
+if get_option('debug')
+  add_project_arguments('-D_GLIBCXX_DEBUG=1', language: 'cpp')
+endif
+
 libnotify_dep = dependency('libnotify', version: ['>=0.8.4'])
 sdbus_cpp_dep = dependency('sdbus-c++', version: ['>=2.1.0', '<3.0.0']) # SemVer
 # NOTE: probably not a hard dependency.
