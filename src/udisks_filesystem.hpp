@@ -42,7 +42,7 @@ class UdisksFilesystem final
   auto operator=(UdisksFilesystem&&) -> UdisksFilesystem& = delete;
   auto operator=(const UdisksFilesystem&) -> UdisksFilesystem& = delete;
 
-  ~UdisksFilesystem() noexcept;
+  ~UdisksFilesystem() noexcept { unregisterProxy(); }
 
  private:
   /// @brief Automount, if udisken is configured to do so.

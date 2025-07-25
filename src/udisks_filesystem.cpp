@@ -41,19 +41,6 @@ UdisksFilesystem::UdisksFilesystem(sdbus::IConnection& connection,
   registerProxy();
 }
 
-// FIXME(xlacroixx): currently this destructor will fail if the device is busy.
-// To prevent that, we need to Unmount using the `force` option.
-// Preferably, we need to unmount the filesystem outside of this destructor!
-UdisksFilesystem::~UdisksFilesystem() noexcept {
-  Unmount({});
-
-  // TODO(xlacroixx): iterate over all mount points
-  std::println(std::cerr, "Unmounted {} at {}", getProxy().getObjectPath(),
-               mount_paths_[0]);
-
-  unregisterProxy();
-}
-
 // TODO(xlacroixx): check whether we are allowed to automount.
 auto UdisksFilesystem::Automount() -> std::vector<std::string> {
   // If mount points already exist, no need to automount it...
