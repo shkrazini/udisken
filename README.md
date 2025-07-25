@@ -2,6 +2,41 @@
 
 An automounter that stays quite quiet.
 
+## Requires
+
+- [libnotify](https://gitlab.gnome.org/GNOME/libnotify) 0.8.4 or later
+- [sdbus-c++](https://github.com/Kistler-Group/sdbus-cpp) 2.1.0 or later
+- [UDisks](https://github.com/storaged-project/udisks) 2.10.0 or later
+
+## Install
+
+### Arch Linux User Repository (AUR)
+
+<!-- NOTE: not published yet so these links are fake. -->
+
+Available as [udisken](https://aur.archlinux.org/packages/udisken),
+[udisken-bin](https://aur.archlinux.org/packages/udisken-bin) (binary releases)
+or [udisken-git](https://aur.archlinux.org/packages/udisken-git)
+(development branch).
+
+```sh
+paru -S udisken
+# ...or...
+yay -S udisken
+# ...or...
+aurhelperx -S udisken
+```
+
+Dependencies are automatically taken care of. You can still install them with:
+
+```sh
+pacman -S --asdeps libnotify sdbus-cpp udisks2
+```
+
+## Building
+
+See [BUILDING.md](./docs/BUILDING.md).
+
 ## Nitpick
 
 > Why don't you just use `libudisks2` (yes that exists, nowhere mentioned on
