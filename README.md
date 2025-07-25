@@ -6,7 +6,7 @@ A Linux automounter that stays quite quiet.
 
 - [UDisks](https://github.com/storaged-project/udisks) 2.10.0 or later
 - [sdbus-c++](https://github.com/Kistler-Group/sdbus-cpp) 2.1.0 or later
-- [libnotify](https://gitlab.gnome.org/GNOME/libnotify) 0.8.4 or later
+- [spdlog](https://github.com/gabime/spdlog) (provided as subproject)
 
 ## Getting started
 

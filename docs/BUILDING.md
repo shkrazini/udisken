@@ -73,6 +73,7 @@ decide to update the interface file (maybe version it?).
 ```sh
 git clone https://codeberg.org/xlacroixx/udisken
 cd udisken
+meson wrap update-db
 meson setup build
 meson compile -C build
 ```

@@ -3,6 +3,8 @@ project(
   'cpp',
   version: '0.0.1',
   license: 'GPL-3.0-or-later',
+  # for WrapDB automatic dependency fallback
+  meson_version: '>=0.64.0',
   default_options: [
     # minimum: c++23
     'cpp_std=c++26',
@@ -66,6 +68,11 @@ sdbus_cpp_dep = dependency('sdbus-c++', version: ['>=2.1.0', '<3.0.0']) # SemVer
 # udisken will still need UDisks to perform any action, but this is clearly not
 # a build dependency. The dependency should be enforced in packages by distros.
 #udisks = dependency('udisks2', version: ['>=2.10.0', '<3.0.0']) # MAJOR (X.0.0) bumps
+# BUG(xlacroixx): werror=false does not work.
+# See <https://github.com/mesonbuild/meson/issues/13600>
+# NOTE(xlacroixx): CMake doesn't cause this issue.
+spdlog_proj = subproject('spdlog', default_options: 'werror=false')
+spdlog_dep = spdlog_proj.get_variable('spdlog_dep')
 
 udisks_sdbus_cpp_proj = subproject(
   'udisks-sdbus-c++',

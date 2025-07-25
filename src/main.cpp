@@ -19,18 +19,23 @@
 #include "managers.hpp"
 
 #include <sdbus-c++/IConnection.h>
+#include <spdlog/common.h>
+#include <spdlog/spdlog.h>
 
 #include <iostream>
-#include <print>
 
 // TODO(xlacroixx): make async event loop?
 auto main() -> int {
-  std::println("udisken {} - VERY WIP, WILL BREAK LOL!! ", UDISKEN_VERSION);
+#ifndef NDEBUG
+  spdlog::set_level(spdlog::level::debug);
+#endif  // !NDEBUG
+
+  spdlog::info("udisken - {}", UDISKEN_VERSION);
 
   const auto connection = sdbus::createSystemBusConnection();
 
   managers::UdisksManager manager{*connection};
-  std::println("Connected to UDisks2 version {} on D-Bus", manager.Version());
+  spdlog::info("Connected to UDisks2 version {} on D-Bus", manager.Version());
 
   managers::UdisksObjectManager object_manager{*connection};
 

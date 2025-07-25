@@ -25,9 +25,8 @@
 #include <sdbus-c++/IConnection.h>
 #include <sdbus-c++/ProxyInterfaces.h>
 #include <sdbus-c++/Types.h>
+#include <spdlog/spdlog.h>
 
-#include <iostream>
-#include <print>
 #include <string>
 #include <vector>
 
@@ -68,14 +67,14 @@ auto UdisksFilesystem::Automount() -> std::vector<std::string> {
   try {
     const auto mount_path = Mount({});
 
-    std::println(std::cerr, "Mounted {} at {}",
-                 getProxy().getObjectPath().c_str(), mount_path);
+    spdlog::info("Mounted {} at {}", getProxy().getObjectPath().c_str(),
+                 mount_path);
 
     return {mount_path};
   } catch (const sdbus::Error& e) {
     // TODO(xlacroixx): handle what we can, throw the rest.
-    std::println("Failed to automount: [{}] {}", e.getName().c_str(),
-                 e.getMessage());
+    spdlog::error("Failed to automount: ({});\n{}", e.getName().c_str(),
+                  e.getMessage());
 
     return {};
   }
