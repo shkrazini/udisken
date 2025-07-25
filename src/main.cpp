@@ -14,14 +14,23 @@
 // You should have received a copy of the GNU General Public License along
 // with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+#include "proxy.hpp"
+#include <sdbus-c++/Error.h>
+#include <sdbus-c++/IConnection.h>
+#include <sdbus-c++/Types.h>
 
-#include <sdbus-c++/sdbus-c++.h>
-
+#include <iostream>
 #include <print>
 
-namespace udisken {}  // namespace udisken
-
+// TODO(xlacroixx): make async event loop so we can test properly.
 auto main() -> int {
-  const auto* aaa{org::freedesktop::UDisks2::Block_proxy::INTERFACE_NAME};
-  std::println("Hello World: {}!", aaa);
+  std::println("udisken {} ", UDISKEN_VERSION);
+
+  const auto connection = sdbus::createSystemBusConnection();
+
+  // XXX(xlacroixx): need to send a message to UDisks in order to wake it up?
+  udisken::UdisksManager manager_proxy{*connection};
+
+  std::flush(std::cout);
+  connection->enterEventLoop();
 }
