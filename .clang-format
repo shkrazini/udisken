@@ -1,0 +1,11 @@
+BasedOnStyle: Google
+
+DerivePointerAlignment: false
+PointerAlignment: Left
+
+# Use "west const", most natural for novel programmers.
+# Leaving on "Leave" due to the warning on Clang-Format's documentation.
+QualifierAlignment: Leave
+
+IncludeBlocks: Preserve
+SortIncludes: Never
