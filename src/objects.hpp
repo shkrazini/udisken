@@ -33,22 +33,27 @@ class BlockDevice {
   /// Create a Block device that will take ownership of the unique_ptrs to
   /// the proxy interfaces.
   ///
-  /// Some automatic actions, such as automounting, will be executed.
-  ///
   /// Unique_ptrs passed to this constructor will be moved to!
-  BlockDevice(const sdbus::ObjectPath& object_path,
-              std::unique_ptr<interfaces::UdisksBlock> block,
-              std::unique_ptr<interfaces::UdisksFilesystem> filesystem);
+  BlockDevice(
+      const sdbus::ObjectPath& object_path,
+      std::unique_ptr<interfaces::UdisksBlock> block,
+      std::unique_ptr<interfaces::UdisksFilesystem> filesystem = nullptr,
+      std::unique_ptr<interfaces::UdisksLoop> loop = nullptr,
+      std::unique_ptr<interfaces::UdisksLoop> partition = nullptr);
 
  private:
   /// Object path, as found in /org/freedesktop/UDisks2/block_devices/.
   sdbus::ObjectPath object_path_;
   /// Corresponding Drive interface for this block device.
   // std::unique_ptr<UdisksDrive> drive;
-  /// Proxy to the Block interface of this block device object.
+  /// Proxy to the block interface of this block device object.
   std::unique_ptr<interfaces::UdisksBlock> block_;
-  /// Proxy to the Filesystem present on the block device.
+  /// Proxy to the filesystem present on the block device.
   std::unique_ptr<interfaces::UdisksFilesystem> filesystem_;
+  /// Proxy to the loop device on the block device.
+  std::unique_ptr<interfaces::UdisksLoop> loop_;
+  /// Proxy to the partition on the block device.
+  std::unique_ptr<interfaces::UdisksLoop> partition_;
 };
 
 #endif  // UDISKEN_OBJECTS_HPP_

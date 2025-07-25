@@ -23,6 +23,7 @@
 
 #include <sdbus-c++/Types.h>
 #include <spdlog/spdlog.h>
+#include <udisks-sdbus-c++/udisks_errors.hpp>
 
 #include <format>
 #include <memory>
@@ -34,22 +35,34 @@ namespace objects {
 BlockDevice::BlockDevice(
     const sdbus::ObjectPath& object_path,
     std::unique_ptr<interfaces::UdisksBlock> block,
-    std::unique_ptr<interfaces::UdisksFilesystem> filesystem)
-    : object_path_{object_path},
-      block_{std::move(block)},
-      filesystem_{std::move(filesystem)} {
+    std::unique_ptr<interfaces::UdisksFilesystem> filesystem,
+    std::unique_ptr<interfaces::UdisksLoop> loop,
+    std::unique_ptr<interfaces::UdisksLoop> partition)
+    : block_{std::move(block)},
+      filesystem_{std::move(filesystem)},
+      loop_{std::move(loop)},
+      partition_{std::move(partition)} {
+  if (!filesystem_) {
+    spdlog::info("Not automounting {}: block device has no filesystem",
+                 object_path.c_str());
+    return;
+  }
+
   if (block_->HintAuto()) {
-    if (auto mnt_point = filesystem_->Automount(); mnt_point.has_value()) {
+    if (auto mnt_point = Automount(*filesystem_); mnt_point.has_value()) {
       spdlog::info("Automounted {}", *mnt_point);
       utils::Notification notif{
           .summary = "Mounted disk",
           .body = std::format("{} at {}", block_->HintName(), *mnt_point),
           .icon = "drive-removable-media"};
       utils::Notify(notif);
-    }
-  }
 
-  spdlog::debug("Got hint to not automount {}", object_path_.c_str());
+      return;
+    }
+
+    spdlog::debug("Not automounting {}: automount hint was false",
+                  object_path_.c_str());
+  }
 }
 
 }  // namespace objects

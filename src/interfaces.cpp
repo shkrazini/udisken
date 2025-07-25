@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License along
 // with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-/// Interface proxies with some automatic methods executed.
+/// Interfaces proxies and functions acting upon them.
 
 #include "interfaces.hpp"
 
@@ -29,10 +29,18 @@
 #include <spdlog/spdlog.h>
 #include <udisks-sdbus-c++/udisks_errors.hpp>
 
-#include <algorithm>
-#include <optional>
 #include <string>
-#include <vector>
+
+namespace {
+
+void PrintMountPoints(std::span<const std::string> mount_points) {
+  spdlog::debug("Current mount points:");
+  for (const auto& current_mnt_points : mount_points) {
+    spdlog::debug("- {}", current_mnt_points);
+  }
+}
+
+}  // namespace
 
 namespace interfaces {
 
@@ -55,32 +63,25 @@ UdisksFilesystem::UdisksFilesystem(sdbus::IConnection& connection,
   registerProxy();
 }
 
-auto UdisksFilesystem::Automount() -> std::optional<std::string> {
+UdisksPartition::UdisksPartition(sdbus::IConnection& connection,
+                                 const sdbus::ObjectPath& objectPath)
+    : ProxyInterfaces<Partition_proxy>(connection, globals::kServiceName,
+                                       objectPath) {}
+
+auto Automount(interfaces::UdisksFilesystem& fs) -> std::optional<std::string> {
   // If mount points already exist, no need to automount it...
   // TODO(blackma9ick): ...unless other paths are given to UDISKEN and it
   // should mount?)
-  if (!MountPoints().empty()) {
-    mount_points_ = conversions::ConvertArrayArrayByte(MountPoints());
-
+  if (!fs.MountPoints().empty()) {
     return std::nullopt;
   }
 
+  auto mount_points = conversions::ConvertArrayArrayByte(fs.MountPoints());
+
   try {
-    auto mnt_point = Mount({});
+    auto mnt_point = fs.Mount({});
 
-    if (std::ranges::find(mount_points_, mnt_point) != mount_points_.end()) {
-      spdlog::warn(
-          "UDisks succesfully mounted, but it already had a "
-          "mount point");
-
-      return std::nullopt;
-    }
-
-    mount_points_.push_back(mnt_point);
-    spdlog::debug("Current mount points:");
-    for (const auto& current_mnt_points : mount_points_) {
-      spdlog::debug("- {}", current_mnt_points);
-    }
+    PrintMountPoints(mount_points);
 
     return mnt_point;
   } catch (const sdbus::Error& e) {
@@ -90,16 +91,10 @@ auto UdisksFilesystem::Automount() -> std::optional<std::string> {
       // Should have been caught at the guard at the beginning
       // of the function, so this is weird.
 
-      mount_points_ = conversions::ConvertArrayArrayByte(MountPoints());
-
       spdlog::warn(
-          "{} is already mounted but UDisks initially "
-          "returned no mount "
-          "paths;\nMount paths after asking again:",
-          getProxy().getObjectPath().c_str());
-      for (const auto& mount_point : mount_points_) {
-        spdlog::warn("- {}", mount_point);
-      }
+          "{} is already mounted but UDisks initially returned no mount paths;",
+          fs.getProxy().getObjectPath().c_str());
+      PrintMountPoints(mount_points);
 
       return std::nullopt;
     }
@@ -116,6 +111,6 @@ auto UdisksFilesystem::Automount() -> std::optional<std::string> {
 // TEST(blackma9ick): constructing an UdisksFilesystem mounts the filesystem, if
 // automounting is enabled; do not fail if filesystem is already mounted (e.g.
 // by user)
-// TEST(blackma9ick): destructing an UdisksFilesystem unmounts the filesystem, if
-// automounting if enabled; do not fail if filesystem is already unmounted (e.g.
-// by external program).
+// TEST(blackma9ick): destructing an UdisksFilesystem unmounts the filesystem,
+// if automounting if enabled; do not fail if filesystem is already unmounted
+// (e.g. by external program).

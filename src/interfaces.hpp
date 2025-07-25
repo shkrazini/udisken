@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License along
 // with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-/// Interfaces proxies with some automatic methods executed.
+/// Interfaces proxies and functions acting upon them.
 
 #ifndef UDISKEN_INTERFACES_HPP_
 #define UDISKEN_INTERFACES_HPP_
@@ -24,7 +24,6 @@
 #include <sdbus-c++/Types.h>
 #include <udisks-sdbus-c++/udisks_proxy.hpp>
 
-#include <optional>
 #include <string>
 #include <vector>
 
@@ -32,6 +31,9 @@ namespace interfaces {
 
 namespace udisks = org::freedesktop::UDisks2;
 
+/// Proxy to a UDisks block interface.
+///
+/// @ref UdisksBlockDevice always implements this interface.
 class UdisksBlock final : public sdbus::ProxyInterfaces<udisks::Block_proxy> {
  public:
   UdisksBlock(sdbus::IConnection& connection,
@@ -47,6 +49,7 @@ class UdisksBlock final : public sdbus::ProxyInterfaces<udisks::Block_proxy> {
  private:
 };
 
+/// Proxy to a UDisks disk drive interface.
 class UdisksDrive final : public sdbus::ProxyInterfaces<udisks::Drive_proxy> {
  public:
   UdisksDrive(sdbus::IConnection& connection,
@@ -62,8 +65,10 @@ class UdisksDrive final : public sdbus::ProxyInterfaces<udisks::Drive_proxy> {
  private:
 };
 
-/// Proxy to a UDisks Filesystem interface. Keep track of a filesystem and
-/// (automatically) execute actions on it, e.g., automounting.
+/// Proxy to a UDisks mountable filesystem interface, contained in a @ref
+/// UdisksBlockDevice.
+///
+/// @ref UdisksBlockDevice may implement this interface.
 class UdisksFilesystem final
     : public sdbus::ProxyInterfaces<udisks::Filesystem_proxy> {
  public:
@@ -83,21 +88,52 @@ class UdisksFilesystem final
 
   ~UdisksFilesystem() noexcept { unregisterProxy(); }
 
-  /// Automount, TODO(blackma9ick): if UDISKEN is configured to do so.
-  ///
-  /// @return Path to mount point after mounting, or nothing if the
-  /// filesystem is already mounted somewhere. mount_paths_ (private) may
-  /// contain multiple paths before or after mounting.
-  ///
-  /// @throws sdbus::Error Error returned by UDisks if automounting
-  /// failed. Does not throw if filesystem is already mounted somewhere.
-  auto Automount() -> std::optional<std::string>;
-
  private:
   /// List of mount paths for this filesystem.
   /// Can be empty, if UDISKEN cannot or will not mount this filesystem.
   std::vector<std::string> mount_points_;
 };
+
+/// Proxy to a UDisks loop device interface.
+///
+/// @ref UdisksBlockDevice may implement this interface.
+class UdisksLoop : public sdbus::ProxyInterfaces<udisks::Loop_proxy> {
+ public:
+  UdisksLoop(sdbus::IConnection& connection,
+             const sdbus::ObjectPath& objectPath);
+
+  UdisksLoop(UdisksLoop&&) = delete;
+  UdisksLoop(const UdisksLoop&) = delete;
+  auto operator=(UdisksLoop&&) -> UdisksLoop& = delete;
+  auto operator=(const UdisksLoop&) -> UdisksLoop& = delete;
+
+  ~UdisksLoop() noexcept { unregisterProxy(); }
+};
+
+/// Proxy to a UDisks partition interface.
+///
+/// @ref UdisksBlockDevice may implement this interface.
+class UdisksPartition : public sdbus::ProxyInterfaces<udisks::Partition_proxy> {
+ public:
+  UdisksPartition(sdbus::IConnection& connection,
+                  const sdbus::ObjectPath& objectPath);
+
+  UdisksPartition(UdisksPartition&&) = delete;
+  UdisksPartition(const UdisksPartition&) = delete;
+  auto operator=(UdisksPartition&&) -> UdisksPartition& = delete;
+  auto operator=(const UdisksPartition&) -> UdisksPartition& = delete;
+
+  ~UdisksPartition() noexcept { unregisterProxy(); }
+};
+
+/// Automount, TODO(blackma9ick): if UDISKEN is configured to do so.
+///
+/// @return Path to mount point after mounting, or nothing if the
+/// filesystem is already mounted somewhere.
+///
+/// @throws sdbus::Error Error returned by UDisks if automounting
+/// failed. Does not throw if filesystem is already mounted somewhere.
+auto Automount(interfaces::UdisksFilesystem& fs) -> std::optional<std::string>;
 
 }  // namespace interfaces
 
