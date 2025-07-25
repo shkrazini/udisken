@@ -13,3 +13,25 @@
 //
 // You should have received a copy of the GNU General Public License along
 // with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+/// Concrete objects implementing many UDisks interfaces.
+
+#include "proxies.hpp"
+
+#include <memory>
+
+namespace objects {
+
+/// Block device object, upon which most udisken actions take effect.
+struct BlockDevice {
+  /// Object path, as found in /org/freedesktop/UDisks2/block_devices/.
+  sdbus::ObjectPath object_path;
+  /// Corresponding Drive interface for this block device.
+  // std::unique_ptr<UdisksDrive> drive;
+  /// Proxy to the Block interface of this block device object.
+  std::unique_ptr<proxies::UdisksBlock> block;
+  /// Proxy to the Filesystem present on the block device.
+  std::unique_ptr<proxies::UdisksFilesystem> filesystem;
+};
+
+}  // namespace objects

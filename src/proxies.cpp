@@ -14,9 +14,9 @@
 // You should have received a copy of the GNU General Public License along
 // with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-/// Filesystem proxy and associated actions, e.g. automounting.
+/// Proxies with some automatic methods executed.
 
-#include "filesystem.hpp"
+#include "proxies.hpp"
 
 #include "conversions.hpp"
 #include "globals.hpp"
@@ -32,6 +32,20 @@
 #include <vector>
 
 namespace proxies {
+
+UdisksBlock::UdisksBlock(sdbus::IConnection& connection,
+                         const sdbus::ObjectPath& object_path)
+    : ProxyInterfaces(connection, sdbus::ServiceName{globals::kInterfaceName},
+                      object_path) {
+  registerProxy();
+}
+
+UdisksDrive::UdisksDrive(sdbus::IConnection& connection,
+                         const sdbus::ObjectPath& object_path)
+    : ProxyInterfaces(connection, sdbus::ServiceName(globals::kInterfaceName),
+                      object_path) {
+  registerProxy();
+}
 
 UdisksFilesystem::UdisksFilesystem(sdbus::IConnection& connection,
                                    const sdbus::ObjectPath& object_path)
@@ -56,8 +70,8 @@ auto UdisksFilesystem::Automount() -> std::vector<std::string> {
                  getProxy().getObjectPath().c_str(), mount_path);
 
     return {mount_path};
-  } catch (const sdbus::Error&
-               e) {  // TODO(xlacroixx): handle what we can, throw the rest.
+  } catch (const sdbus::Error& e) {
+    // TODO(xlacroixx): handle what we can, throw the rest.
     std::println("Failed to automount: [{}] {}", e.getName().c_str(),
                  e.getMessage());
 

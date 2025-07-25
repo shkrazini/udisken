@@ -18,19 +18,17 @@
 
 #include "manager.hpp"
 
-#include "drive.hpp"
-#include "filesystem.hpp"
 #include "globals.hpp"
+#include "proxies.hpp"
 
 #include <sdbus-c++/IConnection.h>
 #include <sdbus-c++/ProxyInterfaces.h>
 #include <sdbus-c++/Types.h>
 
-#include <cstddef>
-#include <iostream>
 #include <map>
 #include <memory>
 #include <print>
+#include <utility>
 #include <vector>
 
 namespace proxies {
@@ -50,33 +48,32 @@ void UdisksManager::onInterfacesAdded(
     const std::map<sdbus::InterfaceName,
                    std::map<sdbus::PropertyName, sdbus::Variant>>&
         interfaces_and_properties) {
-  // TODO(xlacroixx): debug log
-  std::println("Object {}", object_path.c_str());
+  std::println("Interfaces added for object {}", object_path.c_str());
+
+  objects::BlockDevice blk_device{};
+
   for (const auto& [interface, properties] : interfaces_and_properties) {
     std::println("- {}", interface.c_str());
-    for (const auto& [member_name, value] : properties) {
-      std::println("\t{}: {}", member_name.c_str(), value.peekValueType());
+
+    if (interface == UdisksBlock::INTERFACE_NAME) {
+      blk_device.block = std::make_unique<UdisksBlock>(
+          getProxy().getConnection(), object_path);
+    } else if (interface == UdisksFilesystem::INTERFACE_NAME) {
+      blk_device.filesystem = std::make_unique<UdisksFilesystem>(
+          getProxy().getConnection(), object_path);
     }
+  }
+
+  if (blk_device.block != nullptr && blk_device.filesystem != nullptr) {
+    block_devices_.try_emplace(object_path, std::move(blk_device));
   }
 }
 
 void UdisksManager::onInterfacesRemoved(
-    const sdbus::ObjectPath& object_path,
-    const std::vector<sdbus::InterfaceName>& interfaces) {
-  for (const auto& interface : interfaces) {
-    if (interface == UdisksFilesystem::INTERFACE_NAME) {
-      // Such filesystem may have disappeared without being unmounted, either by
-      // udisken or an external source. Unfortunately there is no way to check
-      // this.
-      //
-      // Erases no key if udisken unmounted the filesystem.
-      auto keys_erased = filesystems_.erase(object_path);
-
-      if (keys_erased >= 1) {
-        std::println(std::cerr, "{} disappeared", object_path);
-      }
-    }
-  }
+    [[maybe_unused]] const sdbus::ObjectPath& object_path,
+    [[maybe_unused]] const std::vector<sdbus::InterfaceName>& interfaces) {
+  // for (const auto& interface : interfaces) {
+  // }
 }
 
 }  // namespace proxies

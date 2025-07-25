@@ -1,9 +1,8 @@
 udisken_sources = [
   'conversions.cpp',
   'main.cpp',
-  'drive.cpp',
-  'filesystem.cpp',
   'manager.cpp',
+  'proxies.cpp',
 ]
 
 executable(

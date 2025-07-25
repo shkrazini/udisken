@@ -7,7 +7,7 @@
   represents:
 
   - a block device (`block_devices/`), with one `Block` interface and zero or
-    more of its `Filesystem` interfaces
+    one `Filesystem` interfaces
   - a drive device, linked to the block device, and one `Device` interface.
 
 - [ ] Cleanup headers!!!!!!!!!!!!!!

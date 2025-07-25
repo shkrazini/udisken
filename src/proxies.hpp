@@ -14,10 +14,10 @@
 // You should have received a copy of the GNU General Public License along
 // with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-/// Filesystem proxy and associated actions, e.g. automounting.
+/// Proxies with some automatic methods executed.
 
-#ifndef UDISKEN_FILESYSTEM_HPP_
-#define UDISKEN_FILESYSTEM_HPP_
+#ifndef UDISKEN_PROXIES_HPP_
+#define UDISKEN_PROXIES_HPP_
 
 #include <sdbus-c++/IConnection.h>
 #include <sdbus-c++/ProxyInterfaces.h>
@@ -30,6 +30,36 @@
 namespace proxies {
 
 namespace udisks = org::freedesktop::UDisks2;
+
+class UdisksBlock final : public sdbus::ProxyInterfaces<udisks::Block_proxy> {
+ public:
+  UdisksBlock(sdbus::IConnection& connection,
+              const sdbus::ObjectPath& object_path);
+
+  UdisksBlock(UdisksBlock&&) = delete;
+  UdisksBlock(const UdisksBlock&) = delete;
+  auto operator=(UdisksBlock&&) -> UdisksBlock& = delete;
+  auto operator=(const UdisksBlock&) -> UdisksBlock& = delete;
+
+  ~UdisksBlock() noexcept { unregisterProxy(); };
+
+ private:
+};
+
+class UdisksDrive final : public sdbus::ProxyInterfaces<udisks::Drive_proxy> {
+ public:
+  UdisksDrive(sdbus::IConnection& connection,
+              const sdbus::ObjectPath& object_path);
+
+  UdisksDrive(const UdisksDrive&) = delete;
+  UdisksDrive(UdisksDrive&&) = delete;
+  auto operator=(const UdisksDrive&) -> UdisksDrive& = delete;
+  auto operator=(UdisksDrive&&) -> UdisksDrive& = delete;
+
+  ~UdisksDrive() noexcept { unregisterProxy(); }
+
+ private:
+};
 
 /// Proxy to a UDisks Filesystem interface. Keep track of a filesystem and
 /// (automatically) execute actions on it, e.g., automounting.
@@ -66,4 +96,4 @@ class UdisksFilesystem final
 
 }  // namespace proxies
 
-#endif  // UDISKEN_FILESYSTEM_HPP_
+#endif  // UDISKEN_PROXIES_HPP_
