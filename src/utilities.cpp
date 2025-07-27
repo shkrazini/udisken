@@ -18,6 +18,13 @@
 
 #include "utilities.hpp"
 
+#include <sdbus-c++/Types.h>
+
+#include <cstdint>
+#include <ranges>
+#include <string>
+#include <vector>
+
 #ifdef FEATURE_NOTIFY
 #include "spdlog/spdlog.h"
 
@@ -48,3 +55,16 @@ auto Notify([[maybe_unused]] const Notification& notification) -> bool {
 }
 
 }  // namespace utils
+
+namespace conversions {
+
+// TEST(blackma9ick): convert sample data.
+auto ConvertArrayArrayByte(const std::vector<std::vector<uint8_t>>& aay)
+    -> std::vector<std::string> {
+  return aay | std::views::transform([](const auto& vec) {
+           return std::string{std::from_range, vec};
+         }) |
+         std::ranges::to<std::vector<std::string>>();
+}
+
+}  // namespace conversions

@@ -18,8 +18,8 @@
 
 #include "interfaces.hpp"
 
-#include "conversions.hpp"
 #include "globals.hpp"
+#include "utilities.hpp"
 
 #include <libnotify/notification.h>
 #include <sdbus-c++/Error.h>

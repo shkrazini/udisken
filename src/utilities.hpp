@@ -19,7 +19,11 @@
 #ifndef UDISKEN_UTILITIES_HPP_
 #define UDISKEN_UTILITIES_HPP_
 
+#include <sdbus-c++/Types.h>
+
+#include <cstdint>
 #include <string>
+#include <vector>
 
 namespace utils {
 
@@ -40,5 +44,17 @@ struct Notification {
 auto Notify(const Notification& notification) -> bool;
 
 }  // namespace utils
+
+namespace conversions {
+
+/// Converts an array of array of bytes (D-Bus equivalent type: a{a{y}})
+/// to a vector of strings.
+///
+/// @param aay The array of array of bytes.
+[[nodiscard("Creates moved-to converted vector")]]
+auto ConvertArrayArrayByte(const std::vector<std::vector<uint8_t>>& aay)
+    -> std::vector<std::string>;
+
+}  // namespace conversions
 
 #endif  // UDISKEN_UTILITIES_HPP_
