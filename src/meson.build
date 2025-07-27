@@ -10,7 +10,6 @@ executable(
 	'udisken',
 	udisken_sources,
 	dependencies : [
-		glib_dep,
 		libnotify_dep,
 		sdbus_cpp_dep,
 		spdlog_dep,
