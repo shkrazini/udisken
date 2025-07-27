@@ -3,8 +3,7 @@ project(
   'cpp',
   version: '0.0.1',
   license: 'GPL-3.0-or-later',
-  # for WrapDB automatic dependency fallback
-  meson_version: '>=0.64.0',
+  meson_version: '>=1.1.0',
   default_options: [
     # minimum: c++23
     'cpp_std=c++23',
