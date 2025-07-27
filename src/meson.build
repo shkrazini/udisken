@@ -1,5 +1,4 @@
 udisken_sources = [
-	'conversions.cpp',
 	'main.cpp',
 	'managers.cpp',
 	'objects.cpp',
