@@ -53,6 +53,10 @@ sdbus_cpp_dep = dependency('sdbus-c++', version : ['>=2.1.0', '<3.0.0']) # SemVe
 
 # BUG(blackma9ick): werror=false does not work.
 # See <https://github.com/mesonbuild/meson/issues/13600>
+
+argparse_proj = subproject('argparse', default_options : 'werror=false')
+argparse_dep = argparse_proj.get_variable('argparse_dep')
+
 spdlog_proj = subproject('spdlog', default_options : 'werror=false')
 spdlog_dep = spdlog_proj.get_variable('spdlog_dep')
 
