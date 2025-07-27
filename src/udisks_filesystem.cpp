@@ -52,10 +52,8 @@ auto UdisksFilesystem::Automount() -> std::vector<std::string> {
   try {
     const auto mount_path = Mount({});
 
-  // FIXME(xlacroixx): getObjectPath() returns a literal array of bytes. Convert
-  // that. See run.log in data/
-  std::println(std::cerr, "Mounted {} at {}", getProxy().getObjectPath(),
-               mount_path);
+    std::println(std::cerr, "Mounted {} at {}",
+                 getProxy().getObjectPath().c_str(), mount_path);
 
     return {mount_path};
   } catch (const sdbus::Error&
