@@ -23,9 +23,6 @@ Finally, using [mold] as linker is
 
 ### UDisks D-Bus API bindings
 
-Laborious, but not much other choice. Ideally UDisks would provide the bindings
-by itself.
-
 You absolutely need to have
 [sdbus-cpp](https://github.com/Kistler-Group/sdbus-cpp) installed, which
 provides the `sdbus-c++-xml2cpp` program required for this step.
@@ -43,26 +40,8 @@ provides the `sdbus-c++-xml2cpp` program required for this step.
    The file's location may vary depending on your distribution.
    - In the [UDisks upstream repository], it is located at
      [data/org.freedesktop.UDisks2.xml]
-
-#### Discussion detail about retrieving the interface file
-
-Feel free to ignore.
-
-We need to easily obtain the IDL file describing UDisks's D-Bus API,
-but the solutions are only less than ideal:
-
-1. Read the interface file on a common path, and if it fails, bail out
-   gracefully.
-2. Build UDisks in our project and retrieve the interface file from there.
-3. Call quits, and copy-paste the interface file manually occasionally like a
-   caveman... Could at least subscribe to news and changes on UDisks's repo.
-
-Even if we find a solution still, how do we keep track of (breaking) changes
-between interface file updates? No obvious solution exists, so we should only
-manually update the file from time to time.
-
-This is what we'll do: keep track of changes in UDisks's D-Bus API, and
-decide to update the interface file (maybe version it?).
+   - Alternatively, you may change the file location in the root project
+     `meson.build`
 
 ## Build
 
