@@ -17,6 +17,7 @@
 #include "proxy.hpp"
 
 #include "filesystem_proxy.hpp"
+
 #include <sdbus-c++/Types.h>
 #include <sdbus-c++/sdbus-c++.h>
 #include <udisks-sdbus-c++/udisks_proxy.hpp>

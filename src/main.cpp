@@ -15,6 +15,7 @@
 // with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "proxy.hpp"
+
 #include <sdbus-c++/Error.h>
 #include <sdbus-c++/IConnection.h>
 #include <sdbus-c++/Types.h>

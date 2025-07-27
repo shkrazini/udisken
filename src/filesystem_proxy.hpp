@@ -20,6 +20,7 @@
 #define UDISKEN_FILESYSTEM_PROXY_HPP_
 
 #include "udisks_proxy.hpp"
+
 #include <sdbus-c++/IConnection.h>
 #include <sdbus-c++/ProxyInterfaces.h>
 #include <sdbus-c++/Types.h>
