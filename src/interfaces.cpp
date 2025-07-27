@@ -27,8 +27,6 @@
 #include <sdbus-c++/ProxyInterfaces.h>
 #include <sdbus-c++/Types.h>
 #include <spdlog/spdlog.h>
-#include <udisks-sdbus-c++/udisks_errors.hpp>
-
 
 namespace interfaces {
 

@@ -58,8 +58,7 @@ auto Automount(interfaces::UdisksFilesystem& fs) -> std::optional<std::string> {
     return mnt_point;
   } catch (const sdbus::Error& e) {
     if (e.getName() ==
-        std::get<udisks::UdisksErrors::kUdisksErrorAlreadyMounted>(
-            udisks::udisks_error_names)) {
+        udisks::ErrorName(udisks::UdisksErrors::kUdisksErrorAlreadyMounted)) {
       spdlog::warn(
           "{} is already mounted but UDisks initially returned no mount paths;",
           fs.getProxy().getObjectPath().c_str());
