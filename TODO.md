@@ -13,7 +13,8 @@ Post-study of udiskie:
 
 - [x] Automount removable media
 - [x] Notifications
-- [ ] Loop devices (mounting iso archives)
+- [x] Loop devices (mounting iso archives)
+      Basically already handled by existing automount logic.
 - [ ] Command line tools for manual un-/mounting
 - [ ] Autolaunch or execute action upon disk connect/mounting (using D-Bus
       activation)
@@ -21,6 +22,7 @@ Post-study of udiskie:
 - [ ] LUKS encrypted devices
 - [ ] Password caching (requires python keyutils 0.3)
 - [ ] Tray icon
+- [ ] Shell completion (Zsh, Fish, Bash)
 
 Most features taken from udiskie.
 
