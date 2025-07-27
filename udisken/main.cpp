@@ -31,12 +31,10 @@ auto main() -> int {
     spdlog::set_level(spdlog::level::debug);
   }
 
-  spdlog::info("UDISKEN - {} - GPLv3", UDISKEN_VERSION);
-
   const auto connection = sdbus::createSystemBusConnection();
 
   managers::UdisksManager mgr{*connection};
-  spdlog::info("Connected to UDisks version {} on D-Bus", mgr.Version());
+  spdlog::debug("Connected to UDisks version {} on D-Bus", mgr.Version());
 
   managers::UdisksObjectManager object_mgr{*connection};
 }
