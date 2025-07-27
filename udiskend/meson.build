@@ -2,7 +2,6 @@ executable(
 	'udiskend',
 	'main.cpp',
 	dependencies : [
-		glib_dep,
 		libnotify_dep,
 		sdbus_cpp_dep,
 		spdlog_dep,

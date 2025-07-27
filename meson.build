@@ -50,7 +50,6 @@ if get_option('debug')
 	add_project_arguments('-D_GLIBCXX_DEBUG=1', language : 'cpp')
 endif
 
-glib_dep = dependency('glib-2.0', version : ['>=2.84.0', '<3.0.0'])
 sdbus_cpp_dep = dependency('sdbus-c++', version : ['>=2.1.0', '<3.0.0']) # SemVer
 
 # BUG(blackma9ick): werror=false does not work.

@@ -28,7 +28,6 @@
 #ifdef FEATURE_NOTIFY
 #include "spdlog/spdlog.h"
 
-#include <glib.h>
 #include <libnotify/notification.h>
 
 #include <memory>
@@ -43,7 +42,7 @@ auto Notify([[maybe_unused]] const Notification& notification) -> bool {
       notification.summary.c_str(), notification.body.c_str(),
       notification.icon.c_str()));
 
-  auto shown = notify_notification_show(notif.get(), nullptr) == FALSE;
+  auto shown = notify_notification_show(notif.get(), nullptr) == 0;
   if (!shown) {
     spdlog::warn("Failed to show notification");
   }

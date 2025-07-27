@@ -11,7 +11,6 @@ common_lib = library(
 	'udisken-common',
 	common_sources,
 	dependencies : [
-		glib_dep,
 		libnotify_dep,
 		sdbus_cpp_dep,
 		spdlog_dep,

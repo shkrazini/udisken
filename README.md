@@ -22,7 +22,6 @@ Low on memory usage, lightweight footprint, fast.
 - [UDisks](https://github.com/storaged-project/udisks) 2.10.0 or later
 - [libnotify](https://gitlab.gnome.org/GNOME/libnotify) 0.8.0 or later
   (optional)
-- [glib2](https://www.gtk.org/) 2.84.0 or later (only for building)
 - [spdlog](https://github.com/gabime/spdlog) (provided as subproject)
 
 ## Getting started

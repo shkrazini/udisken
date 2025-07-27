@@ -27,7 +27,6 @@
 #include <udisks-sdbus-c++/udisks_proxy.hpp>
 
 #ifdef FEATURE_NOTIFY
-#include <glib.h>
 #include <libnotify/notify.h>
 
 #include <cstdlib>
@@ -42,7 +41,7 @@ auto main() -> int {
   spdlog::info("UDISKEN - {} - GPLv3", UDISKEN_VERSION);
 
 #ifdef FEATURE_NOTIFY
-  if (notify_init(globals::kAppName) == FALSE) {
+  if (notify_init(globals::kAppName) == 0) {
     spdlog::critical("libnotify initialization failed!");
 
     return EXIT_FAILURE;
