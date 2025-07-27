@@ -25,7 +25,7 @@
 #include <string>
 #include <vector>
 
-namespace udisken::conversions {
+namespace conversions {
 
 /// Converts an array of array of bytes (D-Bus equivalent type: a{a{y}})
 /// to a vector of strings.
@@ -35,6 +35,6 @@ namespace udisken::conversions {
 auto ConvertArrayArrayByte(const std::vector<std::vector<uint8_t>>& aay)
     -> std::vector<std::string>;
 
-}  // namespace udisken::conversions
+}  // namespace conversions
 
 #endif  // UDISKEN_CONVERSIONS_HPP_

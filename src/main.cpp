@@ -30,7 +30,8 @@ auto main() -> int {
 
   const auto connection = sdbus::createSystemBusConnection();
 
-  udisken::UdisksManager manager_proxy{*connection};
+  proxies::UdisksManager manager_proxy{*connection};
+  // std::println("Connected to UDisks2 version {}", );
 
   std::flush(std::cout);
   connection->enterEventLoop();

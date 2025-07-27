@@ -31,7 +31,7 @@
 #include <memory>
 #include <vector>
 
-namespace udisken {
+namespace proxies {
 
 /// Bridges the UDisks ObjectManager and interfaces.
 class UdisksManager final
@@ -68,6 +68,6 @@ class UdisksManager final
   std::map<sdbus::ObjectPath, std::unique_ptr<UdisksFilesystem>> filesystems_{};
 };
 
-}  // namespace udisken
+}  // namespace proxies
 
 #endif  // UDISKEN_UDISKS_MANAGER_HPP_

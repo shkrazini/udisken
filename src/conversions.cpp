@@ -25,7 +25,7 @@
 #include <string>
 #include <vector>
 
-namespace udisken::conversions {
+namespace conversions {
 
 // TODO(xlacroixx): pass by rvalue-reference and require std::move at call site.
 // TEST(xlacroixx): convert sample data.
@@ -37,4 +37,4 @@ auto ConvertArrayArrayByte(const std::vector<std::vector<uint8_t>>& aay)
          std::ranges::to<std::vector<std::string>>();
 }
 
-}  // namespace udisken::conversions
+}  // namespace conversions

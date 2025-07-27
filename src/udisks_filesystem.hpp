@@ -27,7 +27,7 @@
 #include <string>
 #include <vector>
 
-namespace udisken {
+namespace proxies {
 
 namespace udisks = org::freedesktop::UDisks2;
 
@@ -64,6 +64,6 @@ class UdisksFilesystem final
   std::vector<std::string> mount_paths_{};
 };
 
-}  // namespace udisken
+}  // namespace proxies
 
 #endif  // UDISKEN_UDISKS_FILESYSTEM_HPP_

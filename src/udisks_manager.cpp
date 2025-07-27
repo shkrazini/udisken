@@ -33,11 +33,11 @@
 #include <print>
 #include <vector>
 
-namespace udisken {
+namespace proxies {
 
 UdisksManager::UdisksManager(sdbus::IConnection& connection)
-    : ProxyInterfaces(connection, sdbus::ServiceName{kInterfaceName},
-                      sdbus::ObjectPath{kObjectPath}) {
+    : ProxyInterfaces(connection, sdbus::ServiceName{globals::kInterfaceName},
+                      sdbus::ObjectPath{globals::kObjectPath}) {
   for (auto managed_objects = GetManagedObjects();
        const auto& [object_path, interfaces_and_properties] : managed_objects) {
     onInterfacesAdded(object_path, interfaces_and_properties);
@@ -79,4 +79,4 @@ void UdisksManager::onInterfacesRemoved(
   }
 }
 
-}  // namespace udisken
+}  // namespace proxies

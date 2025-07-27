@@ -19,11 +19,11 @@
 #ifndef UDISKEN_UDISKS_GLOBALS_HPP_
 #define UDISKEN_UDISKS_GLOBALS_HPP_
 
-namespace udisken {
+namespace globals {
 
 static constexpr auto kInterfaceName = "org.freedesktop.UDisks2";
 static constexpr auto kObjectPath = "/org/freedesktop/UDisks2";
 
-}  // namespace udisken
+}  // namespace globals
 
 #endif  // UDISKEN_UDISKS_GLOBALS_HPP_

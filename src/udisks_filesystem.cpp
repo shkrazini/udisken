@@ -31,11 +31,11 @@
 #include <string>
 #include <vector>
 
-namespace udisken {
+namespace proxies {
 
 UdisksFilesystem::UdisksFilesystem(sdbus::IConnection& connection,
                                    const sdbus::ObjectPath& object_path)
-    : ProxyInterfaces(connection, sdbus::ServiceName(kInterfaceName),
+    : ProxyInterfaces(connection, sdbus::ServiceName(globals::kInterfaceName),
                       object_path),
       mount_paths_{Automount()} {
   registerProxy();
@@ -65,7 +65,7 @@ auto UdisksFilesystem::Automount() -> std::vector<std::string> {
   }
 }
 
-}  // namespace udisken
+}  // namespace proxies
 
 // TEST(xlacroixx): constructing an UdisksFilesystem mounts the filesystem, if
 // automounting is enabled; do not fail if filesystem is already mounted (e.g.
