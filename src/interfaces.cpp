@@ -45,15 +45,13 @@ UdisksBlock::UdisksBlock(sdbus::IConnection& connection,
 
 UdisksDrive::UdisksDrive(sdbus::IConnection& connection,
                          const sdbus::ObjectPath& object_path)
-    : ProxyInterfaces(connection, sdbus::ServiceName(globals::kInterfaceName),
-                      object_path) {
+    : ProxyInterfaces(connection, globals::kServiceName, object_path) {
   registerProxy();
 }
 
 UdisksFilesystem::UdisksFilesystem(sdbus::IConnection& connection,
                                    const sdbus::ObjectPath& object_path)
-    : ProxyInterfaces(connection, sdbus::ServiceName(globals::kInterfaceName),
-                      object_path) {
+    : ProxyInterfaces(connection, globals::kServiceName, object_path) {
   registerProxy();
 }
 

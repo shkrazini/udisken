@@ -19,6 +19,8 @@
 #ifndef UDISKEN_GLOBALS_HPP_
 #define UDISKEN_GLOBALS_HPP_
 
+#include <sdbus-c++/Types.h>
+
 namespace globals {
 
 /// Whether UDISKEN was compiled in debug mode.
@@ -38,6 +40,7 @@ constexpr bool kNotify{false};
 constexpr auto kAppName = UDISKEN_NAME;
 constexpr auto kInterfaceName = "org.freedesktop.UDisks2";
 constexpr auto kObjectPath = "/org/freedesktop/UDisks2";
+static const auto kServiceName = sdbus::ServiceName{kInterfaceName};
 
 }  // namespace globals
 
