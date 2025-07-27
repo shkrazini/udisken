@@ -32,9 +32,9 @@
 
 // TODO(xlacroixx): make async event loop?
 auto main() -> int {
-#ifndef NDEBUG
-  spdlog::set_level(spdlog::level::debug);
-#endif  // !NDEBUG
+  if constexpr (globals::kDebug) {
+    spdlog::set_level(spdlog::level::debug);
+  }
 
   spdlog::info("UDISKEN - {} - GPLv3", UDISKEN_VERSION);
 

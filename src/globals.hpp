@@ -14,12 +14,19 @@
 // You should have received a copy of the GNU General Public License along
 // with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-/// Global variables for UDisks D-Bus API.
+/// Global variables for UDISKEN and UDisks D-Bus API.
 
 #ifndef UDISKEN_GLOBALS_HPP_
 #define UDISKEN_GLOBALS_HPP_
 
 namespace globals {
+
+/// Whether UDISKEN was compiled in debug mode.
+#ifdef NDEBUG
+constexpr bool kDebug{false};
+#else
+constexpr bool kDebug{true};
+#endif
 
 /// Whether desktop notifications are enabled.
 #ifdef FEATURE_NOTIFY
