@@ -55,10 +55,10 @@ auto main() -> int {
 
   const auto connection = sdbus::createSystemBusConnection();
 
-  managers::UdisksManager manager{*connection};
-  spdlog::info("Connected to UDisks version {} on D-Bus", manager.Version());
+  managers::UdisksManager mgr{*connection};
+  spdlog::info("Connected to UDisks version {} on D-Bus", mgr.Version());
 
-  managers::UdisksObjectManager object_manager{*connection};
+  managers::UdisksObjectManager object_mgr{*connection};
 
   spdlog::debug("Entering event loop");
   connection->enterEventLoop();
