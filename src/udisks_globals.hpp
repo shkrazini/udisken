@@ -14,8 +14,7 @@
 // You should have received a copy of the GNU General Public License along
 // with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-/// @file
-/// @brief Global variables for UDisks D-Bus API.
+/// Global variables for UDisks D-Bus API.
 
 #ifndef UDISKEN_UDISKS_GLOBALS_HPP_
 #define UDISKEN_UDISKS_GLOBALS_HPP_

@@ -14,8 +14,7 @@
 // You should have received a copy of the GNU General Public License along
 // with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-/// @file
-/// @brief Filesystem proxy and associated actions, e.g. automounting.
+/// Filesystem proxy and associated actions, e.g. automounting.
 
 #include "udisks_filesystem.hpp"
 

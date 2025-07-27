@@ -14,8 +14,7 @@
 // You should have received a copy of the GNU General Public License along
 // with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-/// @file
-/// @brief Filesystem proxy and associated actions, e.g. automounting.
+/// Filesystem proxy and associated actions, e.g. automounting.
 
 #ifndef UDISKEN_UDISKS_FILESYSTEM_HPP_
 #define UDISKEN_UDISKS_FILESYSTEM_HPP_
@@ -32,13 +31,12 @@ namespace udisken {
 
 namespace udisks = org::freedesktop::UDisks2;
 
-/// @class UdisksFilesystem
-/// @brief Proxy to a UDisks Filesystem interface. Keep track of a filesystem
-/// and (automatically) execute actions on it, e.g., automounting.
+/// Proxy to a UDisks Filesystem interface. Keep track of a filesystem and
+/// (automatically) execute actions on it, e.g., automounting.
 class UdisksFilesystem final
     : public sdbus::ProxyInterfaces<udisks::Filesystem_proxy> {
  public:
-  /// @brief Construct a filesystem proxy and execute actions on it, e.g.,
+  /// Construct a filesystem proxy and execute actions on it, e.g.,
   /// automounting.
   ///
   /// @param connection System bus connection. Should be the same as used to
@@ -55,14 +53,14 @@ class UdisksFilesystem final
   ~UdisksFilesystem() noexcept { unregisterProxy(); }
 
  private:
-  /// @brief Automount, if udisken is configured to do so.
+  /// Automount, if udisken is configured to do so.
   ///
   /// @return Path to the mount point after mounting, or nothing if the
   ///         filesystem is already mounted somewhere.
   auto Automount() -> std::vector<std::string>;
 
-  /// @brief List of mount paths for this filesystem.
-  ///        Can be empty, if udisken cannot or will not mount this filesystem.
+  /// List of mount paths for this filesystem.
+  /// Can be empty, if udisken cannot or will not mount this filesystem.
   std::vector<std::string> mount_paths_{};
 };
 

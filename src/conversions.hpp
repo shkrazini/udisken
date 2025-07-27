@@ -14,8 +14,7 @@
 // You should have received a copy of the GNU General Public License along
 // with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-/// @file
-/// @brief Functions converting sdbus-c++ types to usual C++ types.
+/// Functions converting sdbus-c++ types to usual C++ types.
 
 #ifndef UDISKEN_CONVERSIONS_HPP_
 #define UDISKEN_CONVERSIONS_HPP_
@@ -28,7 +27,7 @@
 
 namespace udisken::conversions {
 
-/// @brief Converts an array of array of bytes (D-Bus equivalent type: a{a{y}})
+/// Converts an array of array of bytes (D-Bus equivalent type: a{a{y}})
 /// to a vector of strings.
 ///
 /// @param aay The array of array of bytes.
