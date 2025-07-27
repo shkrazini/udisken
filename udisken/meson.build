@@ -10,21 +10,3 @@ executable(
 	include_directories : common_include_dir,
 	install : true,
 )
-
-install_symlink(
-	'udiskie-info',
-	pointing_to : 'udisken',
-	install_dir : get_option('bindir'),
-)
-
-install_symlink(
-	'udiskie-mount',
-	pointing_to : 'udisken',
-	install_dir : get_option('bindir'),
-)
-
-install_symlink(
-	'udiskie-unmount',
-	pointing_to : 'udisken',
-	install_dir : get_option('bindir'),
-)

@@ -36,8 +36,6 @@ The project consists of two main parts:
   - `udiskie-unmount` -> `udisken unmount` (alias: `udisken umount`)
   - `udiskie-info` -> `udisken show` (alias: `udisken info`)
 
-  (udiskie programs are symlinked to UDISKEN and execute the respective actions)
-
 ## Install
 
 ### Arch Linux User Repository (AUR)
