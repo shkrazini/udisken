@@ -22,6 +22,8 @@ Low on memory usage, lightweight footprint, fast.
 - [UDisks](https://github.com/storaged-project/udisks) 2.10.0 or later
 - [libnotify](https://gitlab.gnome.org/GNOME/libnotify) 0.8.0 or later
   (optional)
+- [argparse](https://github.com/p-ranav/argparse) (building only)
+  (provided as subproject)
 - [spdlog](https://github.com/gabime/spdlog) (provided as subproject)
 
 ## Getting started
