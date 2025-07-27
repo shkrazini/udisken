@@ -64,9 +64,9 @@ void UdisksObjectManager::onInterfacesAdded(
     objects::BlockDevice blk_device{
         object_path,
         std::make_unique<interfaces::UdisksBlock>(getProxy().getConnection(),
-                                               object_path),
-        std::make_unique<interfaces::UdisksFilesystem>(getProxy().getConnection(),
-                                                    object_path)};
+                                                  object_path),
+        std::make_unique<interfaces::UdisksFilesystem>(
+            getProxy().getConnection(), object_path)};
 
     block_devices_.try_emplace(object_path, std::move(blk_device));
 
