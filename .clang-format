@@ -25,12 +25,14 @@ IncludeCategories:
   # System library headers (e.g. <gtk/gtk.h>)
   - Regex: '^<.+\.h.*'
     Priority: 3
-
-  # Exception: Guidelines Support Library (GSL) (System library headers)
+  # Exception: Guidelines Support Library (GSL)
   # (e.g. <gsl/gsl>)
   - Regex: "^<gsl/[[:alnum:].]+>"
     Priority: 3
 
   # Standard library headers (e.g. <vector>)
   - Regex: "^<[[:alnum:].]+>"
+    Priority: 4
+  # Exception: string_view
+  - Regex: "^<string_view>$"
     Priority: 4
