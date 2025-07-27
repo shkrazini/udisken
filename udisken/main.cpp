@@ -14,11 +14,12 @@
 // You should have received a copy of the GNU General Public License along
 // with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-/// Main entrypoint; initiates connection to D-Bus and UDisks.
+/// Main entrypoint for commands.
 
 #include "globals.hpp"
 #include "managers.hpp"
 
+#include <argparse/argparse.hpp>
 #include <sdbus-c++/IConnection.h>
 #include <sdbus-c++/ProxyInterfaces.h>
 #include <sdbus-c++/Types.h>
@@ -26,8 +27,31 @@
 #include <spdlog/spdlog.h>
 #include <udisks-sdbus-c++/udisks_proxy.hpp>
 
-auto main() -> int {
-  if constexpr (globals::kDebug) {
+#include <cstdlib>
+#include <iostream>
+#include <print>
+
+auto main(int argc, char* argv[]) -> int {
+  argparse::ArgumentParser program{UDISKEN_NAME, UDISKEN_VERSION};
+
+  program.add_argument("-V", "--verbose")
+      .help("increase output verbosity")
+      .flag();
+
+  program.add_description("Manipulate disks.");
+
+  // TODO(blackma9ick): support `--` separator
+
+  try {
+    program.parse_args(argc, argv);
+  } catch (const std::exception& e) {
+    spdlog::error("{}", e.what());
+    std::cerr << program;
+
+    return EXIT_FAILURE;
+  }
+
+  if (program["--verbose"] == true || globals::kDebug) {
     spdlog::set_level(spdlog::level::debug);
   }
 
