@@ -33,7 +33,7 @@ namespace udisks = org::freedesktop::UDisks2;
 
 /// Proxy to a UDisks block interface.
 ///
-/// @ref UdisksBlockDevice always implements this interface.
+/// UdisksBlockDevice always implements this interface.
 class UdisksBlock final : public sdbus::ProxyInterfaces<udisks::Block_proxy> {
  public:
   UdisksBlock(sdbus::IConnection& connection,
@@ -61,10 +61,10 @@ class UdisksDrive final : public sdbus::ProxyInterfaces<udisks::Drive_proxy> {
   ~UdisksDrive() noexcept { unregisterProxy(); }
 };
 
-/// Proxy to a UDisks mountable filesystem interface, contained in a @ref
+/// Proxy to a UDisks mountable filesystem interface, contained in a
 /// UdisksBlockDevice.
 ///
-/// @ref UdisksBlockDevice may implement this interface.
+/// UdisksBlockDevice may implement this interface.
 class UdisksFilesystem final
     : public sdbus::ProxyInterfaces<udisks::Filesystem_proxy> {
  public:
@@ -92,7 +92,7 @@ void PrintMountPoints(const MountPoints& mnt_points);
 
 /// Proxy to a UDisks loop device interface.
 ///
-/// @ref UdisksBlockDevice may implement this interface.
+/// UdisksBlockDevice may implement this interface.
 class UdisksLoop : public sdbus::ProxyInterfaces<udisks::Loop_proxy> {
  public:
   UdisksLoop(sdbus::IConnection& connection,
@@ -108,7 +108,7 @@ class UdisksLoop : public sdbus::ProxyInterfaces<udisks::Loop_proxy> {
 
 /// Proxy to a UDisks partition interface.
 ///
-/// @ref UdisksBlockDevice may implement this interface.
+/// UdisksBlockDevice may implement this interface.
 class UdisksPartition : public sdbus::ProxyInterfaces<udisks::Partition_proxy> {
  public:
   UdisksPartition(sdbus::IConnection& connection,

@@ -44,13 +44,13 @@ class BlockDevice {
 
   [[nodiscard]] auto ObjectPath() const -> const sdbus::ObjectPath&;
 
-  /// @brief Get the block interface proxy; this proxy always exists as long as
+  /// Get the block interface proxy; this proxy always exists as long as
   /// the block device is valid.
   ///
   /// @returns Reference to the block interface proxy, not the pointer.
   [[nodiscard]] auto block() -> interfaces::UdisksBlock& { return *block_; }
 
-  /// @brief Get the filesystem interface proxy.
+  /// Get the filesystem interface proxy.
   ///
   /// @throws InterfaceNotImplemented if trying to access a non-existent
   /// interface
@@ -59,13 +59,13 @@ class BlockDevice {
   [[nodiscard]] auto filesystem() -> interfaces::UdisksFilesystem&;
   [[nodiscard]] auto HasFilesystem() -> bool { return filesystem_ != nullptr; }
 
-  /// @brief Get the loop device interface proxy.
+  /// Get the loop device interface proxy.
   ///
   /// @returns Reference to the loop device interface proxy, not the pointer.
   [[nodiscard]] auto loop() -> interfaces::UdisksLoop&;
   [[nodiscard]] auto HasLoop() -> bool { return loop_ != nullptr; }
 
-  /// @brief Get the partition interface proxy.
+  /// Get the partition interface proxy.
   ///
   /// @returns Reference to the partition interface proxy, not the pointer.
   [[nodiscard]] auto partition() -> interfaces::UdisksLoop&;
