@@ -50,7 +50,7 @@ class BlockDevice {
   /// the block device is valid.
   ///
   /// @returns Reference to the block interface proxy, not the pointer.
-  [[nodiscard]] auto Block() -> interfaces::UdisksBlock& { return *block_; }
+  [[nodiscard]] auto block() -> interfaces::UdisksBlock& { return *block_; }
 
   /// @brief Get the filesystem interface proxy.
   ///
@@ -58,19 +58,19 @@ class BlockDevice {
   /// interface
   ///
   /// @returns Reference to the filesystem interface proxy, not the pointer.
-  [[nodiscard]] auto Filesystem() -> interfaces::UdisksFilesystem&;
+  [[nodiscard]] auto filesystem() -> interfaces::UdisksFilesystem&;
   [[nodiscard]] auto HasFilesystem() -> bool { return filesystem_ != nullptr; }
 
   /// @brief Get the loop device interface proxy.
   ///
   /// @returns Reference to the loop device interface proxy, not the pointer.
-  [[nodiscard]] auto Loop() -> interfaces::UdisksLoop&;
+  [[nodiscard]] auto loop() -> interfaces::UdisksLoop&;
   [[nodiscard]] auto HasLoop() -> bool { return loop_ != nullptr; }
 
   /// @brief Get the partition interface proxy.
   ///
   /// @returns Reference to the partition interface proxy, not the pointer.
-  [[nodiscard]] auto Partition() -> interfaces::UdisksLoop&;
+  [[nodiscard]] auto partition() -> interfaces::UdisksLoop&;
   [[nodiscard]] auto HasPartition() -> bool { return partition_ != nullptr; }
 
  private:

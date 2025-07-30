@@ -83,7 +83,7 @@ auto TryAutomount(objects::BlockDevice& blk_device)
                   reason);
   };
 
-  if (!blk_device.Block().HintAuto()) {
+  if (!blk_device.block().HintAuto()) {
     print_not_automounting("automount hint was false");
 
     return std::nullopt;
@@ -99,20 +99,20 @@ auto TryAutomount(objects::BlockDevice& blk_device)
   // If mount points already exist, no need to automount it...
   // TODO(blackma9ick): ...unless other paths are given to UDISKEN and it
   // should mount?)
-  if (!blk_device.Filesystem().MountPoints().empty()) {
+  if (!blk_device.filesystem().MountPoints().empty()) {
     print_not_automounting("already mounted");
 
     return std::nullopt;
   }
 
-  auto mnt_point = Automount(blk_device.Filesystem());
+  auto mnt_point = Automount(blk_device.filesystem());
 
   if (mnt_point.has_value()) {
     spdlog::info("Automounted {}", *mnt_point);
     utils::Notification notif{
         .summary = "Mounted disk",
         .body =
-            std::format("{} at {}", blk_device.Block().HintName(), *mnt_point),
+            std::format("{} at {}", blk_device.block().HintName(), *mnt_point),
         .icon = "drive-removable-media"};
     utils::Notify(notif);
   }
@@ -120,7 +120,7 @@ auto TryAutomount(objects::BlockDevice& blk_device)
   return mnt_point;
 }
 
-auto BlockDevice::Filesystem() -> interfaces::UdisksFilesystem& {
+auto BlockDevice::filesystem() -> interfaces::UdisksFilesystem& {
   if (!HasFilesystem()) {
     throw std::logic_error("interface does not exist");
   }
@@ -128,14 +128,15 @@ auto BlockDevice::Filesystem() -> interfaces::UdisksFilesystem& {
   return *filesystem_;
 }
 
-auto BlockDevice::Loop() -> interfaces::UdisksLoop& {
+auto BlockDevice::loop() -> interfaces::UdisksLoop& {
   if (!HasLoop()) {
     throw std::logic_error("interface does not exist");
   }
+
   return *loop_;
 }
 
-auto BlockDevice::Partition() -> interfaces::UdisksLoop& {
+auto BlockDevice::partition() -> interfaces::UdisksLoop& {
   if (!HasPartition()) {
     throw std::logic_error("interface does not exist");
   }
