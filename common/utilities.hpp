@@ -27,19 +27,18 @@
 
 namespace utils {
 
-/// @class Notification
-/// @brief Thin struct containing the essential properties of a libnotify
+/// Thin struct containing the essential properties of a libnotify
 /// Notification that can be sent to desktop.
-///
 struct Notification {
   std::string summary;
   std::string body;
   std::string icon;
 };
 
-/// @brief Send a desktop notification.
+/// Send a desktop notification.
 ///
 /// @param notification Notification.
+///
 /// @return Successfully sent the notification.
 auto Notify(const Notification& notification) -> bool;
 
