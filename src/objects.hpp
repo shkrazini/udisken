@@ -24,7 +24,6 @@
 #include <sdbus-c++/Types.h>
 
 #include <memory>
-#include <stdexcept>
 #include <string>
 
 namespace objects {
@@ -59,36 +58,19 @@ class BlockDevice {
   /// interface
   ///
   /// @returns Reference to the filesystem interface proxy, not the pointer.
-  [[nodiscard]] auto Filesystem() -> interfaces::UdisksFilesystem& {
-    if (!HasFilesystem()) {
-      throw std::logic_error("interface does not exist");
-    }
-
-    return *filesystem_;
-  }
+  [[nodiscard]] auto Filesystem() -> interfaces::UdisksFilesystem&;
   [[nodiscard]] auto HasFilesystem() -> bool { return filesystem_ != nullptr; }
 
   /// @brief Get the loop device interface proxy.
   ///
   /// @returns Reference to the loop device interface proxy, not the pointer.
-  [[nodiscard]] auto Loop() -> interfaces::UdisksLoop& {
-    if (!HasLoop()) {
-      throw std::logic_error("interface does not exist");
-    }
-    return *loop_;
-  }
+  [[nodiscard]] auto Loop() -> interfaces::UdisksLoop&;
   [[nodiscard]] auto HasLoop() -> bool { return loop_ != nullptr; }
 
   /// @brief Get the partition interface proxy.
   ///
   /// @returns Reference to the partition interface proxy, not the pointer.
-  [[nodiscard]] auto Partition() -> interfaces::UdisksLoop& {
-    if (!HasPartition()) {
-      throw std::logic_error("interface does not exist");
-    }
-
-    return *partition_;
-  }
+  [[nodiscard]] auto Partition() -> interfaces::UdisksLoop&;
   [[nodiscard]] auto HasPartition() -> bool { return partition_ != nullptr; }
 
  private:

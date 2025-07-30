@@ -26,10 +26,10 @@
 #include <udisks-sdbus-c++/udisks_errors.hpp>
 
 #include <memory>
+#include <stdexcept>
 #include <string>
-#include <utility>
-
 #include <string_view>
+#include <utility>
 
 namespace objects {
 
@@ -118,6 +118,29 @@ auto TryAutomount(objects::BlockDevice& blk_device)
   }
 
   return mnt_point;
+}
+
+auto BlockDevice::Filesystem() -> interfaces::UdisksFilesystem& {
+  if (!HasFilesystem()) {
+    throw std::logic_error("interface does not exist");
+  }
+
+  return *filesystem_;
+}
+
+auto BlockDevice::Loop() -> interfaces::UdisksLoop& {
+  if (!HasLoop()) {
+    throw std::logic_error("interface does not exist");
+  }
+  return *loop_;
+}
+
+auto BlockDevice::Partition() -> interfaces::UdisksLoop& {
+  if (!HasPartition()) {
+    throw std::logic_error("interface does not exist");
+  }
+
+  return *partition_;
 }
 
 }  // namespace objects
