@@ -35,16 +35,14 @@ class BlockDevice {
   /// the proxy interfaces.
   ///
   /// Unique_ptrs passed to this constructor will be moved to!
+  // NOLINTNEXTLINE
   BlockDevice(
-      const sdbus::ObjectPath& object_path,
       std::unique_ptr<interfaces::UdisksBlock> block,
       std::unique_ptr<interfaces::UdisksFilesystem> filesystem = nullptr,
       std::unique_ptr<interfaces::UdisksLoop> loop = nullptr,
       std::unique_ptr<interfaces::UdisksLoop> partition = nullptr);
 
-  [[nodiscard]] auto ObjectPath() const -> const sdbus::ObjectPath& {
-    return object_path_;
-  }
+  [[nodiscard]] auto ObjectPath() const -> const sdbus::ObjectPath&;
 
   /// @brief Get the block interface proxy; this proxy always exists as long as
   /// the block device is valid.
@@ -74,8 +72,6 @@ class BlockDevice {
   [[nodiscard]] auto HasPartition() -> bool { return partition_ != nullptr; }
 
  private:
-  /// Object path, as found in /org/freedesktop/UDisks2/block_devices/.
-  sdbus::ObjectPath object_path_;
   /// Corresponding Drive interface for this block device.
   // std::unique_ptr<UdisksDrive> drive;
   /// Proxy to the block interface of this block device object.

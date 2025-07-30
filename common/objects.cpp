@@ -34,16 +34,22 @@
 namespace objects {
 
 BlockDevice::BlockDevice(
-    const sdbus::ObjectPath& object_path,
     std::unique_ptr<interfaces::UdisksBlock> block,
     std::unique_ptr<interfaces::UdisksFilesystem> filesystem,
     std::unique_ptr<interfaces::UdisksLoop> loop,
     std::unique_ptr<interfaces::UdisksLoop> partition)
-    : object_path_{object_path},
-      block_{std::move(block)},
+    : block_{std::move(block)},
       filesystem_{std::move(filesystem)},
       loop_{std::move(loop)},
-      partition_{std::move(partition)} {}
+      partition_{std::move(partition)} {
+  if (!block_) {
+    throw std::invalid_argument("block pointer must not be null");
+  }
+}
+
+[[nodiscard]] auto BlockDevice::ObjectPath() const -> const sdbus::ObjectPath& {
+  return block_->getProxy().getObjectPath();
+}
 
 namespace {
 

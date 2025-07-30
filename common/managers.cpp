@@ -65,7 +65,6 @@ void UdisksObjectManager::onInterfacesAdded(
       interfaces_and_properties.contains(
           sdbus::InterfaceName{interfaces::UdisksFilesystem::INTERFACE_NAME})) {
     objects::BlockDevice blk_device{
-        object_path,
         std::make_unique<interfaces::UdisksBlock>(getProxy().getConnection(),
                                                   object_path),
         std::make_unique<interfaces::UdisksFilesystem>(
