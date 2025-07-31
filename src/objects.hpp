@@ -34,6 +34,9 @@ namespace objects {
 
 /// Drive object, which is the physical device behind its block device
 /// objects.
+// TODO(blackma9ick): directly take the UdisksDrive ctor parameters to construct
+// it directly? Would be cleaner than requiring an interface: it creates a nest
+// of make_uniques.
 class Drive {
  public:
   /// Construct a Drive object with the Drive interface proxy.
@@ -61,8 +64,10 @@ class BlockDevice {
   /// Create a Block device that will take ownership of the unique_ptrs to
   /// the proxy interfaces.
   ///
-  /// The drive object will be made available automatically if it exists. It
-  /// should not be passed manually to this constructor.
+  /// The block interface is required to construct this device.
+  /// All other interfaces are optional, and can take nullptr.
+  ///
+  /// The drive object will be made available automatically if it exists.
   ///
   /// Unique_ptrs passed to this constructor will be moved to!
   // NOLINTNEXTLINE
@@ -104,15 +109,15 @@ class BlockDevice {
  private:
   /// Corresponding drive object for this block device. If it exists, it is
   /// automatically created.
-  std::unique_ptr<Drive> drive_;
+  std::unique_ptr<Drive> drive_ = nullptr;
   /// Proxy to the block interface of this block device object.
   std::unique_ptr<interfaces::UdisksBlock> block_;
   /// Proxy to the filesystem present on the block device.
-  std::unique_ptr<interfaces::UdisksFilesystem> filesystem_;
+  std::unique_ptr<interfaces::UdisksFilesystem> filesystem_ = nullptr;
   /// Proxy to the loop device on the block device.
-  std::unique_ptr<interfaces::UdisksLoop> loop_;
+  std::unique_ptr<interfaces::UdisksLoop> loop_ = nullptr;
   /// Proxy to the partition on the block device.
-  std::unique_ptr<interfaces::UdisksLoop> partition_;
+  std::unique_ptr<interfaces::UdisksLoop> partition_ = nullptr;
 };
 
 /// Automount, TODO(blackma9ick): if UDISKEN is configured to do so.
