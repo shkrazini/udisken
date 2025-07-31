@@ -4,10 +4,9 @@ LINUX DRIVE AUTOMOUNTER FOR THE IMPATIENT.
 
 ---
 
-GNU/Linux desktop removable media mounting daemon and associated utilities using
-UDisks.
+A small GNU/Linux desktop removable media mounting daemon.
 
-Mount automatically, browse, eject, and unmount your...:
+Mount automatically your...:
 
 - USB drive
 - CD or DVD disk
@@ -26,16 +25,11 @@ Low on memory usage, lightweight footprint, fast.
 
 ## Getting started
 
-The project consists of two main parts:
+Simply run the daemon like this:
 
-- the daemon: `udiskend`
-- the CLI interface/utilities: `udisken COMMAND`, transparent with udiskie:
-  - `udisken eject`
-  - `udiskie-mount` -> `udisken mount`
-  - `udiskie-unmount` -> `udisken unmount` (alias: `udisken umount`)
-  - `udiskie-info` -> `udisken show` (alias: `udisken info`)
-
-  (udiskie programs are symlinked to UDISKEN and execute the respective actions)
+```sh
+udisken
+```
 
 ## Install
 
@@ -59,7 +53,7 @@ aurwrapperx -S udisken
 Dependencies are automatically taken care of. You can still install them with:
 
 ```sh
-pacman -S --asdeps libnotify sdbus-cpp udisks2
+pacman -S --asdeps --needed libnotify sdbus-cpp udisks2
 ```
 
 ## Building
