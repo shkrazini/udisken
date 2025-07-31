@@ -59,10 +59,10 @@ BlockDevice::BlockDevice(
     throw std::invalid_argument("block pointer must not be null");
   }
 
-  if (block->HasDrive()) {
+  if (block_->HasDrive()) {
     // TODO(blackma9ick): make one of the constructors prettier.
     drive_ = std::make_unique<Drive>(std::make_unique<interfaces::UdisksDrive>(
-        block->getProxy().getConnection(), block_->Drive()));
+        block_->getProxy().getConnection(), block_->Drive()));
   }
 }
 
