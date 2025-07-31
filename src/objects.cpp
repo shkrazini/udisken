@@ -73,7 +73,7 @@ namespace {
 
 namespace udisks = org::freedesktop::UDisks2;
 
-auto Automount(interfaces::UdisksFilesystem& fs) -> std::optional<std::string> {
+auto Mount(interfaces::UdisksFilesystem& fs) -> std::optional<std::string> {
   try {
     auto mnt_point = fs.Mount({});
 
@@ -100,8 +100,7 @@ auto Automount(interfaces::UdisksFilesystem& fs) -> std::optional<std::string> {
 
 }  // namespace
 
-auto TryAutomount(objects::BlockDevice& blk_device)
-    -> std::optional<std::string> {
+auto TryMount(objects::BlockDevice& blk_device) -> std::optional<std::string> {
   auto print_not_automounting = [&blk_device](std::string_view reason) {
     spdlog::debug("Not automounting {}: {}", blk_device.ObjectPath().c_str(),
                   reason);
@@ -129,7 +128,7 @@ auto TryAutomount(objects::BlockDevice& blk_device)
     return std::nullopt;
   }
 
-  auto mnt_point = Automount(blk_device.filesystem());
+  auto mnt_point = Mount(blk_device.filesystem());
 
   if (mnt_point.has_value()) {
     spdlog::info("Automounted {}", *mnt_point);

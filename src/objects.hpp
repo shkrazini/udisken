@@ -120,15 +120,14 @@ class BlockDevice {
   std::unique_ptr<interfaces::UdisksLoop> partition_ = nullptr;
 };
 
-/// Automount, TODO(blackma9ick): if UDISKEN is configured to do so.
+/// Automount.
 ///
 /// @return Path to mount point after mounting, or nothing if the
 /// filesystem is already mounted somewhere.
 ///
 /// @throws sdbus::Error Error returned by UDisks if automounting
 /// failed. Does not throw if filesystem is already mounted somewhere.
-auto TryAutomount(objects::BlockDevice& blk_device)
-    -> std::optional<std::string>;
+auto TryMount(objects::BlockDevice& blk_device) -> std::optional<std::string>;
 
 }  // namespace objects
 
