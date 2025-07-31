@@ -28,11 +28,41 @@
 
 namespace objects {
 
+// This place is filled to the brim with unique_ptrs. Why? Because every
+// sdbus-c++ interface proxies have their copy ctor/assignment operator deleted.
+// So, there is not much other way.
+
+/// Drive object, which is the physical device behind its block device
+/// objects.
+class Drive {
+ public:
+  /// Construct a Drive object with the Drive interface proxy.
+  ///
+  /// @param drive Pointer to the drive interface for this object. Must be
+  /// non-null.
+  // NOLINTNEXTLINE
+  Drive(std::unique_ptr<interfaces::UdisksDrive> drive);
+
+  [[nodiscard]] auto ObjectPath() const -> const sdbus::ObjectPath&;
+
+  /// Get the drive interface proxy.
+  ///
+  /// @returns Reference to the drive interface proxy, not the pointer.
+  [[nodiscard]] auto drive() -> interfaces::UdisksDrive&;
+
+ private:
+  /// Corresponding Drive interface for this block device.
+  std::unique_ptr<interfaces::UdisksDrive> drive_;
+};
+
 /// Block device object, upon which most UDISKEN actions take effect.
 class BlockDevice {
  public:
   /// Create a Block device that will take ownership of the unique_ptrs to
   /// the proxy interfaces.
+  ///
+  /// The drive object will be made available automatically if it exists. It
+  /// should not be passed manually to this constructor.
   ///
   /// Unique_ptrs passed to this constructor will be moved to!
   // NOLINTNEXTLINE
@@ -72,8 +102,9 @@ class BlockDevice {
   [[nodiscard]] auto HasPartition() -> bool { return partition_ != nullptr; }
 
  private:
-  /// Corresponding Drive interface for this block device.
-  // std::unique_ptr<UdisksDrive> drive;
+  /// Corresponding drive object for this block device. If it exists, it is
+  /// automatically created.
+  std::unique_ptr<Drive> drive_;
   /// Proxy to the block interface of this block device object.
   std::unique_ptr<interfaces::UdisksBlock> block_;
   /// Proxy to the filesystem present on the block device.

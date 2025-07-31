@@ -27,6 +27,12 @@
 #include <string>
 #include <vector>
 
+// TODO(blackma9ick): should small wrapper methods be added? If so, all of these
+// interfaces could be moved to udisks-sdbus-c++.
+
+// TODO(blackma9ick): are the deleted ctors and assignment operators
+// declarations redundant? If so, remove them.
+
 namespace interfaces {
 
 namespace udisks = org::freedesktop::UDisks2;
@@ -43,6 +49,11 @@ class UdisksBlock final : public sdbus::ProxyInterfaces<udisks::Block_proxy> {
   UdisksBlock(const UdisksBlock&) = delete;
   auto operator=(UdisksBlock&&) -> UdisksBlock& = delete;
   auto operator=(const UdisksBlock&) -> UdisksBlock& = delete;
+
+  auto HasDrive() -> bool {
+    // Equals '/' if no drive exists.
+    return Drive() != "/";
+  }
 
   ~UdisksBlock() noexcept { unregisterProxy(); };
 };

@@ -33,6 +33,19 @@
 
 namespace objects {
 
+Drive::Drive(std::unique_ptr<interfaces::UdisksDrive> drive)
+    : drive_{std::move(drive)} {
+  if (!drive_) {
+    throw std::invalid_argument("drive pointer must not be null");
+  }
+}
+
+auto Drive::ObjectPath() const -> const sdbus::ObjectPath& {
+  return drive_->getProxy().getObjectPath();
+}
+
+auto Drive::drive() -> interfaces::UdisksDrive& { return *drive_; }
+
 BlockDevice::BlockDevice(
     std::unique_ptr<interfaces::UdisksBlock> block,
     std::unique_ptr<interfaces::UdisksFilesystem> filesystem,
@@ -44,6 +57,12 @@ BlockDevice::BlockDevice(
       partition_{std::move(partition)} {
   if (!block_) {
     throw std::invalid_argument("block pointer must not be null");
+  }
+
+  if (block->HasDrive()) {
+    // TODO(blackma9ick): make one of the constructors prettier.
+    drive_ = std::make_unique<Drive>(std::make_unique<interfaces::UdisksDrive>(
+        block->getProxy().getConnection(), block_->Drive()));
   }
 }
 
