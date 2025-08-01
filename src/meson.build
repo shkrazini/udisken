@@ -1,8 +1,7 @@
 udisken_sources = [
 	'main.cpp',
-	'managers.cpp',
-	'objects.cpp',
-	'interfaces.cpp',
+	'options.cpp',
+	'udisks.cpp',
 	'utilities.cpp',
 ]
 

@@ -1,0 +1,313 @@
+// UDISKEN: Linux drive automounter for the impatient.
+// Copyright (C) BlackMa9ick
+//
+// This program is free software: you can redistribute it and/or modify it
+// under the terms of the GNU General Public License as published by the
+// Free Software Foundation, either version 3 of the License, or (at your
+// option) any later version.
+//
+// This program is distributed in the hope that it will be useful, but
+// WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General
+// Public License for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+/// Udisks objects, interface proxies, managers and related functions.
+
+#ifndef UDISKEN_UDISKS_HPP_
+#define UDISKEN_UDISKS_HPP_
+
+#include <sdbus-c++/IConnection.h>
+#include <sdbus-c++/ProxyInterfaces.h>
+#include <sdbus-c++/Types.h>
+#include <udisks-sdbus-c++/udisks_proxy.hpp>
+
+#include <map>
+#include <memory>
+#include <string>
+#include <vector>
+
+// TODO(blackma9ick): should small wrapper methods be added? If so, all of these
+// interfaces could be moved to udisks-sdbus-c++.
+
+// TODO(blackma9ick): are the deleted ctors and assignment operators
+// declarations redundant? If so, remove them.
+
+namespace udisks {
+
+constexpr auto kAppName = UDISKEN_NAME;
+constexpr auto kInterfaceName = "org.freedesktop.UDisks2";
+constexpr auto kObjectPath = "/org/freedesktop/UDisks2";
+static const auto kServiceName = sdbus::ServiceName{kInterfaceName};
+
+}  // namespace udisks
+
+namespace interfaces {
+
+namespace udisks_api = org::freedesktop::UDisks2;
+
+/// Proxy to a UDisks block interface.
+///
+/// UdisksBlockDevice always implements this interface.
+class UdisksBlock final
+    : public sdbus::ProxyInterfaces<udisks_api::Block_proxy> {
+ public:
+  UdisksBlock(sdbus::IConnection& connection,
+              const sdbus::ObjectPath& object_path);
+
+  UdisksBlock(UdisksBlock&&) = delete;
+  UdisksBlock(const UdisksBlock&) = delete;
+  auto operator=(UdisksBlock&&) -> UdisksBlock& = delete;
+  auto operator=(const UdisksBlock&) -> UdisksBlock& = delete;
+
+  auto HasDrive() -> bool {
+    // Equals '/' if no drive exists.
+    return Drive() != "/";
+  }
+
+  ~UdisksBlock() noexcept { unregisterProxy(); };
+};
+
+/// Proxy to a UDisks disk drive interface.
+class UdisksDrive final
+    : public sdbus::ProxyInterfaces<udisks_api::Drive_proxy> {
+ public:
+  UdisksDrive(sdbus::IConnection& connection,
+              const sdbus::ObjectPath& object_path);
+
+  UdisksDrive(const UdisksDrive&) = delete;
+  UdisksDrive(UdisksDrive&&) = delete;
+  auto operator=(const UdisksDrive&) -> UdisksDrive& = delete;
+  auto operator=(UdisksDrive&&) -> UdisksDrive& = delete;
+
+  ~UdisksDrive() noexcept { unregisterProxy(); }
+};
+
+/// Proxy to a UDisks mountable filesystem interface, contained in a
+/// UdisksBlockDevice.
+///
+/// UdisksBlockDevice may implement this interface.
+class UdisksFilesystem final
+    : public sdbus::ProxyInterfaces<udisks_api::Filesystem_proxy> {
+ public:
+  /// Construct a filesystem proxy and execute actions on it, e.g.,
+  /// automounting.
+  ///
+  /// @param connection System bus connection. Should be the same as used
+  /// to construct the manager proxy (UdisksManager).
+  /// @param object_path Object path to a UDisks Filesystem interface.
+  UdisksFilesystem(sdbus::IConnection& connection,
+                   const sdbus::ObjectPath& object_path);
+
+  UdisksFilesystem(UdisksFilesystem&&) = delete;
+  UdisksFilesystem(const UdisksFilesystem&) = delete;
+  auto operator=(UdisksFilesystem&&) -> UdisksFilesystem& = delete;
+  auto operator=(const UdisksFilesystem&) -> UdisksFilesystem& = delete;
+
+  ~UdisksFilesystem() noexcept { unregisterProxy(); }
+};
+
+using MountPoints = std::vector<std::string>;
+
+auto GetMountPoints(UdisksFilesystem& fs) -> MountPoints;
+void PrintMountPoints(const MountPoints& mnt_points);
+
+/// Proxy to a UDisks loop device interface.
+///
+/// UdisksBlockDevice may implement this interface.
+class UdisksLoop : public sdbus::ProxyInterfaces<udisks_api::Loop_proxy> {
+ public:
+  UdisksLoop(sdbus::IConnection& connection,
+             const sdbus::ObjectPath& objectPath);
+
+  UdisksLoop(UdisksLoop&&) = delete;
+  UdisksLoop(const UdisksLoop&) = delete;
+  auto operator=(UdisksLoop&&) -> UdisksLoop& = delete;
+  auto operator=(const UdisksLoop&) -> UdisksLoop& = delete;
+
+  ~UdisksLoop() noexcept { unregisterProxy(); }
+};
+
+/// Proxy to a UDisks partition interface.
+///
+/// UdisksBlockDevice may implement this interface.
+class UdisksPartition
+    : public sdbus::ProxyInterfaces<udisks_api::Partition_proxy> {
+ public:
+  UdisksPartition(sdbus::IConnection& connection,
+                  const sdbus::ObjectPath& objectPath);
+
+  UdisksPartition(UdisksPartition&&) = delete;
+  UdisksPartition(const UdisksPartition&) = delete;
+  auto operator=(UdisksPartition&&) -> UdisksPartition& = delete;
+  auto operator=(const UdisksPartition&) -> UdisksPartition& = delete;
+
+  ~UdisksPartition() noexcept { unregisterProxy(); }
+};
+
+}  // namespace interfaces
+
+namespace objects {
+
+// This place is filled to the brim with unique_ptrs. Why? Because every
+// sdbus-c++ interface proxies have their copy ctor/assignment operator deleted.
+// So, there is not much other way.
+
+/// Drive object, which is the physical device behind its block device
+/// objects.
+// TODO(blackma9ick): directly take the UdisksDrive ctor parameters to construct
+// it directly? Would be cleaner than requiring an interface: it creates a nest
+// of make_uniques.
+class Drive {
+ public:
+  /// Construct a Drive object with the Drive interface proxy.
+  ///
+  /// @param drive Pointer to the drive interface for this object. Must be
+  /// non-null.
+  // NOLINTNEXTLINE
+  Drive(std::unique_ptr<interfaces::UdisksDrive> drive);
+
+  [[nodiscard]] auto ObjectPath() const -> const sdbus::ObjectPath&;
+
+  /// Get the drive interface proxy.
+  ///
+  /// @returns Reference to the drive interface proxy, not the pointer.
+  [[nodiscard]] auto drive() -> interfaces::UdisksDrive&;
+
+ private:
+  /// Corresponding Drive interface for this block device.
+  std::unique_ptr<interfaces::UdisksDrive> drive_;
+};
+
+/// Block device object, upon which most UDISKEN actions take effect.
+class BlockDevice {
+ public:
+  /// Create a Block device that will take ownership of the unique_ptrs to
+  /// the proxy interfaces.
+  ///
+  /// The block interface is required to construct this device.
+  /// All other interfaces are optional, and can take nullptr.
+  ///
+  /// The drive object will be made available automatically if it exists.
+  ///
+  /// Unique_ptrs passed to this constructor will be moved to!
+  // NOLINTNEXTLINE
+  BlockDevice(
+      std::unique_ptr<interfaces::UdisksBlock> block,
+      std::unique_ptr<interfaces::UdisksFilesystem> filesystem = nullptr,
+      std::unique_ptr<interfaces::UdisksLoop> loop = nullptr,
+      std::unique_ptr<interfaces::UdisksLoop> partition = nullptr);
+
+  [[nodiscard]] auto ObjectPath() const -> const sdbus::ObjectPath&;
+
+  /// Get the block interface proxy; this proxy always exists as long as
+  /// the block device is valid.
+  ///
+  /// @returns Reference to the block interface proxy, not the pointer.
+  [[nodiscard]] auto block() -> interfaces::UdisksBlock& { return *block_; }
+
+  /// Get the filesystem interface proxy.
+  ///
+  /// @throws InterfaceNotImplemented if trying to access a non-existent
+  /// interface
+  ///
+  /// @returns Reference to the filesystem interface proxy, not the pointer.
+  [[nodiscard]] auto filesystem() -> interfaces::UdisksFilesystem&;
+  [[nodiscard]] auto HasFilesystem() -> bool { return filesystem_ != nullptr; }
+
+  /// Get the loop device interface proxy.
+  ///
+  /// @returns Reference to the loop device interface proxy, not the pointer.
+  [[nodiscard]] auto loop() -> interfaces::UdisksLoop&;
+  [[nodiscard]] auto HasLoop() -> bool { return loop_ != nullptr; }
+
+  /// Get the partition interface proxy.
+  ///
+  /// @returns Reference to the partition interface proxy, not the pointer.
+  [[nodiscard]] auto partition() -> interfaces::UdisksLoop&;
+  [[nodiscard]] auto HasPartition() -> bool { return partition_ != nullptr; }
+
+ private:
+  /// Corresponding drive object for this block device. If it exists, it is
+  /// automatically created.
+  std::unique_ptr<Drive> drive_ = nullptr;
+  /// Proxy to the block interface of this block device object.
+  std::unique_ptr<interfaces::UdisksBlock> block_;
+  /// Proxy to the filesystem present on the block device.
+  std::unique_ptr<interfaces::UdisksFilesystem> filesystem_ = nullptr;
+  /// Proxy to the loop device on the block device.
+  std::unique_ptr<interfaces::UdisksLoop> loop_ = nullptr;
+  /// Proxy to the partition on the block device.
+  std::unique_ptr<interfaces::UdisksLoop> partition_ = nullptr;
+};
+
+/// Automount.
+///
+/// @return Path to mount point after mounting, or nothing if the
+/// filesystem is already mounted somewhere.
+///
+/// @throws sdbus::Error Error returned by UDisks if automounting
+/// failed. Does not throw if filesystem is already mounted somewhere.
+auto TryMount(objects::BlockDevice& blk_device) -> std::optional<std::string>;
+
+}  // namespace objects
+
+namespace managers {
+
+namespace udisks_api = org::freedesktop::UDisks2;
+
+/// UDisks top-level manager singleton object.
+class UdisksManager final
+    : public sdbus::ProxyInterfaces<udisks_api::Manager_proxy> {
+ public:
+  /// Connect to UDisks using a system bus connection.
+  ///
+  /// @param connection System bus connection.
+  explicit UdisksManager(sdbus::IConnection& connection);
+
+  UdisksManager(const UdisksManager&) = delete;
+  UdisksManager(UdisksManager&&) = delete;
+  auto operator=(const UdisksManager&) -> UdisksManager& = delete;
+  auto operator=(UdisksManager&&) -> UdisksManager& = delete;
+
+  ~UdisksManager() noexcept { unregisterProxy(); }
+
+  /// Object path to the manager singleton.
+  static constexpr auto kObjectPath{"/org/freedesktop/UDisks2/Manager"};
+};
+
+/// Bridges the UDisks ObjectManager and interfaces.
+class UdisksObjectManager final
+    : public sdbus::ProxyInterfaces<sdbus::ObjectManager_proxy> {
+ public:
+  /// Connect to UDisks using a system bus connection.
+  ///
+  /// @param connection System bus connection.
+  explicit UdisksObjectManager(sdbus::IConnection& connection);
+
+  UdisksObjectManager(UdisksObjectManager&&) = delete;
+  UdisksObjectManager(const UdisksObjectManager&) = delete;
+  auto operator=(UdisksObjectManager&&) -> UdisksObjectManager& = delete;
+  auto operator=(const UdisksObjectManager&) -> UdisksObjectManager& = delete;
+
+  ~UdisksObjectManager() noexcept { unregisterProxy(); }
+
+ private:
+  void onInterfacesAdded(
+      const sdbus::ObjectPath& object_path,
+      const std::map<sdbus::InterfaceName,
+                     std::map<sdbus::PropertyName, sdbus::Variant>>&
+          interfaces_and_properties) final;
+
+  void onInterfacesRemoved(
+      const sdbus::ObjectPath& object_path,
+      const std::vector<sdbus::InterfaceName>& interfaces) final;
+
+  std::map<sdbus::ObjectPath, objects::BlockDevice> block_devices_;
+};
+
+}  // namespace managers
+
+#endif  // UDISKEN_UDISKS_HPP_
