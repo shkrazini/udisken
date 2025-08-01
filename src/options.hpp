@@ -14,10 +14,10 @@
 // You should have received a copy of the GNU General Public License along
 // with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-/// Global variables for UDISKEN and UDisks D-Bus API.
+/// Options and status variables for UDISKEN.
 
-#ifndef UDISKEN_GLOBALS_HPP_
-#define UDISKEN_GLOBALS_HPP_
+#ifndef UDISKEN_OPTIONS_HPP_
+#define UDISKEN_OPTIONS_HPP_
 
 #include <sdbus-c++/Types.h>
 
@@ -37,11 +37,6 @@ constexpr bool kNotify{true};
 constexpr bool kNotify{false};
 #endif
 
-constexpr auto kAppName = UDISKEN_NAME;
-constexpr auto kInterfaceName = "org.freedesktop.UDisks2";
-constexpr auto kObjectPath = "/org/freedesktop/UDisks2";
-static const auto kServiceName = sdbus::ServiceName{kInterfaceName};
-
 }  // namespace globals
 
-#endif  // UDISKEN_GLOBALS_HPP_
+#endif  // UDISKEN_OPTIONS_HPP_

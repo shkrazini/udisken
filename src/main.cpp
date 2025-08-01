@@ -16,8 +16,8 @@
 
 /// Main entrypoint; initiates connection to D-Bus and UDisks.
 
-#include "globals.hpp"
-#include "managers.hpp"
+#include "options.hpp"
+#include "udisks.hpp"
 
 #include <sdbus-c++/IConnection.h>
 #include <spdlog/common.h>
@@ -38,7 +38,7 @@ auto main() -> int {
   spdlog::info("UDISKEN - {} - GPLv3", UDISKEN_VERSION);
 
 #ifdef FEATURE_NOTIFY
-  if (notify_init(globals::kAppName) == 0) {
+  if (notify_init(udisks::kAppName) == 0) {
     spdlog::critical("libnotify initialization failed!");
 
     return EXIT_FAILURE;
