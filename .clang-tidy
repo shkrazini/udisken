@@ -1,6 +1,8 @@
 ---
 # - modernize-pass-by-value has unclear advantages and decreases readability. It
 # also triggers on non-standard library expensive types.
+# - concurrency-mt-unsafe triggers even in a single-threaded program, and can be
+#   addressed by mutexes/locks anyways.
 # - readability-identifier-length triggers in cases where longer identifiers
 #	clutter up the code.
 # - readability-redundant-member-init might conflict with gcc/clang -Weffc++
@@ -23,6 +25,7 @@ Checks: "
   clang-analyzer-security.ArrayBound,
   clang-analyzer-unix.*,
   concurrency-*,
+  -concurrency-mt-unsafe,
   cppcoreguidelines-*,
   google-*,
   hicpp-*,
