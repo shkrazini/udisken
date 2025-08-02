@@ -39,4 +39,13 @@ constexpr bool kNotify{false};
 
 }  // namespace globals
 
+namespace options {
+
+/// Should UDISKEN automount.
+///
+/// @return False if UDISKEN_NO_AUTOMOUNT is non-zero. True otherwise.
+[[nodiscard]] auto ShouldMount() -> bool;
+
+}  // namespace options
+
 #endif  // UDISKEN_OPTIONS_HPP_

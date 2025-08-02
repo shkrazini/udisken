@@ -31,6 +31,13 @@ Simply run the daemon like this:
 udisken
 ```
 
+If you don't want UDISKEN to automount for some reason, you can run the daemon
+with:
+
+```sh
+UDISKEN_NO_AUTOMOUNT=1 udisken
+```
+
 ## Install
 
 ### Arch Linux User Repository (AUR)
