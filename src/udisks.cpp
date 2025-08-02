@@ -18,6 +18,7 @@
 
 #include "udisks.hpp"
 
+#include "options.hpp"
 #include "utilities.hpp"
 
 #include <libnotify/notification.h>
@@ -163,14 +164,14 @@ void PrintNotAutomounting(const BlockDevice& blk_device,
 
 auto TryAutomount(BlockDevice& blk_device) -> std::optional<std::string> {
   if (!blk_device.block().HintAuto()) {
-    print_not_automounting("automount hint was false");
+    PrintNotAutomounting(blk_device, "automount hint was false");
 
     return std::nullopt;
   }
 
   // Could there even not be a filesystem if HintAuto was false?
   if (!blk_device.HasFilesystem()) {
-    print_not_automounting("no filesystem found");
+    PrintNotAutomounting(blk_device, "no filesystem found");
 
     return std::nullopt;
   }
@@ -179,7 +180,7 @@ auto TryAutomount(BlockDevice& blk_device) -> std::optional<std::string> {
   // TODO(blackma9ick): ...unless other paths are given to UDISKEN and it
   // should mount?)
   if (!blk_device.filesystem().MountPoints().empty()) {
-    print_not_automounting("already mounted");
+    PrintNotAutomounting(blk_device, "already mounted");
 
     return std::nullopt;
   }
