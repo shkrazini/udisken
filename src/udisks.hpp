@@ -302,6 +302,10 @@ class UdisksManager final
   static constexpr auto kObjectPath{"/org/freedesktop/UDisks2/Manager"};
 };
 
+using InterfacesAndProperties =
+    const std::map<sdbus::InterfaceName,
+                   std::map<sdbus::PropertyName, sdbus::Variant>>&;
+
 /// Class handling UDisks objects and implemented interfaces.
 /// Almost all UDISKEN actions are executed in this class' virtual functions.
 class UdisksObjectManager final
@@ -323,9 +327,7 @@ class UdisksObjectManager final
   /// Houses all UDISKEN automatic actions (e.g., automounting).
   void onInterfacesAdded(
       const sdbus::ObjectPath& object_path,
-      const std::map<sdbus::InterfaceName,
-                     std::map<sdbus::PropertyName, sdbus::Variant>>&
-          interfaces_and_properties) final;
+      InterfacesAndProperties interfaces_and_properties) final;
 
   void onInterfacesRemoved(
       const sdbus::ObjectPath& object_path,

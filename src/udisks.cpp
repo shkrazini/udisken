@@ -255,9 +255,7 @@ UdisksObjectManager::UdisksObjectManager(sdbus::IConnection& connection)
 
 void UdisksObjectManager::onInterfacesAdded(
     const sdbus::ObjectPath& object_path,
-    const std::map<sdbus::InterfaceName,
-                   std::map<sdbus::PropertyName, sdbus::Variant>>&
-        interfaces_and_properties) {
+    InterfacesAndProperties interfaces_and_properties) {
   spdlog::debug("New object: {}", object_path.c_str());
 
   if (interfaces_and_properties.contains(
