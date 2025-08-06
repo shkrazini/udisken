@@ -37,7 +37,6 @@
 
 namespace udisks {
 
-constexpr auto kAppName = UDISKEN_NAME;
 constexpr auto kInterfaceName = "org.freedesktop.UDisks2";
 constexpr auto kObjectPath = "/org/freedesktop/UDisks2";
 static const auto kServiceName = sdbus::ServiceName{kInterfaceName};

@@ -35,10 +35,10 @@ auto main() -> int {
     spdlog::set_level(spdlog::level::debug);
   }
 
-  spdlog::info("UDISKEN - {} - GPLv3", UDISKEN_VERSION);
+  spdlog::info("UDISKEN - {} - GPLv3", globals::kAppVer);
 
 #ifdef FEATURE_NOTIFY
-  if (notify_init(udisks::kAppName) == 0) {
+  if (notify_init(globals::kAppName) == 0) {
     spdlog::critical("libnotify initialization failed!");
 
     return EXIT_FAILURE;
