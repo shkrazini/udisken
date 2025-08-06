@@ -153,14 +153,15 @@ auto Mount(interfaces::UdisksFilesystem& fs) -> std::optional<std::string> {
   }
 }
 
+void PrintNotAutomounting(const BlockDevice& blk_device,
+                          std::string_view reason) {
+  spdlog::debug("Not automounting {}: {}", blk_device.ObjectPath().c_str(),
+                reason);
+}
+
 }  // namespace
 
-auto TryMount(objects::BlockDevice& blk_device) -> std::optional<std::string> {
-  auto print_not_automounting = [&blk_device](std::string_view reason) {
-    spdlog::debug("Not automounting {}: {}", blk_device.ObjectPath().c_str(),
-                  reason);
-  };
-
+auto TryAutomount(BlockDevice& blk_device) -> std::optional<std::string> {
   if (!blk_device.block().HintAuto()) {
     print_not_automounting("automount hint was false");
 
@@ -259,6 +260,10 @@ void UdisksObjectManager::onInterfacesAdded(
                                                   object_path),
         std::make_unique<interfaces::UdisksFilesystem>(
             getProxy().getConnection(), object_path)};
+
+    if (options::ShouldMount()) {
+      objects::TryAutomount(blk_device);
+    }
 
     block_devices_.try_emplace(object_path, std::move(blk_device));
 
