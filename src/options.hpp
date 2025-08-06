@@ -35,7 +35,7 @@ constexpr bool kDebug{false};
 constexpr bool kDebug{true};
 #endif
 
-/// Whether desktop notifications are enabled.
+/// Whether desktop notifications were enabled when building.
 #ifdef FEATURE_NOTIFY
 constexpr bool kNotify{true};
 #else

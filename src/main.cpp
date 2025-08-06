@@ -29,7 +29,6 @@
 #include <cstdlib>
 #endif  // FEATURE_NOTIFY
 
-// TODO(blackma9ick): make async event loop?
 auto main() -> int {
   if constexpr (globals::kDebug) {
     spdlog::set_level(spdlog::level::debug);
