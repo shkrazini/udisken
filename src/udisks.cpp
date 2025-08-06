@@ -253,29 +253,57 @@ UdisksObjectManager::UdisksObjectManager(sdbus::IConnection& connection)
   registerProxy();
 }
 
+namespace {
+
+template <class UdisksInterface>
+auto HasInterface(InterfacesAndProperties& inp) -> bool {
+  return inp.contains(sdbus::InterfaceName{UdisksInterface::INTERFACE_NAME});
+}
+
+}  // namespace
+
 void UdisksObjectManager::onInterfacesAdded(
     const sdbus::ObjectPath& object_path,
     InterfacesAndProperties interfaces_and_properties) {
   spdlog::debug("New object: {}", object_path.c_str());
 
-  if (interfaces_and_properties.contains(
-          sdbus::InterfaceName{interfaces::UdisksBlock::INTERFACE_NAME}) &&
-      interfaces_and_properties.contains(
-          sdbus::InterfaceName{interfaces::UdisksFilesystem::INTERFACE_NAME})) {
-    objects::BlockDevice blk_device{
-        std::make_unique<interfaces::UdisksBlock>(getProxy().getConnection(),
-                                                  object_path),
-        std::make_unique<interfaces::UdisksFilesystem>(
-            getProxy().getConnection(), object_path)};
-
-    if (options::ShouldMount()) {
-      objects::TryAutomount(blk_device);
-    }
-
-    block_devices_.try_emplace(object_path, std::move(blk_device));
-
-    spdlog::debug("Added Block device at {}", object_path.c_str());
+  if (!HasInterface<interfaces::UdisksBlock>(interfaces_and_properties)) {
+    return;
   }
+
+  auto block = std::make_unique<interfaces::UdisksBlock>(
+      getProxy().getConnection(), object_path);
+
+  std::unique_ptr<interfaces::UdisksFilesystem> filesystem{};
+  if (HasInterface<interfaces::UdisksFilesystem>(interfaces_and_properties)) {
+    filesystem = std::make_unique<interfaces::UdisksFilesystem>(
+        getProxy().getConnection(), object_path);
+  }
+
+  std::unique_ptr<interfaces::UdisksLoop> loop{};
+  if (HasInterface<interfaces::UdisksLoop>(interfaces_and_properties)) {
+    loop = std::make_unique<interfaces::UdisksLoop>(getProxy().getConnection(),
+                                                    object_path);
+  }
+
+  std::unique_ptr<interfaces::UdisksPartition> partition{};
+  if (HasInterface<interfaces::UdisksPartition>(interfaces_and_properties)) {
+    partition = std::make_unique<interfaces::UdisksPartition>(
+        getProxy().getConnection(), object_path);
+  }
+
+  // Only block must be non-null. The rest can be null. The Drive member will be
+  // automatically constructed if it exists.
+  objects::BlockDevice blk_device{std::move(block), std::move(filesystem),
+                                  std::move(loop), std::move(partition)};
+
+  if (options::ShouldMount()) {
+    objects::TryAutomount(blk_device);
+  }
+
+  block_devices_.try_emplace(object_path, std::move(blk_device));
+
+  spdlog::debug("Added Block device at {}", object_path.c_str());
 }
 
 void UdisksObjectManager::onInterfacesRemoved(
