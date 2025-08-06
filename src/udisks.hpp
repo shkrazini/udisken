@@ -220,7 +220,7 @@ class BlockDevice {
       std::unique_ptr<interfaces::UdisksBlock> block,
       std::unique_ptr<interfaces::UdisksFilesystem> filesystem = nullptr,
       std::unique_ptr<interfaces::UdisksLoop> loop = nullptr,
-      std::unique_ptr<interfaces::UdisksLoop> partition = nullptr);
+      std::unique_ptr<interfaces::UdisksPartition> partition = nullptr);
 
   [[nodiscard]] auto ObjectPath() const -> const sdbus::ObjectPath&;
 
@@ -248,7 +248,7 @@ class BlockDevice {
   /// Get the partition interface proxy.
   ///
   /// @returns Reference to the partition interface proxy, not the pointer.
-  [[nodiscard]] auto partition() -> interfaces::UdisksLoop&;
+  [[nodiscard]] auto partition() -> interfaces::UdisksPartition&;
   [[nodiscard]] auto HasPartition() -> bool { return partition_ != nullptr; }
 
  private:
@@ -262,7 +262,7 @@ class BlockDevice {
   /// Proxy to the loop device on the block device.
   std::unique_ptr<interfaces::UdisksLoop> loop_ = nullptr;
   /// Proxy to the partition on the block device.
-  std::unique_ptr<interfaces::UdisksLoop> partition_ = nullptr;
+  std::unique_ptr<interfaces::UdisksPartition> partition_ = nullptr;
 };
 
 /// Automount.

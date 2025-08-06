@@ -107,7 +107,7 @@ BlockDevice::BlockDevice(
     std::unique_ptr<interfaces::UdisksBlock> block,
     std::unique_ptr<interfaces::UdisksFilesystem> filesystem,
     std::unique_ptr<interfaces::UdisksLoop> loop,
-    std::unique_ptr<interfaces::UdisksLoop> partition)
+    std::unique_ptr<interfaces::UdisksPartition> partition)
     : block_{std::move(block)},
       filesystem_{std::move(filesystem)},
       loop_{std::move(loop)},
@@ -217,7 +217,7 @@ auto BlockDevice::loop() -> interfaces::UdisksLoop& {
   return *loop_;
 }
 
-auto BlockDevice::partition() -> interfaces::UdisksLoop& {
+auto BlockDevice::partition() -> interfaces::UdisksPartition& {
   if (!HasPartition()) {
     throw std::logic_error("interface does not exist");
   }
