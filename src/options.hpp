@@ -23,6 +23,11 @@
 
 namespace globals {
 
+/// Name of the program, so, "UDISKEN" pretty much.
+constexpr auto kAppName = UDISKEN_NAME;
+/// Version of the program.
+constexpr auto kAppVer = UDISKEN_VERSION;
+
 /// Whether UDISKEN was compiled in debug mode.
 #ifdef NDEBUG
 constexpr bool kDebug{false};
