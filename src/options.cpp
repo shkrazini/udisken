@@ -28,6 +28,11 @@ namespace options {
 
 namespace {
 
+/// Checks if the string view has a non-zero value.
+///
+/// @param sv Typical string view.
+/// @return True if string view is non-empty (regardless of the original
+/// string's content), and its content contains characters other than '0'.
 constexpr auto NonZero(std::string_view sv) -> bool {
   // NOLINTNEXTLINE(readability-static-accessed-through-instance)
   return !sv.empty() && sv.find_first_not_of("0") != sv.npos;
@@ -39,6 +44,10 @@ static_assert(NonZero("010"));
 static_assert(!NonZero(""));
 static_assert(!NonZero("0"));
 
+/// Checks if the environment variable is defined and has a non-zero value.
+///
+/// @param var Name of the environment variable.
+/// @return True if the environment variable is defined and is non-zero.
 auto NonZeroEnvironmentVariable(const std::string& var) -> bool {
   const auto var_value = std::getenv(var.c_str());
   return var_value != nullptr && NonZero(var_value);

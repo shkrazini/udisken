@@ -15,6 +15,7 @@
 // with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 /// Udisks objects, interface proxies, managers and related functions.
+/// Contains the entrypoints to most of UDISKEN's logic, such as automounting.
 
 #ifndef UDISKEN_UDISKS_HPP_
 #define UDISKEN_UDISKS_HPP_
@@ -53,6 +54,11 @@ namespace udisks_api = org::freedesktop::UDisks2;
 class UdisksBlock final
     : public sdbus::ProxyInterfaces<udisks_api::Block_proxy> {
  public:
+  /// Construct a block proxy.
+  ///
+  /// @param connection System bus connection. Should be the same as used
+  /// to construct the manager proxy (UdisksManager).
+  /// @param object_path Object path to a UDisks block interface.
   UdisksBlock(sdbus::IConnection& connection,
               const sdbus::ObjectPath& object_path);
 
@@ -70,9 +76,17 @@ class UdisksBlock final
 };
 
 /// Proxy to a UDisks disk drive interface.
+///
+/// UdisksBlock might have an associated drive object and interface, if the
+/// block device has an underlying disk drive (e.g., it is not a loop device).
 class UdisksDrive final
     : public sdbus::ProxyInterfaces<udisks_api::Drive_proxy> {
  public:
+  /// Construct a drive proxy.
+  ///
+  /// @param connection System bus connection. Should be the same as used
+  /// to construct the manager proxy (UdisksManager).
+  /// @param object_path Object path to a UDisks drive interface.
   UdisksDrive(sdbus::IConnection& connection,
               const sdbus::ObjectPath& object_path);
 
@@ -91,8 +105,7 @@ class UdisksDrive final
 class UdisksFilesystem final
     : public sdbus::ProxyInterfaces<udisks_api::Filesystem_proxy> {
  public:
-  /// Construct a filesystem proxy and execute actions on it, e.g.,
-  /// automounting.
+  /// Construct a filesystem proxy.
   ///
   /// @param connection System bus connection. Should be the same as used
   /// to construct the manager proxy (UdisksManager).
@@ -118,6 +131,11 @@ void PrintMountPoints(const MountPoints& mnt_points);
 /// UdisksBlockDevice may implement this interface.
 class UdisksLoop : public sdbus::ProxyInterfaces<udisks_api::Loop_proxy> {
  public:
+  /// Construct a loop proxy.
+  ///
+  /// @param connection System bus connection. Should be the same as used
+  /// to construct the manager proxy (UdisksManager).
+  /// @param object_path Object path to a UDisks loop interface.
   UdisksLoop(sdbus::IConnection& connection,
              const sdbus::ObjectPath& objectPath);
 
@@ -135,6 +153,11 @@ class UdisksLoop : public sdbus::ProxyInterfaces<udisks_api::Loop_proxy> {
 class UdisksPartition
     : public sdbus::ProxyInterfaces<udisks_api::Partition_proxy> {
  public:
+  /// Construct a partition proxy.
+  ///
+  /// @param connection System bus connection. Should be the same as used
+  /// to construct the manager proxy (UdisksManager).
+  /// @param object_path Object path to a UDisks partition interface.
   UdisksPartition(sdbus::IConnection& connection,
                   const sdbus::ObjectPath& objectPath);
 
@@ -253,11 +276,13 @@ auto TryAutomount(BlockDevice& blk_device) -> std::optional<std::string>;
 
 }  // namespace objects
 
+/// Entrypoints of most of UDISKEN's logic.
 namespace managers {
 
 namespace udisks_api = org::freedesktop::UDisks2;
 
 /// UDisks top-level manager singleton object.
+/// Exposes some meta information about UDisks, such as version.
 class UdisksManager final
     : public sdbus::ProxyInterfaces<udisks_api::Manager_proxy> {
  public:
@@ -277,7 +302,8 @@ class UdisksManager final
   static constexpr auto kObjectPath{"/org/freedesktop/UDisks2/Manager"};
 };
 
-/// Bridges the UDisks ObjectManager and interfaces.
+/// Class handling UDisks objects and implemented interfaces.
+/// Almost all UDISKEN actions are executed in this class' virtual functions.
 class UdisksObjectManager final
     : public sdbus::ProxyInterfaces<sdbus::ObjectManager_proxy> {
  public:
@@ -294,6 +320,7 @@ class UdisksObjectManager final
   ~UdisksObjectManager() noexcept { unregisterProxy(); }
 
  private:
+  /// Houses all UDISKEN automatic actions (e.g., automounting).
   void onInterfacesAdded(
       const sdbus::ObjectPath& object_path,
       const std::map<sdbus::InterfaceName,
