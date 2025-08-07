@@ -210,7 +210,7 @@ auto TryAutomount(BlockDevice& blk_device) -> std::optional<std::string> {
 
 auto BlockDevice::filesystem() -> interfaces::UdisksFilesystem& {
   if (!HasFilesystem()) {
-    throw std::logic_error("interface does not exist");
+    throw std::logic_error("object does not implement interface");
   }
 
   return *filesystem_;
@@ -218,7 +218,7 @@ auto BlockDevice::filesystem() -> interfaces::UdisksFilesystem& {
 
 auto BlockDevice::loop() -> interfaces::UdisksLoop& {
   if (!HasLoop()) {
-    throw std::logic_error("interface does not exist");
+    throw std::logic_error("object does not implement interface");
   }
 
   return *loop_;
@@ -226,7 +226,7 @@ auto BlockDevice::loop() -> interfaces::UdisksLoop& {
 
 auto BlockDevice::partition() -> interfaces::UdisksPartition& {
   if (!HasPartition()) {
-    throw std::logic_error("interface does not exist");
+    throw std::logic_error("object does not implement interface");
   }
 
   return *partition_;

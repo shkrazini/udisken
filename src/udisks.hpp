@@ -232,8 +232,8 @@ class BlockDevice {
 
   /// Get the filesystem interface proxy.
   ///
-  /// @throws InterfaceNotImplemented if trying to access a non-existent
-  /// interface
+  /// @throws logic_error Tried to access an interface that is not implemented
+  /// by the object.
   ///
   /// @returns Reference to the filesystem interface proxy, not the pointer.
   [[nodiscard]] auto filesystem() -> interfaces::UdisksFilesystem&;
@@ -241,11 +241,17 @@ class BlockDevice {
 
   /// Get the loop device interface proxy.
   ///
+  /// @throws logic_error Tried to access an interface that is not implemented
+  /// by the object.
+  ///
   /// @returns Reference to the loop device interface proxy, not the pointer.
   [[nodiscard]] auto loop() -> interfaces::UdisksLoop&;
   [[nodiscard]] auto HasLoop() -> bool { return loop_ != nullptr; }
 
   /// Get the partition interface proxy.
+  ///
+  /// @throws logic_error Tried to access an interface that is not implemented
+  /// by the object.
   ///
   /// @returns Reference to the partition interface proxy, not the pointer.
   [[nodiscard]] auto partition() -> interfaces::UdisksPartition&;
