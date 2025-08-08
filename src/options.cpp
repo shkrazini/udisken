@@ -65,4 +65,14 @@ auto ShouldMount() -> bool {
   return true;
 }
 
+auto ShouldNotify() -> bool {
+  if (NonZeroEnvironmentVariable("UDISKEN_NO_NOTIFY")) {
+    spdlog::debug("Notifications disabled by environment.");
+
+    return false;
+  }
+
+  return globals::kNotify;
+}
+
 }  // namespace options

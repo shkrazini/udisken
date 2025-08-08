@@ -37,16 +37,18 @@ auto main() -> int {
   spdlog::info("UDISKEN - {} - GPLv3", globals::kAppVer);
 
 #ifdef FEATURE_NOTIFY
-  if (notify_init(globals::kAppName) == 0) {
-    spdlog::critical("libnotify initialization failed!");
+  if (options::ShouldNotify()) {
+    if (!notify_init(globals::kAppName)) {
+      spdlog::critical("libnotify initialization failed!");
 
-    return EXIT_FAILURE;
-  }
+      return EXIT_FAILURE;
+    }
 
-  if (std::atexit([] noexcept { notify_uninit(); }) != 0) {
-    spdlog::critical("libnotify uninitialization registration failed!");
+    if (std::atexit([] { notify_uninit(); }) != 0) {
+      spdlog::critical("libnotify uninitialization registration failed!");
 
-    return EXIT_FAILURE;
+      return EXIT_FAILURE;
+    }
   }
 #endif  // FEATURE_NOTIFY
   spdlog::debug("libnotify: {}", globals::kNotify);

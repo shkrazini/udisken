@@ -51,6 +51,11 @@ namespace options {
 /// @return False if UDISKEN_NO_AUTOMOUNT is non-zero. True otherwise.
 [[nodiscard]] auto ShouldMount() -> bool;
 
+/// Should UDISKEN send desktop notifications.
+///
+/// @return False if UDISKEN_NO_NOTIFY is non-zero. True otherwise.
+[[nodiscard]] auto ShouldNotify() -> bool;
+
 }  // namespace options
 
 #endif  // UDISKEN_OPTIONS_HPP_
