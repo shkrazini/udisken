@@ -20,6 +20,8 @@
 
 #include "spdlog/spdlog.h"
 
+#include <libnotify/notify.h>
+
 #include <cstdlib>
 #include <string>
 #include <string_view>
@@ -55,7 +57,7 @@ auto NonZeroEnvironmentVariable(const std::string& var) -> bool {
 
 }  // namespace
 
-auto ShouldMount() -> bool {
+auto MountEnabled() -> bool {
   if (NonZeroEnvironmentVariable("UDISKEN_NO_AUTOMOUNT")) {
     spdlog::debug("Automounting disabled by environment.");
 
@@ -65,7 +67,7 @@ auto ShouldMount() -> bool {
   return true;
 }
 
-auto ShouldNotify() -> bool {
+auto NotifyEnabled() -> bool {
   if (NonZeroEnvironmentVariable("UDISKEN_NO_NOTIFY")) {
     spdlog::debug("Notifications disabled by environment.");
 

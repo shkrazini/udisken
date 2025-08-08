@@ -18,8 +18,6 @@
 
 #include "utilities.hpp"
 
-#include "options.hpp"
-
 #include <libnotify/notify.h>
 #include <sdbus-c++/Types.h>
 
@@ -40,7 +38,7 @@ namespace utils {
 
 auto Notify([[maybe_unused]] const Notification& notification) -> bool {
 #ifdef FEATURE_NOTIFY
-  if (!options::ShouldNotify() || !notify_is_initted()) {
+  if (!notify_is_initted()) {
     return false;
   }
 

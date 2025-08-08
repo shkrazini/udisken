@@ -46,15 +46,20 @@ constexpr bool kNotify{false};
 
 namespace options {
 
-/// Should UDISKEN automount.
+struct Options {
+  bool automount{true};
+  bool notify{true};
+};
+
+/// Is mounting enabled by the environment.
 ///
 /// @return False if UDISKEN_NO_AUTOMOUNT is non-zero. True otherwise.
-[[nodiscard]] auto ShouldMount() -> bool;
+[[nodiscard]] auto MountEnabled() -> bool;
 
-/// Should UDISKEN send desktop notifications.
+/// Are desktop notifications enabled by the environment.
 ///
 /// @return False if UDISKEN_NO_NOTIFY is non-zero. True otherwise.
-[[nodiscard]] auto ShouldNotify() -> bool;
+[[nodiscard]] auto NotifyEnabled() -> bool;
 
 }  // namespace options
 

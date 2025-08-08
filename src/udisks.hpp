@@ -20,6 +20,8 @@
 #ifndef UDISKEN_UDISKS_HPP_
 #define UDISKEN_UDISKS_HPP_
 
+#include "options.hpp"
+
 #include <sdbus-c++/IConnection.h>
 #include <sdbus-c++/ProxyInterfaces.h>
 #include <sdbus-c++/Types.h>
@@ -320,7 +322,8 @@ class UdisksObjectManager final
   /// Connect to UDisks using a system bus connection.
   ///
   /// @param connection System bus connection.
-  explicit UdisksObjectManager(sdbus::IConnection& connection);
+  explicit UdisksObjectManager(sdbus::IConnection& connection,
+                               options::Options options);
 
   UdisksObjectManager(UdisksObjectManager&&) = delete;
   UdisksObjectManager(const UdisksObjectManager&) = delete;
@@ -339,6 +342,7 @@ class UdisksObjectManager final
       const sdbus::ObjectPath& object_path,
       const std::vector<sdbus::InterfaceName>& interfaces) final;
 
+  options::Options options_;
   std::map<sdbus::ObjectPath, objects::BlockDevice> block_devices_;
 };
 
