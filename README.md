@@ -19,11 +19,12 @@ Low on memory usage, lightweight footprint, fast.
 
 - [sdbus-c++](https://github.com/Kistler-Group/sdbus-cpp) 2.1.0 or later
 - [UDisks](https://github.com/storaged-project/udisks) 2.10.0 or later
+- [spdlog](https://github.com/gabime/spdlog) 1.15.0 or later
+  (can fallback to subproject)
 - [libnotify](https://gitlab.gnome.org/GNOME/libnotify) 0.8.0 or later
   (optional)
-- [argparse](https://github.com/p-ranav/argparse) (building only)
-  (provided as subproject)
-- [spdlog](https://github.com/gabime/spdlog) (provided as subproject)
+- [argparse](https://github.com/p-ranav/argparse) 3.1 or later
+  (building only) (can fallback to subproject)
 
 ## Getting started
 
