@@ -3,6 +3,8 @@ data/
 
 # Meson WrapDB packages
 subprojects/**
+!subprojects/argparse.wrap
+!subprojects/spdlog.wrap
 !subprojects/wrapdb.json
 # ...except our own subprojects
 !subprojects/udisks-sdbus-c++
