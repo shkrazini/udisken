@@ -1,56 +1,57 @@
 project(
-	'udisken',
-	'cpp',
-	version : '0.0.1',
-	license : 'GPL-3.0-or-later',
-	meson_version : '>=1.1.0',
-	default_options : [
-		# minimum: c++23
-		'cpp_std=c++23',
-		'warning_level=3',
-	],
+  'udisken',
+  'cpp',
+  version : '0.0.1',
+  license : 'GPL-3.0-or-later',
+  meson_version : '>=1.1.0',
+  default_options : [
+    # minimum: c++23
+    'cpp_std=c++23',
+    'warning_level=3',
     'werror=true',
+  ],
 )
 
 add_project_arguments(
-	'-Wcast-align',
-	'-Wcast-qual',
-	'-Wconversion',
-	'-Wctor-dtor-privacy',
-	'-Wdisabled-optimization',
-	'-Wformat=2',
-	'-Wfloat-equal',
-	'-Winvalid-pch',
-	'-Wlogical-op',
-	'-Wmissing-declarations',
-	'-Wmissing-include-dirs',
-	'-Wnoexcept',
-	'-Wnon-virtual-dtor',
-	# Triggers whenever including C headers (e.g. glib).
-	# Nowadays it is exceptionally rare to see C-style casts in modern C++.
-	# '-Wold-style-cast',
-	'-Woverloaded-virtual',
-	'-Wredundant-decls',
-	'-Wshadow',
-	'-Wsign-conversion',
-	'-Wsign-promo',
-	'-Wstack-protector',
-	'-Wstrict-null-sentinel',
-	'-Wstrict-overflow=5',
-	'-Wswitch-default',
-	'-Wundef',
-	'-Wuseless-cast',
-	'-Wzero-as-null-pointer-constant',
-	'-DUDISKEN_NAME="' + meson.project_name() + '"',
-	'-DUDISKEN_VERSION="' + meson.project_version() + '"',
-	language : 'cpp',
+  '-Wcast-align',
+  '-Wcast-qual',
+  '-Wconversion',
+  '-Wctor-dtor-privacy',
+  '-Wdisabled-optimization',
+  '-Wformat=2',
+  '-Wfloat-equal',
+  '-Winvalid-pch',
+  '-Wlogical-op',
+  '-Wmissing-declarations',
+  '-Wmissing-include-dirs',
+  '-Wnoexcept',
+  '-Wnon-virtual-dtor',
+  '-Wold-style-cast',
+  '-Woverloaded-virtual',
+  '-Wredundant-decls',
+  '-Wshadow',
+  '-Wsign-conversion',
+  '-Wsign-promo',
+  '-Wstack-protector',
+  '-Wstrict-null-sentinel',
+  '-Wstrict-overflow=5',
+  '-Wswitch-default',
+  '-Wundef',
+  '-Wuseless-cast',
+  '-Wzero-as-null-pointer-constant',
+  '-DUDISKEN_NAME="' + meson.project_name() + '"',
+  '-DUDISKEN_VERSION="' + meson.project_version() + '"',
+  language : 'cpp',
 )
 
 if get_option('debug')
-	add_project_arguments('-D_GLIBCXX_DEBUG=1', language : 'cpp')
+  add_project_arguments('-D_GLIBCXX_DEBUG=1', language : 'cpp')
 endif
 
-sdbus_cpp_dep = dependency('sdbus-c++', version : ['>=2.1.0', '<3.0.0']) # SemVer
+sdbus_cpp_dep = dependency(
+  'sdbus-c++',
+  version : ['>=2.1.0', '<3.0.0'], # Follows Semantic Versioning.
+)
 
 # Using as_system('system') is a workaround for silencing warnings coming from
 # libraries.
@@ -61,18 +62,22 @@ argparse_dep = argparse_proj.get_variable('argparse_dep').as_system('system')
 spdlog_proj = subproject('spdlog', default_options : 'werror=false')
 spdlog_dep = spdlog_proj.get_variable('spdlog_dep')
 
-libnotify_dep = dependency('libnotify', version : ['>=0.8.0', '<1.0.0'], required : get_option('notify'))
+libnotify_dep = dependency(
+  'libnotify',
+  version : ['>=0.8.0', '<1.0.0'],
+  required : get_option('notify')
+)
 if libnotify_dep.found()
-	add_project_arguments('-DFEATURE_NOTIFY', language : 'cpp')
+  add_project_arguments('-DFEATURE_NOTIFY', language : 'cpp')
 endif
 
 udisks_sdbus_cpp_proj = subproject(
-	'udisks-sdbus-c++',
-	default_options : [
-		# NOTE: you likely need to change this.
-		'udisks_dbus_interface=/home/sofian/source/udisken/dbus/org.freedesktop.UDisks2.xml',
-	],
-	version : '=2.10-0' # unstable
+  'udisks-sdbus-c++',
+    default_options : [
+      # NOTE: you likely need to change this.
+      'udisks_dbus_interface=/home/sofian/source/udisken/dbus/org.freedesktop.UDisks2.xml',
+    ],
+    version : '=2.10-0' # unstable
 )
 udisks_sdbus_cpp_dep = udisks_sdbus_cpp_proj.get_variable('udisks_sdbus_cpp_dep')
 
