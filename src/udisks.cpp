@@ -242,9 +242,11 @@ UdisksManager::UdisksManager(sdbus::IConnection& connection)
   registerProxy();
 }
 
-UdisksObjectManager::UdisksObjectManager(sdbus::IConnection& connection)
+UdisksObjectManager::UdisksObjectManager(sdbus::IConnection& connection,
+                                         options::Options options)
     : ProxyInterfaces(connection, sdbus::ServiceName{udisks::kInterfaceName},
-                      sdbus::ObjectPath{udisks::kObjectPath}) {
+                      sdbus::ObjectPath{udisks::kObjectPath}),
+      options_{options} {
   for (auto managed_objects = GetManagedObjects();
        const auto& [object_path, interfaces_and_properties] : managed_objects) {
     onInterfacesAdded(object_path, interfaces_and_properties);
@@ -299,7 +301,7 @@ void UdisksObjectManager::onInterfacesAdded(
   objects::BlockDevice blk_device{std::move(block), std::move(filesystem),
                                   std::move(loop), std::move(partition)};
 
-  if (options::ShouldMount()) {
+  if (options::MountEnabled() && options_.automount) {
     objects::TryAutomount(blk_device);
   }
 

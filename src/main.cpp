@@ -19,6 +19,7 @@
 #include "options.hpp"
 #include "udisks.hpp"
 
+#include <argparse/argparse.hpp>
 #include <sdbus-c++/IConnection.h>
 #include <spdlog/common.h>
 #include <spdlog/spdlog.h>
@@ -29,24 +30,48 @@
 #include <cstdlib>
 #endif  // FEATURE_NOTIFY
 
-auto main() -> int {
-  if constexpr (globals::kDebug) {
+#include <iostream>
+
+auto main(int argc, char* argv[]) -> int {
+  argparse::ArgumentParser program(globals::kAppName, globals::kAppVer);
+  bool no_automount{};
+  program.add_argument("-A", "--no-automount")
+      .help("do not automount")
+      .flag()
+      .store_into(no_automount);
+  bool no_notify{};
+  program.add_argument("-N", "--no-notify")
+      .help("do not send desktop notifications")
+      .flag()
+      .store_into(no_notify);
+  bool verbose{};
+  program.add_argument("-V", "--verbose")
+      .help("increase output verbosity")
+      .flag()
+      .store_into(verbose);
+  try {
+    program.parse_args(argc, argv);
+  } catch (const std::exception& err) {
+    spdlog::error("Parsing args failed: {}", err.what());
+    std::cerr << program;
+    return EXIT_FAILURE;
+  }
+
+  if (globals::kDebug || verbose) {
     spdlog::set_level(spdlog::level::debug);
   }
 
   spdlog::info("UDISKEN - {} - GPLv3", globals::kAppVer);
 
 #ifdef FEATURE_NOTIFY
-  if (options::ShouldNotify()) {
+  if (options::NotifyEnabled() && !no_notify) {
     if (!notify_init(globals::kAppName)) {
       spdlog::critical("libnotify initialization failed!");
-
       return EXIT_FAILURE;
     }
 
     if (std::atexit([] { notify_uninit(); }) != 0) {
       spdlog::critical("libnotify uninitialization registration failed!");
-
       return EXIT_FAILURE;
     }
   }
@@ -54,11 +79,11 @@ auto main() -> int {
   spdlog::debug("libnotify: {}", globals::kNotify);
 
   const auto connection = sdbus::createSystemBusConnection();
-
   managers::UdisksManager mgr{*connection};
   spdlog::info("Connected to UDisks version {} on D-Bus", mgr.Version());
-
-  managers::UdisksObjectManager obj_mgr{*connection};
+  managers::UdisksObjectManager obj_mgr{
+      *connection,
+      options::Options{.automount = !no_automount, .notify = !no_notify}};
 
   spdlog::debug("Entering event loop");
   connection->enterEventLoop();
