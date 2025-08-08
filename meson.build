@@ -9,6 +9,7 @@ project(
 		'cpp_std=c++23',
 		'warning_level=3',
 	],
+    'werror=true',
 )
 
 add_project_arguments(
@@ -51,11 +52,11 @@ endif
 
 sdbus_cpp_dep = dependency('sdbus-c++', version : ['>=2.1.0', '<3.0.0']) # SemVer
 
-# BUG(blackma9ick): werror=false does not work.
+# Using as_system('system') is a workaround for silencing warnings coming from
+# libraries.
 # See <https://github.com/mesonbuild/meson/issues/13600>
-
 argparse_proj = subproject('argparse', default_options : 'werror=false')
-argparse_dep = argparse_proj.get_variable('argparse_dep')
+argparse_dep = argparse_proj.get_variable('argparse_dep').as_system('system')
 
 spdlog_proj = subproject('spdlog', default_options : 'werror=false')
 spdlog_dep = spdlog_proj.get_variable('spdlog_dep')
