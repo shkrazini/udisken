@@ -18,6 +18,9 @@
 
 #include "utilities.hpp"
 
+#include "options.hpp"
+
+#include <libnotify/notify.h>
 #include <sdbus-c++/Types.h>
 
 #include <cstdint>
@@ -37,12 +40,16 @@ namespace utils {
 
 auto Notify([[maybe_unused]] const Notification& notification) -> bool {
 #ifdef FEATURE_NOTIFY
+  if (!options::ShouldNotify() || !notify_is_initted()) {
+    return false;
+  }
+
   // notify_notification_new gives us ownership of the notification.
   auto notif = std::make_unique<NotifyNotification>(*notify_notification_new(
       notification.summary.c_str(), notification.body.c_str(),
       notification.icon.c_str()));
 
-  auto shown = notify_notification_show(notif.get(), nullptr) == 0;
+  auto shown = notify_notification_show(notif.get(), nullptr);
   if (!shown) {
     spdlog::warn("Failed to show notification");
   }
