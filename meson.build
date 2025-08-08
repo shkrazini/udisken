@@ -48,24 +48,30 @@ if get_option('debug')
   add_project_arguments('-D_GLIBCXX_DEBUG=1', language : 'cpp')
 endif
 
+# Setting include_type to system, is a workaround for silencing warnings coming
+# from libraries. See <https://github.com/mesonbuild/meson/issues/13600>
+argparse_dep = dependency(
+  'argparse',
+  version : ['>=3.1', '<4.0'],
+  include_type : 'system',
+  fallback : ['argparse', 'argparse_dep'],
+)
+
 sdbus_cpp_dep = dependency(
   'sdbus-c++',
   version : ['>=2.1.0', '<3.0.0'], # Follows Semantic Versioning.
 )
 
-# Using as_system('system') is a workaround for silencing warnings coming from
-# libraries.
-# See <https://github.com/mesonbuild/meson/issues/13600>
-argparse_proj = subproject('argparse', default_options : 'werror=false')
-argparse_dep = argparse_proj.get_variable('argparse_dep').as_system('system')
-
-spdlog_proj = subproject('spdlog', default_options : 'werror=false')
-spdlog_dep = spdlog_proj.get_variable('spdlog_dep')
+spdlog_dep = dependency(
+  'spdlog',
+  version : ['>=1.15.0', '<2.0.0'],
+  fallback : ['spdlog', 'spdlog_dep'],
+)
 
 libnotify_dep = dependency(
   'libnotify',
   version : ['>=0.8.0', '<1.0.0'],
-  required : get_option('notify')
+  required : get_option('notify'),
 )
 if libnotify_dep.found()
   add_project_arguments('-DFEATURE_NOTIFY', language : 'cpp')
