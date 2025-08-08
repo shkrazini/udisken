@@ -195,7 +195,7 @@ auto TryAutomount(BlockDevice& blk_device) -> std::optional<std::string> {
 
   auto mnt_point = Mount(blk_device.filesystem());
 
-  if (mnt_point.has_value()) {
+  if (mnt_point) {
     spdlog::info("Automounted {}", *mnt_point);
     utils::Notification notif{
         .summary = "Mounted disk",
