@@ -62,7 +62,7 @@ These are higher priority than environment variables (see below).
 Disabling notifications:
 
 ```sh
-udisken -n
+udisken --no-notify
 ```
 
 UDISKEN also reads from some environment variables.

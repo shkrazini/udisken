@@ -35,17 +35,17 @@
 auto main(int argc, char* argv[]) -> int {
   argparse::ArgumentParser program(globals::kAppName, globals::kAppVer);
   bool no_automount{};
-  program.add_argument("-A", "--no-automount")
+  program.add_argument("--no-automount")
       .help("do not automount")
       .flag()
       .store_into(no_automount);
   bool no_notify{};
-  program.add_argument("-N", "--no-notify")
+  program.add_argument("-n", "--no-notify")
       .help("do not send desktop notifications")
       .flag()
       .store_into(no_notify);
   bool verbose{};
-  program.add_argument("-V", "--verbose")
+  program.add_argument("-d", "--debug", "--verbose")
       .help("increase output verbosity")
       .flag()
       .store_into(verbose);
