@@ -40,10 +40,12 @@ auto main(int argc, char* argv[]) -> int {
       .flag()
       .store_into(no_automount);
   bool no_notify{};
-  program.add_argument("-n", "--no-notify")
-      .help("do not send desktop notifications")
-      .flag()
-      .store_into(no_notify);
+  if constexpr (globals::kNotify) {
+    program.add_argument("--no-notify")
+        .help("do not send desktop notifications")
+        .flag()
+        .store_into(no_notify);
+  }
   bool verbose{};
   program.add_argument("-d", "--debug", "--verbose")
       .help("increase output verbosity")
