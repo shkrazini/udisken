@@ -44,6 +44,10 @@ aurwrapperx -S udisken
 
 ## Getting started
 
+### Running
+
+<!-- TODO(blackma9ick): add systemd service instructions. -->
+
 Simply run the daemon like this:
 
 ```sh
@@ -94,7 +98,7 @@ Finally, using [mold] as the linker is
 
 > [!IMPORTANT]
 > Make sure that the D-Bus API interface file option is correct before running
-> this command: see [Udisks D-Bus API bindings](#udisks-d-bus-api-bindings)
+> this command: see [UDisks D-Bus API bindings](#udisks-d-bus-api-bindings)
 
 #### UDisks D-Bus API bindings
 
@@ -103,8 +107,8 @@ You absolutely need to have [sdbus-c++] installed, which provides the
 
 Simply make sure that the option `udisks_dbus_interface` in the project root
 `meson.build`, points to the correct D-Bus interface XML file: this
-corresponds to the option being yielded to, as mentioned in udisks-sdbus-c++'s
-README file.
+corresponds to the Meson option being yielded to, as mentioned in
+udisks-sdbus-c++'s README file.
 Alternatively, you can provide the `udisks_dbus_interface` option when running
 `meson setup`:
 
@@ -116,7 +120,8 @@ The file's location may vary depending on your distribution.
 
 - Usually, it is located in the `/usr/share/dbus-1/interfaces/`
   system directory.
-- In the [UDisks] upstream repository, it is located at [data/org.freedesktop.UDisks2.xml]
+- In the [UDisks] upstream repository, it is located at
+  [data/org.freedesktop.UDisks2.xml]
 - Alternatively, you may change the file location in the root project
   `meson.build`
 
