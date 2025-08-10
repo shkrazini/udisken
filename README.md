@@ -140,6 +140,8 @@ meson compile -C build
 
 Licensed under the [GNU General Public License Version 3](./LICENSE) (GPLv3).
 
+Copyright © 2025 BlackMa9ick.
+
 ---
 
 _~BlackMa9ick (black magic)_
