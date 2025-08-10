@@ -23,6 +23,25 @@ Low on memory usage, lightweight footprint, fast.
 - [libnotify] 0.8.0 or later (optional)
 - [argparse] 3.1 or later (building only)
 
+## Install
+
+### Arch Linux User Repository (AUR)
+
+<!-- NOTE: not published yet so these links are fake. -->
+
+Available as [udisken](https://aur.archlinux.org/packages/udisken),
+[udisken-bin](https://aur.archlinux.org/packages/udisken-bin) (binary releases)
+or [udisken-git](https://aur.archlinux.org/packages/udisken-git)
+(development branch).
+
+```sh
+paru -S udisken
+# ...or...
+yay -S udisken
+# ...or...
+aurwrapperx -S udisken
+```
+
 ## Getting started
 
 Simply run the daemon like this:
@@ -49,25 +68,6 @@ Disabling notifications:
 
 ```sh
 UDISKEN_NO_NOTIFY=1 udisken
-```
-
-## Install
-
-### Arch Linux User Repository (AUR)
-
-<!-- NOTE: not published yet so these links are fake. -->
-
-Available as [udisken](https://aur.archlinux.org/packages/udisken),
-[udisken-bin](https://aur.archlinux.org/packages/udisken-bin) (binary releases)
-or [udisken-git](https://aur.archlinux.org/packages/udisken-git)
-(development branch).
-
-```sh
-paru -S udisken
-# ...or...
-yay -S udisken
-# ...or...
-aurwrapperx -S udisken
 ```
 
 ## Building
