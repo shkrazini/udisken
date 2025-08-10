@@ -27,6 +27,14 @@
 
 namespace utils {
 
+/// Converts an array of array of bytes (D-Bus equivalent type: a{a{y}})
+/// to a vector of strings.
+///
+/// @param aay The array of array of bytes.
+[[nodiscard("Creates a converted vector")]]
+auto ConvertArrayArrayByte(const std::vector<std::vector<uint8_t>>& aay)
+    -> std::vector<std::string>;
+
 /// Thin struct containing the essential properties of a libnotify
 /// Notification that can be sent to desktop.
 struct Notification {
@@ -56,17 +64,5 @@ constexpr auto NonZero(std::string_view sv) -> bool;
 auto NonZeroEnvironmentVariable(const std::string& var) -> bool;
 
 }  // namespace utils
-
-namespace conversions {
-
-/// Converts an array of array of bytes (D-Bus equivalent type: a{a{y}})
-/// to a vector of strings.
-///
-/// @param aay The array of array of bytes.
-[[nodiscard("Creates a converted vector")]]
-auto ConvertArrayArrayByte(const std::vector<std::vector<uint8_t>>& aay)
-    -> std::vector<std::string>;
-
-}  // namespace conversions
 
 #endif  // UDISKEN_UTILITIES_HPP_
