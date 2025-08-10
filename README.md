@@ -70,12 +70,6 @@ yay -S udisken
 aurwrapperx -S udisken
 ```
 
-Dependencies are automatically taken care of. You can still install them with:
-
-```sh
-pacman -S --asdeps --needed libnotify sdbus-cpp udisks2
-```
-
 ## Building
 
 ### Prepare
