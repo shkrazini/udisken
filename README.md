@@ -17,14 +17,11 @@ Low on memory usage, lightweight footprint, fast.
 
 ## Requires
 
-- [sdbus-c++](https://github.com/Kistler-Group/sdbus-cpp) 2.1.0 or later
-- [UDisks](https://github.com/storaged-project/udisks) 2.10.0 or later
-- [spdlog](https://github.com/gabime/spdlog) 1.15.0 or later
-  (can fallback to subproject)
-- [libnotify](https://gitlab.gnome.org/GNOME/libnotify) 0.8.0 or later
-  (optional)
-- [argparse](https://github.com/p-ranav/argparse) 3.1 or later
-  (building only) (can fallback to subproject)
+- [sdbus-c++] 2.1.0 or later
+- [spdlog] 1.15.0 or later
+- [UDisks] 2.10.0 or later
+- [libnotify] 0.8.0 or later (optional)
+- [argparse] 3.1 or later (building only)
 
 ## Getting started
 
@@ -70,9 +67,8 @@ pacman -S --asdeps --needed libnotify sdbus-cpp udisks2
 
 ### Prepare
 
-You will need to have the
-[Meson](https://mesonbuild.com/SimpleStart.html#installing-meson) build system
-installed in order to build UDISKEN.
+You will need to have the [Meson] build system installed in order to build
+UDISKEN.
 
 Additionally, you will need the dependencies [listed above](#requires). Some
 dependencies are optional, and you can choose to enable or disable the features
@@ -95,9 +91,8 @@ Finally, using [mold] as the linker is
 
 #### UDisks D-Bus API bindings
 
-You absolutely need to have
-[sdbus-cpp](https://github.com/Kistler-Group/sdbus-cpp) installed, which
-provides the `sdbus-c++-xml2cpp` program required for this step.
+You absolutely need to have [sdbus-c++] installed, which provides the
+`sdbus-c++-xml2cpp` program required for this step.
 
 Simply make sure that the option `udisks_dbus_interface` in the project root
 `meson.build`, points to the correct D-Bus interface XML file: this
@@ -114,8 +109,7 @@ The file's location may vary depending on your distribution.
 
 - Usually, it is located in the `/usr/share/dbus-1/interfaces/`
   system directory.
-- In the [UDisks upstream repository], it is located at
-  [data/org.freedesktop.UDisks2.xml]
+- In the [UDisks] upstream repository, it is located at [data/org.freedesktop.UDisks2.xml]
 - Alternatively, you may change the file location in the root project
   `meson.build`
 
@@ -143,7 +137,12 @@ Licensed under the [GNU General Public License Version 3](./LICENSE) (GPLv3).
 
 _~BlackMa9ick (black magic)_
 
+[argparse]: https://github.com/p-ranav/argparse
 [data/org.freedesktop.UDisks2.xml]: https://github.com/storaged-project/udisks/blob/master/data/org.freedesktop.UDisks2.xml
+[libnotify]: https://gitlab.gnome.org/GNOME/libnotify
+[Meson]: https://mesonbuild.com/SimpleStart.html#installing-meson
 [mold]: https://github.com/rui314/mold
+[sdbus-c++]: https://github.com/Kistler-Group/sdbus-cpp
+[spdlog]: https://github.com/gabime/spdlog
 [udisks-sdbus-c++]: https://github.com/blackma9ick/udisks-sdbus-cpp
-[UDisks upstream repository]: https://github.com/storaged-project/udisks
+[UDisks]: https://github.com/storaged-project/udisks
