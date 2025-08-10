@@ -38,6 +38,7 @@ Checks: "
   llvm-include-order,
   llvm-namespace-comment,
   misc-*,
+  -misc-non-private-member-variables-in-classes,
   modernize-*,
   -modernize-pass-by-value,
   performance-*,
