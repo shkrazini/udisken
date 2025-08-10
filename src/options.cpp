@@ -18,47 +18,19 @@
 
 #include "options.hpp"
 
+#include "utilities.hpp"
+
 #include "spdlog/spdlog.h"
 
 #include <libnotify/notify.h>
 
-#include <cstdlib>
 #include <string>
 #include <string_view>
 
 namespace options {
 
-namespace {
-
-/// Checks if the string view has a non-zero value.
-///
-/// @param sv Typical string view.
-/// @return True if string view is non-empty (regardless of the original
-/// string's content), and its content contains characters other than '0'.
-constexpr auto NonZero(std::string_view sv) -> bool {
-  // NOLINTNEXTLINE(readability-static-accessed-through-instance)
-  return !sv.empty() && sv.find_first_not_of("0") != sv.npos;
-}
-
-static_assert(NonZero("1"));
-static_assert(NonZero("101"));
-static_assert(NonZero("010"));
-static_assert(!NonZero(""));
-static_assert(!NonZero("0"));
-
-/// Checks if the environment variable is defined and has a non-zero value.
-///
-/// @param var Name of the environment variable.
-/// @return True if the environment variable is defined and is non-zero.
-auto NonZeroEnvironmentVariable(const std::string& var) -> bool {
-  const auto var_value = std::getenv(var.c_str());
-  return var_value != nullptr && NonZero(var_value);
-}
-
-}  // namespace
-
 auto MountEnabled() -> bool {
-  if (NonZeroEnvironmentVariable("UDISKEN_NO_AUTOMOUNT")) {
+  if (utils::NonZeroEnvironmentVariable("UDISKEN_NO_AUTOMOUNT")) {
     spdlog::debug("Automounting disabled by environment.");
 
     return false;
@@ -68,7 +40,7 @@ auto MountEnabled() -> bool {
 }
 
 auto NotifyEnabled() -> bool {
-  if (NonZeroEnvironmentVariable("UDISKEN_NO_NOTIFY")) {
+  if (utils::NonZeroEnvironmentVariable("UDISKEN_NO_NOTIFY")) {
     spdlog::debug("Notifications disabled by environment.");
 
     return false;

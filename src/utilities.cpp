@@ -58,6 +58,22 @@ auto Notify([[maybe_unused]] const Notification& notification) -> bool {
 #endif  // FEATURE_NOTIFY
 }
 
+constexpr auto NonZero(std::string_view sv) -> bool {
+  // NOLINTNEXTLINE(readability-static-accessed-through-instance)
+  return !sv.empty() && sv.find_first_not_of("0") != sv.npos;
+}
+
+static_assert(NonZero("1"));
+static_assert(NonZero("101"));
+static_assert(NonZero("010"));
+static_assert(!NonZero(""));
+static_assert(!NonZero("0"));
+
+auto NonZeroEnvironmentVariable(const std::string& var) -> bool {
+  const auto var_value = std::getenv(var.c_str());
+  return var_value != nullptr && NonZero(var_value);
+}
+
 }  // namespace utils
 
 namespace conversions {

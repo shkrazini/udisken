@@ -42,6 +42,19 @@ struct Notification {
 /// @return Successfully sent the notification.
 auto Notify(const Notification& notification) -> bool;
 
+/// Checks if the string view has a non-zero value.
+///
+/// @param sv Typical string view.
+/// @return True if string view is non-empty (regardless of the original
+/// string's content), and its content contains characters other than '0'.
+constexpr auto NonZero(std::string_view sv) -> bool;
+
+/// Checks if the environment variable is defined and has a non-zero value.
+///
+/// @param var Name of the environment variable.
+/// @return True if the environment variable is defined and is non-zero.
+auto NonZeroEnvironmentVariable(const std::string& var) -> bool;
+
 }  // namespace utils
 
 namespace conversions {
