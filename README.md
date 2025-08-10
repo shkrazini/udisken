@@ -31,11 +31,24 @@ Simply run the daemon like this:
 udisken
 ```
 
-If you don't want UDISKEN to automount for some reason, you can run the daemon
-with:
+### Configuring
+
+UDISKEN takes a few command arguments.
+These are higher priority than environment variables (see below).
+
+Disabling notifications:
 
 ```sh
-UDISKEN_NO_AUTOMOUNT=1 udisken
+udisken -n
+```
+
+UDISKEN also reads from some environment variables.
+These are lower priority than command flags.
+
+Disabling notifications:
+
+```sh
+UDISKEN_NO_NOTIFY=1 udisken
 ```
 
 ## Install
