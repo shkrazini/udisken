@@ -46,7 +46,9 @@ auto InitNotify() -> bool {
 }  // namespace
 
 auto main(int argc, char* argv[]) -> int {
-  argparse::ArgumentParser program(globals::kAppName, globals::kAppVer);
+  spdlog::info("UDISKEN {}", globals::kAppVer);
+
+  argparse::ArgumentParser program{globals::kAppName, globals::kAppVer};
   bool no_automount{};
   program.add_argument("--no-automount")
       .help("do not automount")
@@ -75,8 +77,6 @@ auto main(int argc, char* argv[]) -> int {
   if (globals::kDebug || verbose) {
     spdlog::set_level(spdlog::level::debug);
   }
-
-  spdlog::info("UDISKEN - {} - GPLv3", globals::kAppVer);
 
   if (globals::kNotify && !no_notify && !InitNotify()) {
     spdlog::critical("libnotify initialization failed!");
