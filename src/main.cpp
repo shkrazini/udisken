@@ -69,8 +69,8 @@ auto main(int argc, char* argv[]) -> int {
       .store_into(verbose);
   try {
     program.parse_args(argc, argv);
-  } catch (const std::exception& err) {
-    spdlog::error("Parsing args failed: {}", err.what());
+  } catch (const std::exception& e) {
+    spdlog::error("{}", e.what());
     std::cerr << program;
     return EXIT_FAILURE;
   }
