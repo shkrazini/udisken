@@ -301,7 +301,7 @@ void UdisksObjectManager::onInterfacesAdded(
   objects::BlockDevice blk_device{std::move(block), std::move(filesystem),
                                   std::move(loop), std::move(partition)};
 
-  if (options::MountEnabled() && options_.automount) {
+  if (options::MountEnabled()) {
     objects::TryAutomount(blk_device);
   }
 

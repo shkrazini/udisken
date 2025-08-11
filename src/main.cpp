@@ -50,11 +50,6 @@ auto main(int argc, char* argv[]) -> int {
   spdlog::info("UDISKEN {}", globals::kAppVer);
 
   argparse::ArgumentParser program{globals::kAppName, globals::kAppVer};
-  bool no_automount{};
-  program.add_argument("--no-automount")
-      .help("do not automount")
-      .flag()
-      .store_into(no_automount);
   bool no_notify{};
   if constexpr (globals::kNotify) {
     program.add_argument("--no-notify")
@@ -89,9 +84,8 @@ auto main(int argc, char* argv[]) -> int {
   const auto connection = sdbus::createSystemBusConnection();
   managers::UdisksManager mgr{*connection};
   spdlog::info("Connected to UDisks version {} on D-Bus", mgr.Version());
-  managers::UdisksObjectManager obj_mgr{
-      *connection,
-      options::Options{.automount = !no_automount, .notify = !no_notify}};
+  managers::UdisksObjectManager obj_mgr{*connection,
+                                        options::Options{.notify = !no_notify}};
 
   spdlog::debug("Entering event loop");
   connection->enterEventLoop();

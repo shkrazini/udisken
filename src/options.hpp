@@ -47,7 +47,6 @@ constexpr bool kNotify{false};
 namespace options {
 
 struct Options {
-  bool automount{true};
   bool notify{true};
 };
 
