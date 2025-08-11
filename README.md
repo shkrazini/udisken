@@ -57,7 +57,6 @@ udisken
 ### Configuring
 
 UDISKEN takes a few command arguments.
-These are higher priority than environment variables (see below).
 
 Disabling notifications:
 
@@ -66,13 +65,28 @@ udisken --no-notify
 ```
 
 UDISKEN also reads from some environment variables.
-These are lower priority than command flags.
 
 Disabling notifications:
 
 ```sh
 UDISKEN_NO_NOTIFY=1 udisken
 ```
+
+**Other configuration**, such as _enabling or disabling automounting per drive_,
+is best done in lower-level configuration files or tools, such as [fstab(5)].
+
+If done so, this will allow UDISKEN and other programs to respect such
+settings.
+
+To **manually mount, unmount, or do something else**, you should use
+[udisksctl(1)]: it is simple enough to use and supports shell completion in
+Bash, Fish, and Zsh\*; simply remember to add `-b|--block-device`, like this:
+
+```sh
+udisksctl mount -b /dev/sdXN
+```
+
+\*_Requires [zsh-completions] installed._
 
 ## Building
 
@@ -153,10 +167,13 @@ _~BlackMa9ick (black magic)_
 
 [argparse]: https://github.com/p-ranav/argparse
 [data/org.freedesktop.UDisks2.xml]: https://github.com/storaged-project/udisks/blob/master/data/org.freedesktop.UDisks2.xml
+[fstab(5)]: https://man.archlinux.org/man/fstab.5
 [libnotify]: https://gitlab.gnome.org/GNOME/libnotify
 [Meson]: https://mesonbuild.com/SimpleStart.html#installing-meson
 [mold]: https://github.com/rui314/mold
 [sdbus-c++]: https://github.com/Kistler-Group/sdbus-cpp
 [spdlog]: https://github.com/gabime/spdlog
-[udisks-sdbus-c++]: https://github.com/blackma9ick/udisks-sdbus-cpp
 [UDisks]: https://github.com/storaged-project/udisks
+[udisks-sdbus-c++]: https://github.com/blackma9ick/udisks-sdbus-cpp
+[udisksctl(1)]: https://man.archlinux.org/man/udisksctl.1.en
+[zsh-completions]: https://github.com/zsh-users/zsh-completions
