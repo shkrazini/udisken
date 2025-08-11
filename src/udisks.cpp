@@ -201,7 +201,7 @@ auto TryAutomount(BlockDevice& blk_device) -> std::optional<std::string> {
         .summary = "Mounted disk",
         .body =
             std::format("{} at {}", blk_device.block().HintName(), *mnt_point),
-        .icon = "drive-removable-media"};
+        .icon = blk_device.block().HintIconName()};
     utils::Notify(notif);
   }
 
