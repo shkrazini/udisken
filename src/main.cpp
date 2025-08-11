@@ -18,6 +18,7 @@
 
 #include "options.hpp"
 #include "udisks.hpp"
+#include "utilities.hpp"
 
 #include <argparse/argparse.hpp>
 #include <sdbus-c++/IConnection.h>
@@ -74,7 +75,8 @@ auto main(int argc, char* argv[]) -> int {
     return EXIT_FAILURE;
   }
 
-  if (globals::kDebug || verbose) {
+  if (globals::kDebug || utils::NonZeroEnvironmentVariable("DEBUG") ||
+      verbose) {
     spdlog::set_level(spdlog::level::debug);
   }
 
