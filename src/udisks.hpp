@@ -353,6 +353,10 @@ class EncryptedBlockDevice : public BlockDevice {
  private:
   std::unique_ptr<interfaces::UdisksEncrypted> encrypted_;
 };
+
+auto TryUnlock(objects::EncryptedBlockDevice& enc_blk_device)
+    -> std::optional<sdbus::ObjectPath>;
+
 }  // namespace objects
 
 /// Entrypoints of most of UDISKEN's logic.

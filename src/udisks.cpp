@@ -30,8 +30,10 @@
 #include <spdlog/spdlog.h>
 #include <udisks-sdbus-c++/udisks_errors.hpp>
 
+#include <format>
 #include <map>
 #include <memory>
+#include <optional>
 #include <stdexcept>
 #include <string>
 #include <string_view>
@@ -257,28 +259,19 @@ auto TryAutomount(BlockDevice& blk_device) -> std::optional<std::string> {
   return mnt_point;
 }
 
-auto BlockDevice::filesystem() -> interfaces::UdisksFilesystem& {
-  if (!HasFilesystem()) {
-    throw std::logic_error("object does not implement interface");
+auto TryUnlock(objects::EncryptedBlockDevice& enc_blk_device)
+    -> std::optional<sdbus::ObjectPath> {
+  try {
+    if (auto cleartext_blk = enc_blk_device.Unlock("", {});
+        cleartext_blk != udisks::kEmptyObjectPath) {
+      return cleartext_blk;
+    }
+  } catch (const sdbus::Error& e) {
+    spdlog::debug("Unlock initially failed", e.what());
+    // TODO(blackma9ick): open a dialog box to read a passphrase.
   }
 
-  return *filesystem_;
-}
-
-auto BlockDevice::loop() -> interfaces::UdisksLoop& {
-  if (!HasLoop()) {
-    throw std::logic_error("object does not implement interface");
-  }
-
-  return *loop_;
-}
-
-auto BlockDevice::partition() -> interfaces::UdisksPartition& {
-  if (!HasPartition()) {
-    throw std::logic_error("object does not implement interface");
-  }
-
-  return *partition_;
+  return std::nullopt;
 }
 
 }  // namespace objects
