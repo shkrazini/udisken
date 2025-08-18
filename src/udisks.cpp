@@ -305,16 +305,11 @@ void UdisksObjectManager::onInterfacesAdded(
     objects::TryAutomount(blk_device);
   }
 
-  block_devices_.try_emplace(object_path, std::move(blk_device));
-
-  spdlog::debug("Added Block device at {}", object_path.c_str());
+  spdlog::debug("Processed block device at {}", object_path.c_str());
 }
 
 void UdisksObjectManager::onInterfacesRemoved(
     [[maybe_unused]] const sdbus::ObjectPath& object_path,
-    [[maybe_unused]] const std::vector<sdbus::InterfaceName>& interfaces) {
-  // for (const auto& interface : interfaces) {
-  // }
-}
+    [[maybe_unused]] const std::vector<sdbus::InterfaceName>& interfaces) {}
 
 }  // namespace managers

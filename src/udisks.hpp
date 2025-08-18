@@ -343,7 +343,6 @@ class UdisksObjectManager final
       const std::vector<sdbus::InterfaceName>& interfaces) final;
 
   options::Options options_;
-  std::map<sdbus::ObjectPath, objects::BlockDevice> block_devices_;
 };
 
 }  // namespace managers
