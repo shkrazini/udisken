@@ -338,8 +338,32 @@ void UdisksObjectManager::onInterfacesAdded(
         getProxy().getConnection(), object_path);
   }
 
-  // Only block must be non-null. The rest can be null. The Drive member will be
-  // automatically constructed if it exists.
+  // All this mess, is because we can't magically (get it?) let these devices
+  // retrieve their specific interfaces that they implement: we only get the
+  // interfaces in this function, and we have to give them to the devices
+  // manually.
+  if (HasInterface<interfaces::UdisksEncrypted>(interfaces_and_properties)) {
+    // We are adding an encrypted block device.
+    // The cleartext block device (the one that has a mountable filesystem)
+    // backed by this encrypted block device will not appear until we unlock it.
+
+    auto encrypted = std::make_unique<interfaces::UdisksEncrypted>(
+        getProxy().getConnection(), object_path);
+    objects::EncryptedBlockDevice enc_blk_device{
+        std::move(encrypted), std::move(block), std::move(filesystem),
+        std::move(loop), std::move(partition)};
+
+    if (!TryUnlock(enc_blk_device)) {
+      spdlog::warn("Failed to unlock {}", object_path);
+    }
+    // If unlocked, the cleartext device will appear and will be automounted.
+
+    spdlog::debug("Processed encrypted block device at {}",
+                  object_path.c_str());
+
+    return;
+  }
+
   objects::BlockDevice blk_device{std::move(block), std::move(filesystem),
                                   std::move(loop), std::move(partition)};
 
