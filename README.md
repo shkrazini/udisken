@@ -42,9 +42,7 @@ yay -S udisken
 aurwrapperx -S udisken
 ```
 
-## Getting started
-
-### Running
+## Running
 
 <!-- TODO(blackma9ick): add systemd service instructions. -->
 
@@ -54,7 +52,7 @@ Simply run the daemon like this:
 udisken
 ```
 
-### Configuring
+## Configuring
 
 UDISKEN takes a few command arguments.
 
