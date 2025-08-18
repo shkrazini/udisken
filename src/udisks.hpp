@@ -38,6 +38,8 @@
 // TODO(blackma9ick): are the deleted ctors and assignment operators
 // declarations redundant? If so, remove them.
 
+namespace udisks_api = org::freedesktop::UDisks2;
+
 namespace udisks {
 
 constexpr auto kInterfaceName = "org.freedesktop.UDisks2";
@@ -49,8 +51,6 @@ static const sdbus::ObjectPath kEmptyObjectPath{"/"};
 }  // namespace udisks
 
 namespace interfaces {
-
-namespace udisks_api = org::freedesktop::UDisks2;
 
 /// Proxy to a UDisks block interface.
 ///

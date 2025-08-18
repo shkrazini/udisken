@@ -159,8 +159,6 @@ auto BlockDevice::partition() -> interfaces::UdisksPartition& {
 
 namespace {
 
-namespace udisks = org::freedesktop::UDisks2;
-
 auto Mount(interfaces::UdisksFilesystem& fs) -> std::optional<std::string> {
   try {
     auto mnt_point = fs.Mount({});
@@ -170,7 +168,8 @@ auto Mount(interfaces::UdisksFilesystem& fs) -> std::optional<std::string> {
     return mnt_point;
   } catch (const sdbus::Error& e) {
     if (e.getName() ==
-        udisks::ErrorName(udisks::UdisksErrors::kUdisksErrorAlreadyMounted)) {
+        udisks_api::ErrorName(
+            udisks_api::UdisksErrors::kUdisksErrorAlreadyMounted)) {
       spdlog::warn(
           "{} is already mounted but UDisks initially returned no mount paths;",
           fs.getProxy().getObjectPath().c_str());
