@@ -123,7 +123,7 @@ BlockDevice::BlockDevice(
     throw std::invalid_argument("block pointer must not be null");
   }
 
-  if (block_->HasDrive()) {
+  if (block_->Drive() != udisks::kEmptyObjectPath) {
     drive_ = std::make_unique<Drive>(std::make_unique<interfaces::UdisksDrive>(
         block_->getProxy().getConnection(), block_->Drive()));
   }

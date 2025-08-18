@@ -44,6 +44,8 @@ constexpr auto kInterfaceName = "org.freedesktop.UDisks2";
 constexpr auto kObjectPath = "/org/freedesktop/UDisks2";
 static const sdbus::ServiceName kServiceName{kInterfaceName};
 
+static const sdbus::ObjectPath kEmptyObjectPath{"/"};
+
 }  // namespace udisks
 
 namespace interfaces {
@@ -68,11 +70,6 @@ class UdisksBlock final
   UdisksBlock(const UdisksBlock&) = delete;
   auto operator=(UdisksBlock&&) -> UdisksBlock& = delete;
   auto operator=(const UdisksBlock&) -> UdisksBlock& = delete;
-
-  auto HasDrive() -> bool {
-    // Equals '/' if no drive exists.
-    return Drive() != "/";
-  }
 
   ~UdisksBlock() noexcept { unregisterProxy(); };
 };
