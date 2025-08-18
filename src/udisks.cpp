@@ -53,6 +53,12 @@ UdisksDrive::UdisksDrive(sdbus::IConnection& connection,
   registerProxy();
 }
 
+UdisksEncrypted::UdisksEncrypted(sdbus::IConnection& connection,
+                                 const sdbus::ObjectPath& object_path)
+    : ProxyInterfaces(connection, udisks::kServiceName, object_path) {
+  registerProxy();
+}
+
 UdisksFilesystem::UdisksFilesystem(sdbus::IConnection& connection,
                                    const sdbus::ObjectPath& object_path)
     : ProxyInterfaces(connection, udisks::kServiceName, object_path) {
@@ -131,6 +137,49 @@ BlockDevice::BlockDevice(
 
 [[nodiscard]] auto BlockDevice::ObjectPath() const -> const sdbus::ObjectPath& {
   return block_->getProxy().getObjectPath();
+}
+
+EncryptedBlockDevice::EncryptedBlockDevice(
+    std::unique_ptr<interfaces::UdisksEncrypted> encrypted,
+    std::unique_ptr<interfaces::UdisksBlock> block,
+    std::unique_ptr<interfaces::UdisksFilesystem> filesystem,
+    std::unique_ptr<interfaces::UdisksLoop> loop,
+    std::unique_ptr<interfaces::UdisksPartition> partition)
+    : BlockDevice(std::move(block), std::move(filesystem), std::move(loop),
+                  std::move(partition)),
+      encrypted_(std::move(encrypted)) {};
+
+auto EncryptedBlockDevice::Unlock(
+    const std::string& passphrase,
+    const std::map<std::string, sdbus::Variant>& options) -> sdbus::ObjectPath {
+  return encrypted_->Unlock(passphrase, options);
+  // The cleartext Block interface will appear at this point, and
+  // cleartext_block_ should be set with the correct object in
+  // UdisksObjectManager::onInterfacesAdded.
+}
+
+auto BlockDevice::filesystem() -> interfaces::UdisksFilesystem& {
+  if (!HasFilesystem()) {
+    throw std::logic_error("object does not implement interface");
+  }
+
+  return *filesystem_;
+}
+
+auto BlockDevice::loop() -> interfaces::UdisksLoop& {
+  if (!HasLoop()) {
+    throw std::logic_error("object does not implement interface");
+  }
+
+  return *loop_;
+}
+
+auto BlockDevice::partition() -> interfaces::UdisksPartition& {
+  if (!HasPartition()) {
+    throw std::logic_error("object does not implement interface");
+  }
+
+  return *partition_;
 }
 
 namespace {

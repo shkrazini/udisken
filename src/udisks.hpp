@@ -100,6 +100,28 @@ class UdisksDrive final
   ~UdisksDrive() noexcept { unregisterProxy(); }
 };
 
+/// Proxy to a UDisks encrypted device interface.
+///
+/// UdisksBlockDevice may implement this interface.
+class UdisksEncrypted final
+    : public sdbus::ProxyInterfaces<udisks_api::Encrypted_proxy> {
+ public:
+  /// Construct an encrypted proxy.
+  ///
+  /// @param connection System bus connection. Should be the same as used
+  /// to construct the manager proxy (UdisksManager).
+  /// @param object_path Object path to a UDisks Encrypted interface.
+  UdisksEncrypted(sdbus::IConnection& connection,
+                  const sdbus::ObjectPath& object_path);
+
+  UdisksEncrypted(UdisksEncrypted&&) = delete;
+  UdisksEncrypted(const UdisksEncrypted&) = delete;
+  auto operator=(UdisksEncrypted&&) -> UdisksEncrypted& = delete;
+  auto operator=(const UdisksEncrypted&) -> UdisksEncrypted& = delete;
+
+  ~UdisksEncrypted() noexcept { unregisterProxy(); }
+};
+
 /// Proxy to a UDisks mountable filesystem interface, contained in a
 /// UdisksBlockDevice.
 ///
@@ -282,6 +304,55 @@ class BlockDevice {
 /// failed. Does not throw if filesystem is already mounted somewhere.
 auto TryAutomount(BlockDevice& blk_device) -> std::optional<std::string>;
 
+class EncryptedBlockDevice : public BlockDevice {
+ public:
+  /// Create an encrypted Block device that will take ownership of the
+  /// unique_ptrs to the proxy interfaces.
+  ///
+  /// The block interface is required to construct this device.
+  /// All other interfaces are optional, and can take nullptr.
+  /// In addition, the cleartext Block device that is backed by this encrypted
+  /// Block device must be given; see the UDisks "CleartextDevice" property of
+  /// UDisks2.Encrypted and "CryptoBackingDevice" property of UDisks2.Block.
+  ///
+  /// The drive object will be made available automatically if it exists.
+  ///
+  /// Unique_ptrs passed to this constructor will be moved to!
+  // NOLINTNEXTLINE
+  EncryptedBlockDevice(
+      std::unique_ptr<interfaces::UdisksEncrypted> encrypted,
+      std::unique_ptr<interfaces::UdisksBlock> block,
+      std::unique_ptr<interfaces::UdisksFilesystem> filesystem = nullptr,
+      std::unique_ptr<interfaces::UdisksLoop> loop = nullptr,
+      std::unique_ptr<interfaces::UdisksPartition> partition = nullptr);
+
+  /// Tries to unlock the encrypted device using passphrase.
+  ///
+  /// If the device in question is referenced in a system-wide configuration
+  /// file (such as the /etc/crypttab file), then name, options and passphrase
+  /// (if available) is used from that file after requesting additional
+  /// authorization.
+  ///
+  /// If an empty passphrase should be used to unlock the device, it has to be
+  /// passed using the keyfile_contents parameter. Empty string passed as
+  /// passphrase means "Use the passphrase from the configuration file".
+  ///
+  /// If the device is removed without being locked (e.g. the user yanking the
+  /// device or pulling the media out) the cleartext device will be cleaned up.
+  ///
+  /// @param passphrase The passphrase to use.
+  /// @param options Options - known options (in addition to standard options)
+  ///   includes keyfile_contents (of type 'ay') which is preferred over
+  ///   passphrase if specified and read-only (of type 'b').
+  /// @return An object path to the unlocked object implementing the
+  ///   org.freedesktop.UDisks2.Block interface.
+  auto Unlock(const std::string& passphrase,
+              const std::map<std::string, sdbus::Variant>& options)
+      -> sdbus::ObjectPath;
+
+ private:
+  std::unique_ptr<interfaces::UdisksEncrypted> encrypted_;
+};
 }  // namespace objects
 
 /// Entrypoints of most of UDISKEN's logic.
