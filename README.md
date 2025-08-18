@@ -1,18 +1,13 @@
 # UDISKEN
 
-LINUX DRIVE AUTOMOUNTER FOR THE IMPATIENT.
-
----
-
-A small GNU/Linux desktop removable media mounting daemon.
+A small Linux desktop removable media mounting daemon, that uses little
+memory.
 
 Mount automatically your...:
 
 - USB drive
 - CD or DVD disk
 - loop devices
-
-Low on memory usage, lightweight footprint, fast.
 
 ## Requires
 
@@ -156,7 +151,9 @@ meson compile -C build
 
 Licensed under the [GNU General Public License Version 3](./LICENSE) (GPLv3).
 
-Copyright © 2025 Sofian-Hedi Krazini.
+---
+
+My first real project; others were either underdeveloped or abandoned.
 
 [argparse]: https://github.com/p-ranav/argparse
 [data/org.freedesktop.UDisks2.xml]: https://github.com/storaged-project/udisks/blob/master/data/org.freedesktop.UDisks2.xml
