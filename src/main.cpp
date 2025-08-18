@@ -47,8 +47,6 @@ auto InitNotify() -> bool {
 }  // namespace
 
 auto main(int argc, char* argv[]) -> int {
-  spdlog::info("UDISKEN {}", globals::kAppVer);
-
   argparse::ArgumentParser program{globals::kAppName, globals::kAppVer};
   bool no_notify{};
   if constexpr (globals::kNotify) {
@@ -69,6 +67,8 @@ auto main(int argc, char* argv[]) -> int {
     std::cerr << program;
     return EXIT_FAILURE;
   }
+
+  spdlog::info("UDISKEN {}", globals::kAppVer);
 
   if (globals::kDebug || utils::NonZeroEnvironmentVariable("DEBUG") ||
       verbose) {
