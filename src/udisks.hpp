@@ -1,5 +1,5 @@
 // UDISKEN: Linux drive automounter for the impatient.
-// Copyright (C) 2025 BlackMa9ick
+// Copyright (C) 2025 Sofian-Hedi Krazini
 //
 // This program is free software: you can redistribute it and/or modify it
 // under the terms of the GNU General Public License as published by the
