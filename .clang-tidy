@@ -17,6 +17,7 @@ Checks: "
   -*,
   bugprone-*,
   cert-*,
+  -cert-env33-c,
   -cert-err58-cpp,
   clang-analyzer-alpha.core.*,
   clang-analyzer-alpha.cplusplus.*,
