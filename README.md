@@ -10,7 +10,6 @@ Mount automatically your...:
 
 - USB drive
 - CD or DVD disk
-- encrypted drive
 - loop devices
 
 Low on memory usage, lightweight footprint, fast.
