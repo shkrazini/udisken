@@ -161,10 +161,6 @@ Licensed under the [GNU General Public License Version 3](./LICENSE) (GPLv3).
 
 Copyright © 2025 BlackMa9ick.
 
----
-
-_~BlackMa9ick (black magic)_
-
 [argparse]: https://github.com/p-ranav/argparse
 [data/org.freedesktop.UDisks2.xml]: https://github.com/storaged-project/udisks/blob/master/data/org.freedesktop.UDisks2.xml
 [fstab(5)]: https://man.archlinux.org/man/fstab.5
