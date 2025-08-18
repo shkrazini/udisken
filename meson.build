@@ -83,7 +83,7 @@ udisks_sdbus_cpp_proj = subproject(
       # NOTE: you likely need to change this.
       'udisks_dbus_interface=/home/sofian/source/udisken/dbus/org.freedesktop.UDisks2.xml',
     ],
-    version : '=2.10-0' # unstable
+    version : '=2.10-1'
 )
 udisks_sdbus_cpp_dep = udisks_sdbus_cpp_proj.get_variable('udisks_sdbus_cpp_dep')
 
