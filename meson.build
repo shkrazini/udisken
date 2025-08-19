@@ -34,7 +34,7 @@ add_project_arguments(
   '-Wsign-promo',
   '-Wstack-protector',
   '-Wstrict-null-sentinel',
-  '-Wstrict-overflow=5',
+  '-Wstrict-overflow',
   '-Wswitch-default',
   '-Wundef',
   '-Wuseless-cast',
