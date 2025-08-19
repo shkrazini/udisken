@@ -7,6 +7,7 @@ project(
   default_options : [
     # minimum: c++23
     'cpp_std=c++23',
+	'b_ndebug=if-release',
     'warning_level=3',
     'werror=true',
   ],
