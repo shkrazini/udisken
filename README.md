@@ -1,5 +1,12 @@
 # UDISKEN
 
+> [!NOTE]
+> [!NOTE]
+> Unlocking encrypted disks is not supported yet.
+> Some preliminary work has been done in the
+> [unlock](https://github.com/blackma9ick/udisken/tree/unlock)
+> branch.
+
 A small Linux desktop removable media mounting daemon, that uses little memory.
 (\~26x fewer memory used than [udiskie] on author's setup:
 from \~80 MiB to \~3 MiB)
