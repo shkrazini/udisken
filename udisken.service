@@ -1,0 +1,11 @@
+[Unit]
+Description=UDISKEN Removable Media Mounting Daemon
+Documentation=https://github.com/blackma9ick/udisken/blob/main/README.md
+Requires=dbus.service udisks2.service
+
+[Service]
+Type=exec
+ExecStart=/usr/bin/udisken
+
+[Install]
+WantedBy=local-fs.target usb-gadget.target

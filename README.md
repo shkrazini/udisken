@@ -39,9 +39,13 @@ aurwrapperx -S udisken
 
 ## Running
 
-<!-- TODO(blackma9ick): add systemd service instructions. -->
+UDISKEN provides a systemd user service. You can enable it using:
 
-Simply run the daemon like this:
+```sh
+systemctl --user enable udisken.service
+```
+
+You can also simply run the daemon like this:
 
 ```sh
 udisken

@@ -89,4 +89,6 @@ udisks_sdbus_cpp_proj = subproject(
 )
 udisks_sdbus_cpp_dep = udisks_sdbus_cpp_proj.get_variable('udisks_sdbus_cpp_dep')
 
+install_data('udisken.service', install_dir : '/usr/lib/systemd/user')
+
 subdir('src')
