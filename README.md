@@ -1,7 +1,8 @@
 # UDISKEN
 
-A small Linux desktop removable media mounting daemon, that uses little
-memory.
+A small Linux desktop removable media mounting daemon, that uses little memory.
+(\~26x fewer memory used than [udiskie] on author's setup:
+from \~80 MiB to \~3 MiB)
 
 Mount automatically your...:
 
@@ -163,6 +164,7 @@ My first real project; others were either underdeveloped or abandoned.
 [mold]: https://github.com/rui314/mold
 [sdbus-c++]: https://github.com/Kistler-Group/sdbus-cpp
 [spdlog]: https://github.com/gabime/spdlog
+[udiskie]: https://github.com/coldfix/udiskie
 [UDisks]: https://github.com/storaged-project/udisks
 [udisks-sdbus-c++]: https://github.com/blackma9ick/udisks-sdbus-cpp
 [udisksctl(1)]: https://man.archlinux.org/man/udisksctl.1.en
