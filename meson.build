@@ -14,6 +14,9 @@ project(
 )
 
 add_project_arguments(
+  '-D_FORTIFY_SOURCE=3',
+  '-DUDISKEN_NAME="' + meson.project_name() + '"',
+  '-DUDISKEN_VERSION="' + meson.project_version() + '"',
   '-Wcast-align',
   '-Wcast-qual',
   '-Wconversion',
@@ -40,8 +43,6 @@ add_project_arguments(
   '-Wundef',
   '-Wuseless-cast',
   '-Wzero-as-null-pointer-constant',
-  '-DUDISKEN_NAME="' + meson.project_name() + '"',
-  '-DUDISKEN_VERSION="' + meson.project_version() + '"',
   language : 'cpp',
 )
 
