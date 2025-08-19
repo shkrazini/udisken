@@ -1,6 +1,9 @@
 # UDISKEN
 
 > [!NOTE]
+> UDISKEN will only receive bug fixes for now, as I am working on other
+> projects. A few features are still planned, such as unlocking (see the note below).
+
 > [!NOTE]
 > Unlocking encrypted disks is not supported yet.
 > Some preliminary work has been done in the
