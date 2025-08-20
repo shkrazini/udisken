@@ -32,8 +32,6 @@ Mount automatically your...:
 
 ### Arch Linux User Repository (AUR)
 
-<!-- NOTE: not published yet so these links are fake. -->
-
 Available as [udisken](https://aur.archlinux.org/packages/udisken),
 [udisken-bin](https://aur.archlinux.org/packages/udisken-bin) (binary releases)
 or [udisken-git](https://aur.archlinux.org/packages/udisken-git)
