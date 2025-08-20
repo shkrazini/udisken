@@ -164,7 +164,10 @@ meson compile -C build
 
 ## Copyright
 
-Licensed under the [GNU General Public License Version 3](./LICENSE) (GPLv3).
+Licensed under the [Apache License, Version 2.0](./LICENSE).
+
+Please remember to include the [NOTICE](./NOTICE) file in your fork, as required
+by the Apache License. Thanks!
 
 ---
 

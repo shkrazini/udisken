@@ -2,7 +2,7 @@ project(
   'udisken',
   'cpp',
   version : '0.0.1',
-  license : 'GPL-3.0-or-later',
+  license : 'Apache-2.0',
   meson_version : '>=1.1.0',
   default_options : [
     # minimum: c++23
