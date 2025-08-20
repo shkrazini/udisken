@@ -106,17 +106,6 @@ Additionally, you will need the dependencies [listed above](#requires). Some
 dependencies are optional, and you can choose to enable or disable the features
 that require them in `meson.options`.
 
-Finally, using [mold] as the linker is
-**recommended**:
-
-1. Install [mold]: depends on your distribution.
-2. Set `CC_LD` and `CXX_LD` to use [mold] prior to running
-   `meson setup [builddir]`; run
-
-   ```sh
-   CC_LD=mold CXX_LD=mold meson setup build
-   ```
-
 > [!IMPORTANT]
 > Make sure that the D-Bus API interface file option is correct before running
 > this command: see [UDisks D-Bus API bindings](#udisks-d-bus-api-bindings)
@@ -150,10 +139,6 @@ For more information, see [udisks-sdbus-c++].
 
 ### Build
 
-> [!TIP]
-> If you want to use [mold] ([recommended](#prepare)),
-> run `CC_LD=mold CXX_LD=mold meson setup build` instead of `meson setup build`.
-
 ```sh
 git clone https://github.com/blackma9ick/udisken
 cd udisken
@@ -178,7 +163,6 @@ My first real project; others were either underdeveloped or abandoned.
 [fstab(5)]: https://man.archlinux.org/man/fstab.5
 [libnotify]: https://gitlab.gnome.org/GNOME/libnotify
 [Meson]: https://mesonbuild.com/SimpleStart.html#installing-meson
-[mold]: https://github.com/rui314/mold
 [sdbus-c++]: https://github.com/Kistler-Group/sdbus-cpp
 [spdlog]: https://github.com/gabime/spdlog
 [udiskie]: https://github.com/coldfix/udiskie
