@@ -3,7 +3,7 @@ project(
   'cpp',
   version : '0.0.1',
   license : 'Apache-2.0',
-  meson_version : '>=1.1.0',
+  meson_version : '>=1.4.0',
   default_options : [
     # minimum: c++23
     'cpp_std=c++23',
