@@ -81,11 +81,14 @@ if libnotify_dep.found()
   add_project_arguments('-DFEATURE_NOTIFY', language : 'cpp')
 endif
 
+# FIXME(blackma9ick): when installing with Meson, udisks-sdbus-c++'s header
+# files are also installed. That's not really to be desired.
+
+dbus_interface = files('dbus/org.freedesktop.UDisks2.xml')
 udisks_sdbus_cpp_proj = subproject(
   'udisks-sdbus-c++',
     default_options : [
-      # NOTE: you likely need to change this.
-      'udisks_dbus_interface=/home/sofian/source/udisken/dbus/org.freedesktop.UDisks2.xml',
+      'udisks_dbus_interface=' + dbus_interface[0].full_path(),
     ],
     version : '=2.10-1'
 )
