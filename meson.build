@@ -62,6 +62,7 @@ argparse_dep = dependency(
 sdbus_cpp_dep = dependency(
   'sdbus-c++',
   version : ['>=2.1.0', '<3.0.0'], # Follows Semantic Versioning.
+  static : false, # LGPL
 )
 
 spdlog_dep = dependency(
@@ -74,6 +75,7 @@ libnotify_dep = dependency(
   'libnotify',
   version : ['>=0.8.0', '<1.0.0'],
   required : get_option('notify'),
+  static : false, # LGPL
 )
 if libnotify_dep.found()
   add_project_arguments('-DFEATURE_NOTIFY', language : 'cpp')
