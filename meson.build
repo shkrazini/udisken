@@ -14,7 +14,6 @@ project(
 )
 
 add_project_arguments(
-  '-D_FORTIFY_SOURCE=3',
   '-DUDISKEN_NAME="' + meson.project_name() + '"',
   '-DUDISKEN_VERSION="' + meson.project_version() + '"',
   '-Wcast-align',
