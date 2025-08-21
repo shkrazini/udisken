@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "codelldb",
+      "request": "launch",
+      "name": "Launch UDISKEN",
+      "program": "${workspaceFolder}/build/src/udisken"
+    },
+    {
+      "type": "codelldb",
+      "request": "attach",
+      "name": "Attach to process",
+      "program": "${command:pickProcess}"
+    }
+  ]
+}
