@@ -21,6 +21,7 @@
 #include <sdbus-c++/Types.h>
 
 #include <cstdint>
+#include <cstdlib>
 #include <ranges>
 #include <string>
 #include <vector>
