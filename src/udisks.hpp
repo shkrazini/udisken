@@ -32,12 +32,6 @@
 #include <string>
 #include <vector>
 
-// TODO(blackma9ick): should small wrapper methods be added? If so, all of these
-// interfaces could be moved to udisks-sdbus-c++.
-
-// TODO(blackma9ick): are the deleted ctors and assignment operators
-// declarations redundant? If so, remove them.
-
 namespace udisks_api = org::freedesktop::UDisks2;
 
 namespace udisks {
@@ -178,17 +172,17 @@ namespace objects {
 
 /// Drive object, which is the physical device behind its block device
 /// objects.
-// TODO(blackma9ick): directly take the UdisksDrive ctor parameters to construct
-// it directly? Would be cleaner than requiring an interface: it creates a nest
-// of make_uniques.
 class Drive {
  public:
+  // NOLINTBEGIN
+
   /// Construct a Drive object with the Drive interface proxy.
   ///
   /// @param drive Pointer to the drive interface for this object. Must be
   /// non-null.
-  // NOLINTNEXTLINE
   Drive(std::unique_ptr<interfaces::UdisksDrive> drive);
+
+  // NOLINTEND
 
   [[nodiscard]] auto ObjectPath() const -> const sdbus::ObjectPath&;
 

@@ -70,9 +70,6 @@ spdlog_dep = dependency(
   fallback : ['spdlog', 'spdlog_dep'],
 )
 
-# FIXME(blackma9ick): when installing with Meson, udisks-sdbus-c++'s header
-# files are also installed. That's not really to be desired.
-
 dbus_interface = files('dbus/org.freedesktop.UDisks2.xml')
 udisks_sdbus_cpp_proj = subproject(
   'udisks-sdbus-c++',

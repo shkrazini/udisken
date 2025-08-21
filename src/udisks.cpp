@@ -192,6 +192,8 @@ void PrintNotAutomounting(const BlockDevice& blk_device,
 
 }  // namespace
 
+// TODO(blackma9ick): read from fstab, etc., for any additional mount points
+// that UDisks may not know about.
 auto TryAutomount(BlockDevice& blk_device) -> std::optional<std::string> {
   if (!blk_device.block().HintAuto()) {
     PrintNotAutomounting(blk_device, "automount hint was false");
@@ -206,9 +208,7 @@ auto TryAutomount(BlockDevice& blk_device) -> std::optional<std::string> {
     return std::nullopt;
   }
 
-  // If mount points already exist, no need to automount it...
-  // TODO(blackma9ick): ...unless other paths are given to UDISKEN and it
-  // should mount?)
+  // If mount points already exist, no need to automount it.
   if (!blk_device.filesystem().MountPoints().empty()) {
     PrintNotAutomounting(blk_device, "already mounted");
 
