@@ -7,11 +7,7 @@
 #   characters and you forget to replace the single-quotes.
 #   Also the gain is negligeable unless you're running it on a asphyxiated
 #   vacuum-tube machine.
-# - readability-identifier-length triggers in cases where longer identifiers
-#	clutter up the code.
 # - readability-implicit-bool-conversion triggers with C libraries.
-# - readability-redundant-member-init might conflict with gcc/clang -Weffc++
-#	NOTE: restored because we disabled -Weffc++.
 # - readability-qualified-auto adds noise more often than not.
 Checks: "
   -*,
