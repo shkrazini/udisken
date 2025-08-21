@@ -25,19 +25,8 @@
 #include <libnotify/notify.h>
 
 #include <string>
-#include <string_view>
 
 namespace options {
-
-auto MountEnabled() -> bool {
-  if (utils::NonZeroEnvironmentVariable("UDISKEN_NO_AUTOMOUNT")) {
-    spdlog::debug("Automounting disabled by environment.");
-
-    return false;
-  }
-
-  return true;
-}
 
 auto NotifyEnabled() -> bool {
   if (utils::NonZeroEnvironmentVariable("UDISKEN_NO_NOTIFY")) {

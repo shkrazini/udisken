@@ -50,11 +50,6 @@ struct Options {
   bool notify{true};
 };
 
-/// Is mounting enabled by the environment.
-///
-/// @return False if UDISKEN_NO_AUTOMOUNT is non-zero. True otherwise.
-[[nodiscard]] auto MountEnabled() -> bool;
-
 /// Are desktop notifications enabled by the environment.
 ///
 /// @return False if UDISKEN_NO_NOTIFY is non-zero. True otherwise.
