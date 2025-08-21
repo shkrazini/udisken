@@ -32,6 +32,7 @@ Checks: "
   concurrency-*,
   -concurrency-mt-unsafe,
   cppcoreguidelines-*,
+  -cppcoreguidelines-avoid-magic-numbers,
   google-*,
   hicpp-*,
   llvm-header-guard,
