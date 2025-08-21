@@ -25,7 +25,6 @@ Mount automatically your...:
 - [sdbus-c++] 2.1.0 or later
 - [spdlog] 1.15.0 or later
 - [UDisks] 2.10.0 or later
-- [libnotify] 0.8.0 or later (optional)
 - [argparse] 3.1 or later (building only)
 
 ## Install
@@ -159,7 +158,6 @@ My first real project; others were either underdeveloped or abandoned.
 [argparse]: https://github.com/p-ranav/argparse
 [data/org.freedesktop.UDisks2.xml]: https://github.com/storaged-project/udisks/blob/master/data/org.freedesktop.UDisks2.xml
 [fstab(5)]: https://man.archlinux.org/man/fstab.5
-[libnotify]: https://gitlab.gnome.org/GNOME/libnotify
 [Meson]: https://mesonbuild.com/SimpleStart.html#installing-meson
 [sdbus-c++]: https://github.com/Kistler-Group/sdbus-cpp
 [spdlog]: https://github.com/gabime/spdlog

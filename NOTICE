@@ -8,8 +8,6 @@ We greatly appreciate the following works and people:
 
 - argparse by Pranav Srinivas Kumar, licensed under the MIT License.
 - fmt by Victor Zverovich and {fmt} contributors, licensed under the MIT License.
-- libnotify by Christian Hammond, and Red Hat, Inc., licensed under the GNU Lesser
-  General Public License Version 2.1.
 - sdbus-c++, by KISTLER INSTRUMENTE AG, Winterthur, Switzerland, and Stanislav
   Angelovic, licensed under the GNU Lesser General Public License Version 2.1.
 - spdlog by Gabi Melman, licensed under the MIT License.
@@ -72,8 +70,8 @@ source code, you may redistribute such embedded portions in such object form
 without including the above copyright and permission notices.
 
 
-libnotify by Christian Hammond, and Red Hat, Inc., licensed under the GNU Lesser
-General Public License Version 2.1.
+sdbus-c++, by KISTLER INSTRUMENTE AG, Winterthur, Switzerland, and Stanislav
+Angelovic, licensed under the GNU Lesser General Public License Version 2.1.
 -------------------------------------------------------------------------------
 
           GNU LESSER GENERAL PUBLIC LICENSE Version 2.1, February 1999
@@ -505,12 +503,6 @@ er published by the Free Software Foundation.
     SUSTAINED BY YOU OR THIRD PARTIES OR A FAILURE OF THE LIBRARY TO OPERATE
     WITH ANY OTHER SOFTWARE), EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN
     ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
-
-sdbus-c++, by KISTLER INSTRUMENTE AG, Winterthur, Switzerland, and Stanislav
-Angelovic, licensed under the GNU Lesser General Public License Version 2.1.
--------------------------------------------------------------------------------
-(license above)
-
 
 spdlog by Gabi Melman, licensed under the MIT License.
 -------------------------------------------------------------------------------

@@ -22,7 +22,6 @@
 #include "options.hpp"
 #include "utilities.hpp"
 
-#include <libnotify/notification.h>
 #include <sdbus-c++/Error.h>
 #include <sdbus-c++/IConnection.h>
 #include <sdbus-c++/ProxyInterfaces.h>

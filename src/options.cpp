@@ -22,8 +22,6 @@
 
 #include "spdlog/spdlog.h"
 
-#include <libnotify/notify.h>
-
 #include <string>
 
 namespace options {
@@ -35,7 +33,7 @@ auto NotifyEnabled() -> bool {
     return false;
   }
 
-  return globals::kNotify;
+  return true;
 }
 
 }  // namespace options

@@ -70,16 +70,6 @@ spdlog_dep = dependency(
   fallback : ['spdlog', 'spdlog_dep'],
 )
 
-libnotify_dep = dependency(
-  'libnotify',
-  version : ['>=0.8.0', '<1.0.0'],
-  required : get_option('notify'),
-  static : false, # LGPL
-)
-if libnotify_dep.found()
-  add_project_arguments('-DFEATURE_NOTIFY', language : 'cpp')
-endif
-
 # FIXME(blackma9ick): when installing with Meson, udisks-sdbus-c++'s header
 # files are also installed. That's not really to be desired.
 

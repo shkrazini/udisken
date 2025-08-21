@@ -1,6 +1,0 @@
-option(
-	'notify',
-	type : 'feature',
-	value : 'enabled',
-	description : 'Desktop notifications using libnotify'
-)

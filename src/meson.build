@@ -10,7 +10,6 @@ executable(
 	udisken_sources,
 	dependencies : [
 		argparse_dep,
-		libnotify_dep,
 		sdbus_cpp_dep,
 		spdlog_dep,
 		udisks_sdbus_cpp_dep
