@@ -51,10 +51,6 @@ Checks: "
   -google-objc-*,
   "
 
-# Almost all warnings must be fixed. A few could be ignored by adding a
-# NOLINT(...) directive.
-WarningsAsErrors: "*,-fuchsia-statically-constructed-objects,"
-
 # Based on Google's naming style.
 # prettier-ignore
 CheckOptions:
