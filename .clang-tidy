@@ -11,6 +11,12 @@
 #   vacuum-tube machine.
 # - readability-implicit-bool-conversion triggers with C libraries.
 # - readability-qualified-auto adds noise more often than not.
+# - readability-redundant-member-init has bugs[1][2] and directly conflicts
+#	with -Wmissing(-designated)-field-initializers, which even though has
+# 	questionable semantics, is still of a massive importance to not forget
+#   initializing new members.
+#   [1]: https://github.com/llvm/llvm-project/issues/90235
+#   [2]: https://github.com/llvm/llvm-project/issues/134440
 Checks: "
   -*,
   bugprone-*,
@@ -48,6 +54,7 @@ Checks: "
   -readability-identifier-length,
   -readability-implicit-bool-conversion,
   -readability-qualified-auto,
+  -readability-redundant-member-init,
   -google-objc-*,
   "
 
