@@ -88,13 +88,6 @@ UdisksPartition::UdisksPartition(sdbus::IConnection& connection,
 
 }  // namespace interfaces
 
-// TEST(blackma9ick): constructing an UdisksFilesystem mounts the filesystem, if
-// automounting is enabled; do not fail if filesystem is already mounted (e.g.
-// by user)
-// TEST(blackma9ick): destructing an UdisksFilesystem unmounts the filesystem,
-// if automounting if enabled; do not fail if filesystem is already unmounted
-// (e.g. by external program).
-
 namespace objects {
 
 Drive::Drive(std::unique_ptr<interfaces::UdisksDrive> drive)
