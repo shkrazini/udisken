@@ -304,7 +304,8 @@ class UdisksObjectManager final
   ~UdisksObjectManager() noexcept { unregisterProxy(); }
 
  private:
-  /// Houses all UDISKEN automatic actions (e.g., automounting).
+  /// Processes interfaces and the objects implementing them, and runs vital
+  /// functions on these, such as automounting.
   void onInterfacesAdded(
       const sdbus::ObjectPath& object_path,
       InterfacesAndProperties interfaces_and_properties) final;
