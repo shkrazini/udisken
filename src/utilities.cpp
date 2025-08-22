@@ -43,8 +43,7 @@ auto Notify([[maybe_unused]] const Notification& notification) -> bool {
 }
 
 constexpr auto NonZero(std::string_view sv) -> bool {
-  // NOLINTNEXTLINE(readability-static-accessed-through-instance)
-  return !sv.empty() && sv.find_first_not_of("0") != sv.npos;
+  return !sv.empty() && sv.find_first_not_of("0") != std::string_view::npos;
 }
 
 static_assert(NonZero("1"));
