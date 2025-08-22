@@ -19,9 +19,13 @@
 #ifndef UDISKEN_UTILITIES_HPP_
 #define UDISKEN_UTILITIES_HPP_
 
+#include "options.hpp"
+
 #include <sdbus-c++/Types.h>
 
+#include <chrono>
 #include <cstdint>
+#include <map>
 #include <string>
 #include <vector>
 
@@ -34,21 +38,6 @@ namespace utils {
 [[nodiscard("Creates a converted vector")]]
 auto ConvertArrayArrayByte(const std::vector<std::vector<uint8_t>>& aay)
     -> std::vector<std::string>;
-
-/// Thin struct containing the essential properties of a libnotify
-/// Notification that can be sent to desktop.
-struct Notification {
-  std::string summary;
-  std::string body;
-  std::string icon;
-};
-
-/// Send a desktop notification.
-///
-/// @param notification Notification.
-///
-/// @return Successfully sent the notification.
-auto Notify(const Notification& notification) -> bool;
 
 /// Checks if the string view has a non-zero value.
 ///
@@ -66,5 +55,36 @@ auto Notify(const Notification& notification) -> bool;
 [[nodiscard]] auto NonZeroEnvironmentVariable(const std::string& var) -> bool;
 
 }  // namespace utils
+
+namespace notify {
+
+using namespace std::chrono_literals;
+
+/// Thin struct containing the essential properties of a Freedesktop.org
+/// Notification that can be sent to desktop.
+///
+/// See the Notifications specification for documentation on these properties:
+/// <https://specifications.freedesktop.org/notification-spec/latest/>
+struct Notification {
+  std::string summary;
+
+  std::string body{};
+  std::string app_name{globals::kAppName};
+  std::string app_icon{};
+  std::chrono::milliseconds expire_timeout{1s};
+  std::uint32_t replaces_id{0};
+  std::vector<std::string> actions{};
+
+  std::map<std::string, sdbus::Variant> hints{};
+};
+
+/// Send a desktop notification.
+///
+/// @param notification Notification.
+///
+/// @return Successfully sent the notification.
+auto Notify(const Notification& notif) -> bool;
+
+}  // namespace notify
 
 #endif  // UDISKEN_UTILITIES_HPP_

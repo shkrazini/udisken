@@ -18,12 +18,16 @@
 
 #include "utilities.hpp"
 
+#include <sdbus-c++/Error.h>
+#include <sdbus-c++/IProxy.h>
 #include <sdbus-c++/Types.h>
+#include <spdlog/spdlog.h>
 
 #include <cstdint>
 #include <cstdlib>
 #include <ranges>
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace utils {
@@ -35,11 +39,6 @@ auto ConvertArrayArrayByte(const std::vector<std::vector<uint8_t>>& aay)
            return std::string{std::from_range, vec};
          }) |
          std::ranges::to<std::vector<std::string>>();
-}
-
-auto Notify([[maybe_unused]] const Notification& notification) -> bool {
-  // TODO(blackma9ick): add open in FM feature.
-  return false;
 }
 
 constexpr auto NonZero(std::string_view sv) -> bool {
@@ -58,3 +57,34 @@ auto NonZeroEnvironmentVariable(const std::string& var) -> bool {
 }
 
 }  // namespace utils
+
+namespace notify {
+
+// TODO(blackma9ick): add open in file manager actions.
+auto Notify(const Notification& notif) -> bool {
+  sdbus::ServiceName service_name{"org.freedesktop.Notifications"};
+  sdbus::ObjectPath object_path{"/org/freedesktop/Notifications"};
+  sdbus::InterfaceName interface_name{service_name};
+  auto notify_proxy =
+      sdbus::createProxy(std::move(service_name), std::move(object_path));
+
+  std::uint32_t notif_id{};
+  try {
+    // FIXME(blackma9ick): gives an error with "too many notifications sent
+    // quickly". For some reason.
+    notify_proxy->callMethod("Notify")
+        .onInterface(interface_name)
+        .withArguments(notif.app_name, notif.replaces_id, notif.app_icon,
+                       notif.summary, notif.body, notif.actions, notif.hints,
+                       static_cast<std::int32_t>(notif.expire_timeout.count()))
+        .storeResultsTo(notif_id);
+  } catch (const sdbus::Error& e) {
+    spdlog::error("Error after sending notification: {}", e.getMessage());
+  }
+
+  // notif_id will always be greater than zero if sending notification
+  // succeeded.
+  return notif_id != 0;
+}
+
+}  // namespace notify

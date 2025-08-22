@@ -29,6 +29,7 @@
 #include <spdlog/spdlog.h>
 #include <udisks-sdbus-c++/udisks_errors.hpp>
 
+#include <format>
 #include <map>
 #include <memory>
 #include <stdexcept>
@@ -192,6 +193,8 @@ void PrintNotAutomounting(const BlockDevice& blk_device,
 
 }  // namespace
 
+using namespace std::chrono_literals;
+
 // TODO(blackma9ick): read from fstab, etc., for any additional mount points
 // that UDisks may not know about.
 auto TryAutomount(BlockDevice& blk_device) -> std::optional<std::string> {
@@ -216,15 +219,18 @@ auto TryAutomount(BlockDevice& blk_device) -> std::optional<std::string> {
   }
 
   auto mnt_point = Mount(blk_device.filesystem());
-
   if (mnt_point) {
     spdlog::info("Automounted {}", *mnt_point);
-    utils::Notification notif{
-        .summary = "Mounted disk",
-        .body =
-            std::format("{} at {}", blk_device.block().HintName(), *mnt_point),
-        .icon = blk_device.block().HintIconName()};
-    utils::Notify(notif);
+    notify::Notification notif{
+        .summary{"Mounted disk"},
+        .body{std::format("{} at {}", blk_device.block().HintName(),
+                          *mnt_point->c_str())},
+        .app_icon{blk_device.block().HintIconName()},
+        .expire_timeout{5s},
+        .hints{{{"action_icons", sdbus::Variant{true}},
+                {"category", sdbus::Variant{"device.added"}},
+                {"sound_name", sdbus::Variant{"device-added-media"}}}}};
+    notify::Notify(notif);
   }
 
   return mnt_point;
