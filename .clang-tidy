@@ -3,6 +3,8 @@
 # also triggers on non-standard library expensive types.
 # - concurrency-mt-unsafe triggers even in a single-threaded program, and can be
 #   addressed by mutexes/locks anyways.
+# - google-explicit-constructor triggers in too many irrelevant cases, including
+#   with program-defined types.
 # - performance-faster-string-find will lead to so much pain if you add
 #   characters and you forget to replace the single-quotes.
 #   Also the gain is negligeable unless you're running it on a asphyxiated
@@ -30,6 +32,7 @@ Checks: "
   cppcoreguidelines-*,
   -cppcoreguidelines-avoid-magic-numbers,
   google-*,
+  -google-explicit-constructor,
   hicpp-*,
   llvm-header-guard,
   llvm-include-order,

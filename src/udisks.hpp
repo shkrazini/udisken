@@ -174,15 +174,11 @@ namespace objects {
 /// objects.
 class Drive {
  public:
-  // NOLINTBEGIN
-
   /// Construct a Drive object with the Drive interface proxy.
   ///
   /// @param drive Pointer to the drive interface for this object. Must be
   /// non-null.
   Drive(std::unique_ptr<interfaces::UdisksDrive> drive);
-
-  // NOLINTEND
 
   [[nodiscard]] auto ObjectPath() const -> const sdbus::ObjectPath&;
 
@@ -208,7 +204,6 @@ class BlockDevice {
   /// The drive object will be made available automatically if it exists.
   ///
   /// Unique_ptrs passed to this constructor will be moved to!
-  // NOLINTNEXTLINE
   BlockDevice(
       std::unique_ptr<interfaces::UdisksBlock> block,
       std::unique_ptr<interfaces::UdisksFilesystem> filesystem = nullptr,
