@@ -1,5 +1,6 @@
 udisken_sources = [
   'main.cpp',
+  'mount.cpp',
   'options.cpp',
   'udisks.cpp',
   'utilities.cpp',

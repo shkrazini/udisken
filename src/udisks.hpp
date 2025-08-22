@@ -29,7 +29,6 @@
 
 #include <map>
 #include <memory>
-#include <string>
 #include <vector>
 
 namespace udisks_api = org::freedesktop::UDisks2;
@@ -113,11 +112,6 @@ class UdisksFilesystem final
 
   ~UdisksFilesystem() noexcept { unregisterProxy(); }
 };
-
-using MountPoints = std::vector<std::string>;
-
-auto GetMountPoints(UdisksFilesystem& fs) -> MountPoints;
-void PrintMountPoints(const MountPoints& mnt_points);
 
 /// Proxy to a UDisks loop device interface.
 ///
@@ -258,15 +252,6 @@ class BlockDevice {
   /// Proxy to the partition on the block device.
   std::unique_ptr<interfaces::UdisksPartition> partition_ = nullptr;
 };
-
-/// Automount.
-///
-/// @return Path to mount point after mounting, or nothing if the
-/// filesystem is already mounted somewhere.
-///
-/// @throws sdbus::Error Error returned by UDisks if automounting
-/// failed. Does not throw if filesystem is already mounted somewhere.
-auto TryAutomount(BlockDevice& blk_device) -> std::optional<std::string>;
 
 }  // namespace objects
 
