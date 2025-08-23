@@ -85,7 +85,7 @@ auto Drive::ObjectPath() const -> const sdbus::ObjectPath& {
   return drive_->getProxy().getObjectPath();
 }
 
-auto Drive::drive() -> interfaces::UdisksDrive& { return *drive_; }
+auto Drive::GetDrive() -> interfaces::UdisksDrive& { return *drive_; }
 
 BlockDevice::BlockDevice(
     std::unique_ptr<interfaces::UdisksBlock> block,
@@ -110,7 +110,7 @@ BlockDevice::BlockDevice(
   return block_->getProxy().getObjectPath();
 }
 
-auto BlockDevice::filesystem() -> interfaces::UdisksFilesystem& {
+auto BlockDevice::Filesystem() -> interfaces::UdisksFilesystem& {
   if (!HasFilesystem()) {
     throw std::logic_error("object does not implement interface");
   }
@@ -118,7 +118,7 @@ auto BlockDevice::filesystem() -> interfaces::UdisksFilesystem& {
   return *filesystem_;
 }
 
-auto BlockDevice::loop() -> interfaces::UdisksLoop& {
+auto BlockDevice::Loop() -> interfaces::UdisksLoop& {
   if (!HasLoop()) {
     throw std::logic_error("object does not implement interface");
   }
@@ -126,7 +126,7 @@ auto BlockDevice::loop() -> interfaces::UdisksLoop& {
   return *loop_;
 }
 
-auto BlockDevice::partition() -> interfaces::UdisksPartition& {
+auto BlockDevice::Partition() -> interfaces::UdisksPartition& {
   if (!HasPartition()) {
     throw std::logic_error("object does not implement interface");
   }

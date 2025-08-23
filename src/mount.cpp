@@ -91,7 +91,7 @@ using namespace std::chrono_literals;
 // that UDisks may not know about.
 auto TryAutomount(objects::BlockDevice& blk_device)
     -> std::optional<std::string> {
-  if (!blk_device.block().HintAuto()) {
+  if (!blk_device.Block().HintAuto()) {
     PrintNotAutomounting(blk_device, "automount hint was false");
 
     return std::nullopt;
@@ -105,20 +105,20 @@ auto TryAutomount(objects::BlockDevice& blk_device)
   }
 
   // If mount points already exist, no need to automount it.
-  if (!blk_device.filesystem().MountPoints().empty()) {
+  if (!blk_device.Filesystem().MountPoints().empty()) {
     PrintNotAutomounting(blk_device, "already mounted");
 
     return std::nullopt;
   }
 
-  auto mnt_point = Mount(blk_device.filesystem());
+  auto mnt_point = Mount(blk_device.Filesystem());
   if (mnt_point) {
     spdlog::info("Automounted {}", *mnt_point);
     notify::Notification notif{
         .summary{"Mounted disk"},
-        .body{std::format("{} at {}", blk_device.block().HintName(),
+        .body{std::format("{} at {}", blk_device.Block().HintName(),
                           *mnt_point->c_str())},
-        .app_icon{blk_device.block().HintIconName()},
+        .app_icon{blk_device.Block().HintIconName()},
         .expire_timeout{5s},
         .hints{{{"action_icons", sdbus::Variant{true}},
                 {"category", sdbus::Variant{"device.added"}},

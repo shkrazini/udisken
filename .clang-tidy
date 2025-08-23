@@ -117,7 +117,3 @@ CheckOptions:
     - { key: readability-identifier-naming.MemberConstantPrefix,      value: k          }
     - { key: readability-identifier-naming.StaticConstantCase,        value: CamelCase  }
     - { key: readability-identifier-naming.StaticConstantPrefix,      value: k          }
-
-    # Trivial getters (and even setters) should be allowed to have variable name
-    # case (that is, "snake_case"). Otherwise, stick to "CamelCase".
-    - { key: readability-identifier-naming.PublicMethodCase,      value: aNy_CasE   }
