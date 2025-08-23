@@ -160,10 +160,6 @@ class UdisksPartition
 
 namespace objects {
 
-// This place is filled to the brim with unique_ptrs. Why? Because every
-// sdbus-c++ interface proxies have their copy ctor/assignment operator deleted.
-// So, there is not much other way.
-
 /// Drive object, which is the physical device behind its block device
 /// objects.
 class Drive {
