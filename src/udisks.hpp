@@ -170,7 +170,7 @@ class Drive {
   /// non-null.
   Drive(std::unique_ptr<interfaces::UdisksDrive> drive);
 
-  [[nodiscard]] auto ObjectPath() const -> const sdbus::ObjectPath&;
+  auto ObjectPath() const -> const sdbus::ObjectPath&;
 
   /// Get the drive interface proxy.
   ///
@@ -200,7 +200,7 @@ class BlockDevice {
       std::unique_ptr<interfaces::UdisksLoop> loop = nullptr,
       std::unique_ptr<interfaces::UdisksPartition> partition = nullptr);
 
-  [[nodiscard]] auto ObjectPath() const -> const sdbus::ObjectPath&;
+  auto ObjectPath() const -> const sdbus::ObjectPath&;
 
   /// Get the block interface proxy; this proxy always exists as long as
   /// the block device is valid.
@@ -214,8 +214,8 @@ class BlockDevice {
   /// by the object.
   ///
   /// @returns Reference to the filesystem interface proxy, not the pointer.
-  [[nodiscard]] auto HasFilesystem() -> bool { return filesystem_ != nullptr; }
   auto Filesystem() -> interfaces::UdisksFilesystem&;
+  auto HasFilesystem() -> bool { return filesystem_ != nullptr; }
 
   /// Get the loop device interface proxy.
   ///
@@ -223,8 +223,8 @@ class BlockDevice {
   /// by the object.
   ///
   /// @returns Reference to the loop device interface proxy, not the pointer.
-  [[nodiscard]] auto HasLoop() -> bool { return loop_ != nullptr; }
   auto Loop() -> interfaces::UdisksLoop&;
+  auto HasLoop() -> bool { return loop_ != nullptr; }
 
   /// Get the partition interface proxy.
   ///
@@ -232,8 +232,8 @@ class BlockDevice {
   /// by the object.
   ///
   /// @returns Reference to the partition interface proxy, not the pointer.
-  [[nodiscard]] auto HasPartition() -> bool { return partition_ != nullptr; }
   auto Partition() -> interfaces::UdisksPartition&;
+  auto HasPartition() -> bool { return partition_ != nullptr; }
 
  private:
   /// Corresponding drive object for this block device. If it exists, it is

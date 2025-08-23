@@ -46,7 +46,7 @@ struct Options {
 /// Are desktop notifications enabled by the environment.
 ///
 /// @return False if UDISKEN_NO_NOTIFY is non-zero. True otherwise.
-[[nodiscard]] auto NotifyEnabled() -> bool;
+auto NotifyEnabled() -> bool;
 
 }  // namespace options
 

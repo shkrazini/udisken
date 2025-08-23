@@ -106,7 +106,7 @@ BlockDevice::BlockDevice(
   }
 }
 
-[[nodiscard]] auto BlockDevice::ObjectPath() const -> const sdbus::ObjectPath& {
+auto BlockDevice::ObjectPath() const -> const sdbus::ObjectPath& {
   return block_->getProxy().getObjectPath();
 }
 

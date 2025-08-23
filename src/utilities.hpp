@@ -35,7 +35,7 @@ namespace utils {
 /// to a vector of strings.
 ///
 /// @param aay The array of array of bytes.
-[[nodiscard("Creates a converted vector")]]
+[[nodiscard("Returns the converted vector")]]
 auto ConvertArrayArrayByte(const std::vector<std::vector<uint8_t>>& aay)
     -> std::vector<std::string>;
 
@@ -45,14 +45,14 @@ auto ConvertArrayArrayByte(const std::vector<std::vector<uint8_t>>& aay)
 ///
 /// @return True if string view is non-empty (regardless of the original
 /// string's content), and its content contains characters other than '0'.
-[[nodiscard]] constexpr auto NonZero(std::string_view sv) -> bool;
+constexpr auto NonZero(std::string_view sv) -> bool;
 
 /// Checks if the environment variable is defined and has a non-zero value.
 ///
 /// @param var Name of the environment variable.
 ///
 /// @return True if the environment variable is defined and is non-zero.
-[[nodiscard]] auto NonZeroEnvironmentVariable(const std::string& var) -> bool;
+auto NonZeroEnvironmentVariable(const std::string& var) -> bool;
 
 }  // namespace utils
 
