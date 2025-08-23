@@ -1,22 +1,4 @@
 ---
-# - modernize-pass-by-value has unclear advantages and decreases readability. It
-# also triggers on non-standard library expensive types.
-# - concurrency-mt-unsafe triggers even in a single-threaded program, and can be
-#   addressed by mutexes/locks anyways.
-# - google-explicit-constructor triggers in too many irrelevant cases, including
-#   with program-defined types.
-# - performance-faster-string-find will lead to so much pain if you add
-#   characters and you forget to replace the single-quotes.
-#   Also the gain is negligeable unless you're running it on a asphyxiated
-#   vacuum-tube machine.
-# - readability-implicit-bool-conversion triggers with C libraries.
-# - readability-qualified-auto adds noise more often than not.
-# - readability-redundant-member-init has bugs[1][2] and directly conflicts
-#	with -Wmissing(-designated)-field-initializers, which even though has
-# 	questionable semantics, is still of a massive importance to not forget
-#   initializing new members.
-#   [1]: https://github.com/llvm/llvm-project/issues/90235
-#   [2]: https://github.com/llvm/llvm-project/issues/134440
 Checks: "
   -*,
   bugprone-*,
@@ -96,6 +78,16 @@ Checks: "
   -readability-qualified-auto,
   -readability-redundant-member-init,
   "
+# - concurrency-mt-unsafe triggers even in a single-threaded program, and can
+#   and should be addressed by mutexes/locks anyways (very few mortals are
+#   concurrency gods).
+# - readability-qualified-auto adds noise more often than not.
+# - readability-redundant-member-init has bugs[1][2] and directly conflicts
+#	with -Wmissing(-designated)-field-initializers, which even though has
+# 	questionable semantics, is still of great help to not forget initializing
+# 	new members.
+#   [1]: https://github.com/llvm/llvm-project/issues/90235
+#   [2]: https://github.com/llvm/llvm-project/issues/134440
 
 # Based on Google's naming style.
 # prettier-ignore
