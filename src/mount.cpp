@@ -88,10 +88,12 @@ void PrintNotAutomounting(const objects::BlockDevice& blk_device,
 using namespace std::chrono_literals;
 
 // TODO(blackma9ick): read from fstab, etc., for any additional mount points
-// that UDisks may not know about.
+// that UDisks may not know about, and mount to them.
 auto TryAutomount(objects::BlockDevice& blk_device)
     -> std::optional<std::string> {
-  if (!blk_device.Block().HintAuto()) {
+  interfaces::UdisksBlock& blk{blk_device.Block()};
+
+  if (!blk.HintAuto()) {
     PrintNotAutomounting(blk_device, "automount hint was false");
 
     return std::nullopt;
@@ -114,11 +116,16 @@ auto TryAutomount(objects::BlockDevice& blk_device)
   auto mnt_point = Mount(blk_device.Filesystem());
   if (mnt_point) {
     spdlog::info("Automounted {}", *mnt_point);
+
+    std::string blk_name{blk.HintName().empty() ? blk_device.Partition().Name()
+                                                : blk.HintName()};
+    std::string blk_icon_name{blk.HintIconName().empty()
+                                  ? "drive-removable-media"
+                                  : blk.HintIconName()};
     notify::Notification notif{
         .summary{"Mounted disk"},
-        .body{std::format("{} at {}", blk_device.Block().HintName(),
-                          *mnt_point->c_str())},
-        .app_icon{blk_device.Block().HintIconName()},
+        .body{std::format("{} at {}", blk_name, *mnt_point->c_str())},
+        .app_icon{blk_icon_name},
         .expire_timeout{5s},
         .hints{{{"action_icons", sdbus::Variant{true}},
                 {"category", sdbus::Variant{"device.added"}},
