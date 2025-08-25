@@ -15,6 +15,7 @@ project(
 
 add_project_arguments(
   '-DUDISKEN_NAME="' + meson.project_name() + '"',
+  '-DUDISKEN_NAME_UI="' + meson.project_name().to_upper() + '"',
   '-DUDISKEN_VERSION="' + meson.project_version() + '"',
   '-Wcast-align',
   '-Wcast-qual',

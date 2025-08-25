@@ -47,7 +47,7 @@ auto main(int argc, char* argv[]) -> int {
     return EXIT_FAILURE;
   }
 
-  spdlog::info("UDISKEN {}", globals::kAppVer);
+  spdlog::info("{} {}", globals::kAppNameUi, globals::kAppVer);
 
   if (globals::kDebug || utils::NonZeroEnvironmentVariable("DEBUG") ||
       verbose) {

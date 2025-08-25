@@ -25,8 +25,12 @@
 
 namespace globals {
 
-/// Name of the program, so, "UDISKEN" pretty much.
+/// Name of the program, as seen by other programs and machines;
+/// that's pretty much "udisken".
 constexpr std::string kAppName{UDISKEN_NAME};
+/// Name of the program, as it should be presented in interfaces and logs;
+/// that's pretty much "UDISKEN".
+constexpr std::string kAppNameUi{UDISKEN_NAME_UI};
 /// Version of the program.
 constexpr std::string kAppVer{UDISKEN_VERSION};
 
