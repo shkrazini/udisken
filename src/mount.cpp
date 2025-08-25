@@ -116,14 +116,22 @@ auto TryAutomount(objects::BlockDevice& blk_device)
   if (mnt_point) {
     spdlog::info("Automounted {}", *mnt_point);
 
-    std::string blk_name{blk.HintName().empty() ? blk_device.Partition().Name()
-                                                : blk.HintName()};
+    std::string blk_name{};
+    if (!blk.HintName().empty()) {
+      blk_name = blk.HintName();
+    } else if (!blk.IdLabel().empty()) {
+      blk_name = blk.IdLabel();
+    } else {
+      blk_name = "USB drive";
+    }  // TODO(blackma9ick): also lookup UDisks2.Drive.Model
+       // TODO(blackma9ick): To do that, consider storing the interfaces
+       // somewhere and access them (start by reverting 25961a20e7d2).
     std::string blk_icon_name{blk.HintIconName().empty()
                                   ? "drive-removable-media"
                                   : blk.HintIconName()};
     notify::Notification notif{
         .summary{"Mounted disk"},
-        .body{std::format("{} at {}", blk_name, *mnt_point->c_str())},
+        .body{std::format("{} at {}", blk_name, *mnt_point)},
         .app_icon{blk_icon_name},
         .expire_timeout{5s},
         .hints{{{"action_icons", sdbus::Variant{true}},
