@@ -14,7 +14,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/// Udisks objects, interface proxies, managers and related functions.
+/// UDisks objects, interface proxies, managers and related functions.
 /// Contains the entrypoints to most of UDISKEN's logic, such as automounting.
 
 #include "udisks.hpp"
