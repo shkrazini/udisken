@@ -80,7 +80,7 @@ auto Notify(const Notification& notif) -> bool {
                        static_cast<std::int32_t>(notif.expire_timeout.count()))
         .storeResultsTo(notif_id);
   } catch (const sdbus::Error& e) {
-    spdlog::error("Error after sending notification: {}", e.getMessage());
+    spdlog::error("Error after sending notification: {}", e.what());
   }
 
   // notif_id will always be greater than zero if sending notification

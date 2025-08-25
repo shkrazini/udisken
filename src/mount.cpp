@@ -70,8 +70,7 @@ auto Mount(interfaces::UdisksFilesystem& fs) -> std::optional<std::string> {
       return std::nullopt;
     }
 
-    spdlog::error("Failed to automount:\n({}) {}", e.getName().c_str(),
-                  e.getMessage());
+    spdlog::error("Failed to automount: {}", e.what());
 
     throw;
   }
