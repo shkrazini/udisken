@@ -71,7 +71,6 @@ Checks: "
   -google-explicit-constructor,
   -hicpp-explicit-conversions,
   -misc-non-private-member-variables-in-classes,
-  -modernize-pass-by-value,
   -modernize-use-nodiscard,
   -performance-faster-string-find,
   -readability-identifier-length,
