@@ -130,7 +130,7 @@ auto TryAutomount(objects::BlockDevice& blk_device)
                                   ? "drive-removable-media"
                                   : blk.HintIconName()};
     notify::Notification notif{
-        .summary{"Mounted disk"},
+        .summary{"Mounted drive"},
         .body{std::format("{} at {}", blk_name, *mnt_point)},
         .app_icon{blk_icon_name},
         .expire_timeout{5s},
