@@ -72,12 +72,16 @@ Checks: "
   -hicpp-explicit-conversions,
   -misc-non-private-member-variables-in-classes,
   -modernize-pass-by-value,
+  -modernize-use-nodiscard,
   -performance-faster-string-find,
   -readability-identifier-length,
   -readability-implicit-bool-conversion,
   -readability-qualified-auto,
   -readability-redundant-member-init,
   "
+# - modernize-use-nodiscard clutters up function signatures. nodiscard should
+#   only used in cases where important return values are easily ignored
+#   caller-side.
 # - concurrency-mt-unsafe triggers even in a single-threaded program, and can
 #   and should be addressed by mutexes/locks anyways (very few mortals are
 #   concurrency gods).
