@@ -64,14 +64,15 @@ namespace notify {
 auto Notify(const Notification& notif) -> bool {
   sdbus::ServiceName service_name{"org.freedesktop.Notifications"};
   sdbus::ObjectPath object_path{"/org/freedesktop/Notifications"};
-  sdbus::InterfaceName interface_name{service_name};
-  auto notify_proxy =
-      sdbus::createProxy(std::move(service_name), std::move(object_path));
+  std::unique_ptr<sdbus::IProxy> notify_proxy =
+      sdbus::createProxy(service_name, object_path);
 
   std::uint32_t notif_id{};
+  sdbus::InterfaceName interface_name{service_name};
   try {
     // FIXME(blackma9ick): gives an error with "too many notifications sent
     // quickly". For some reason.
+    // Maybe because of D-Bus calls in the rest of UDISKEN?
     notify_proxy->callMethod("Notify")
         .onInterface(interface_name)
         .withArguments(notif.app_name, notif.replaces_id, notif.app_icon,
