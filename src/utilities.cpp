@@ -52,7 +52,7 @@ static_assert(!NonZero(""));
 static_assert(!NonZero("0"));
 
 auto NonZeroEnvironmentVariable(const std::string& var) -> bool {
-  const auto var_value = std::getenv(var.c_str());
+  auto* const var_value = std::getenv(var.c_str());
   return var_value != nullptr && NonZero(var_value);
 }
 

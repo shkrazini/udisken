@@ -21,12 +21,14 @@
 
 #include <sdbus-c++/Types.h>
 
+#include <string>
+
 namespace globals {
 
 /// Name of the program, so, "UDISKEN" pretty much.
-constexpr auto kAppName = UDISKEN_NAME;
+constexpr std::string kAppName{UDISKEN_NAME};
 /// Version of the program.
-constexpr auto kAppVer = UDISKEN_VERSION;
+constexpr std::string kAppVer{UDISKEN_VERSION};
 
 /// Whether UDISKEN was compiled in debug mode.
 #ifdef NDEBUG

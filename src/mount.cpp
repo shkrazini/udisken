@@ -113,7 +113,7 @@ auto TryAutomount(objects::BlockDevice& blk_device)
     return std::nullopt;
   }
 
-  auto mnt_point = Mount(blk_device.Filesystem());
+  std::optional<std::string> mnt_point{Mount(blk_device.Filesystem())};
   if (mnt_point) {
     spdlog::info("Automounted {}", *mnt_point);
 
