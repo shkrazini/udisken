@@ -70,9 +70,9 @@ auto Notify(const Notification& notif) -> bool {
   sdbus::InterfaceName interface_name{service_name};
   spdlog::debug("Sending notification: [{}] {}", notif.summary, notif.body);
   try {
-    // FIXME(blackma9ick): gives an error with "too many notifications sent
-    // quickly". For some reason.
-    // Maybe because of D-Bus calls in the rest of UDISKEN?
+    // XXX(blackma9ick): if you get
+    // "Notifications.Error.ExcessNotificationGeneration" and you have recently
+    // upgraded your packages, make sure to reboot ;)
     notify_proxy->callMethod("Notify")
         .onInterface(interface_name)
         .withArguments(notif.app_name, notif.replaces_id, notif.app_icon,
