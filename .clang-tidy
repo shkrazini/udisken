@@ -74,7 +74,6 @@ Checks: "
   -modernize-use-nodiscard,
   -performance-faster-string-find,
   -readability-identifier-length,
-  -readability-implicit-bool-conversion,
   -readability-redundant-member-init,
   "
 # - modernize-use-nodiscard clutters up function signatures. nodiscard should
