@@ -154,7 +154,7 @@ UdisksObjectManager::UdisksObjectManager(sdbus::IConnection& connection,
     onInterfacesAdded(object_path, interfaces_and_properties);
   }
 
-  spdlog::info("Parsed existing drives");
+  spdlog::info("Scanned drives");
 
   registerProxy();
 }
