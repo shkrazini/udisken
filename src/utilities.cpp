@@ -27,7 +27,6 @@
 #include <cstdlib>
 #include <ranges>
 #include <string>
-#include <utility>
 #include <vector>
 
 namespace utils {
@@ -69,6 +68,7 @@ auto Notify(const Notification& notif) -> bool {
 
   std::uint32_t notif_id{};
   sdbus::InterfaceName interface_name{service_name};
+  spdlog::debug("Sending notification: [{}] {}", notif.summary, notif.body);
   try {
     // FIXME(blackma9ick): gives an error with "too many notifications sent
     // quickly". For some reason.
