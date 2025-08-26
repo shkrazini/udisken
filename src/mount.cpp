@@ -121,7 +121,7 @@ auto NotifyMounted(interfaces::UdisksBlock& blk, const std::string& mnt_point)
               {"category", sdbus::Variant{"device.added"}},
               {"sound_name", sdbus::Variant{"device-added-media"}}}}};
 
-  auto open_app_fn{[&](std::uint32_t id, std::string action_key) {
+  auto open_app_fn{[=](std::uint32_t id, std::string action_key) {
     if (action_key == action_open_fm) {
       if (int command_value{OpenPathWithDefaultApp(mnt_point)};
           SystemCommandFailed(command_value)) {
