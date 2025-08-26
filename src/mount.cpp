@@ -98,7 +98,7 @@ auto NotifyMounted(interfaces::UdisksBlock& blk, const std::string& mnt_point)
   } else if (!blk.IdLabel().empty()) {
     blk_name = blk.IdLabel();
   } else {
-    blk_name = "USB drive";
+    blk_name = "Drive";
   }  // TODO(blackma9ick): also lookup UDisks2.Drive.Model
      // TODO(blackma9ick): To do that, consider storing the interfaces
      // somewhere and access them (start by reverting e5d18f78b47e).
