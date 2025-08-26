@@ -79,6 +79,12 @@ struct Notification {
   std::map<std::string, sdbus::Variant> hints{};
 };
 
+static const sdbus::ServiceName kNotifServiceName{
+    "org.freedesktop.Notifications"};
+static const sdbus::ObjectPath kNotifObjectPath{
+    "/org/freedesktop/Notifications"};
+static const sdbus::InterfaceName kNotifInterfaceName{kNotifServiceName};
+
 /// Send a desktop notification.
 ///
 /// @param notification Notification.

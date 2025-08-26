@@ -61,20 +61,17 @@ namespace notify {
 
 // TODO(blackma9ick): add open in file manager actions.
 auto Notify(const Notification& notif) -> bool {
-  sdbus::ServiceName service_name{"org.freedesktop.Notifications"};
-  sdbus::ObjectPath object_path{"/org/freedesktop/Notifications"};
   std::unique_ptr<sdbus::IProxy> notify_proxy =
-      sdbus::createProxy(service_name, object_path);
+      sdbus::createProxy(kNotifServiceName, kNotifObjectPath);
 
   std::uint32_t notif_id{};
-  sdbus::InterfaceName interface_name{service_name};
   spdlog::debug("Sending notification: [{}] {}", notif.summary, notif.body);
   try {
     // XXX(blackma9ick): if you get
     // "Notifications.Error.ExcessNotificationGeneration" and you have recently
     // upgraded your packages, make sure to reboot ;)
     notify_proxy->callMethod("Notify")
-        .onInterface(interface_name)
+        .onInterface(kNotifInterfaceName)
         .withArguments(notif.app_name, notif.replaces_id, notif.app_icon,
                        notif.summary, notif.body, notif.actions, notif.hints,
                        notif.expire_timeout)
