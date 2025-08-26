@@ -40,10 +40,10 @@ using MountPoints = std::vector<std::string>;
 ///
 /// @return List of strings representing the filesystem's mount points.
 auto GetMountPoints(interfaces::UdisksFilesystem& fs) -> MountPoints;
-void PrintMountPoints(const MountPoints& mnt_points);
 /// Log mount points as verbose output.
 ///
 /// @param mnt_points List of strings representing a filesystem's mount points.
+void DebugMountPoints(const MountPoints& mnt_points);
 
 /// Try to mount a block device's filesystem, to be used when automatically
 /// mounting.

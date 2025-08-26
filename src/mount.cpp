@@ -43,8 +43,7 @@ auto GetMountPoints(interfaces::UdisksFilesystem& fs) -> MountPoints {
   return utils::ConvertArrayArrayByte(fs.MountPoints());
 }
 
-void PrintMountPoints(const MountPoints& mnt_points) {
-  spdlog::debug("Current mount points:");
+void DebugMountPoints(const MountPoints& mnt_points) {
   for (const auto& current_mnt_points : mnt_points) {
     spdlog::debug("- {}", current_mnt_points);
   }
@@ -56,7 +55,8 @@ auto Mount(interfaces::UdisksFilesystem& fs) -> std::optional<std::string> {
   try {
     auto mnt_point = fs.Mount({});
 
-    PrintMountPoints(GetMountPoints(fs));
+    spdlog::debug("Current mount points:");
+    DebugMountPoints(GetMountPoints(fs));
 
     return mnt_point;
   } catch (const sdbus::Error& e) {
@@ -66,7 +66,8 @@ auto Mount(interfaces::UdisksFilesystem& fs) -> std::optional<std::string> {
       spdlog::warn(
           "{} is already mounted but UDisks initially returned no mount paths;",
           fs.getProxy().getObjectPath().c_str());
-      PrintMountPoints(GetMountPoints(fs));
+      spdlog::debug("Current mount points after trying to mount:");
+      DebugMountPoints(GetMountPoints(fs));
 
       return std::nullopt;
     }
