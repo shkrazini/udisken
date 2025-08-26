@@ -82,10 +82,6 @@ void PrintNotAutomounting(const objects::BlockDevice& blk_device,
                 reason);
 }
 
-}  // namespace
-
-namespace {
-
 auto OpenPathWithDefaultApp(const std::string& str) -> int {
   return std::system(std::format("xdg-open file://{}", str).c_str());
 }
