@@ -133,7 +133,6 @@ auto TryAutomount(objects::BlockDevice& blk_device)
         .summary{"Mounted drive"},
         .body{std::format("{} at {}", blk_name, *mnt_point)},
         .app_icon{blk_icon_name},
-        .expire_timeout{5s},
         .hints{{{"action_icons", sdbus::Variant{true}},
                 {"category", sdbus::Variant{"device.added"}},
                 {"sound_name", sdbus::Variant{"device-added-media"}}}}};

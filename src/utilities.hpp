@@ -71,7 +71,8 @@ struct Notification {
   std::string body{};
   std::string app_name{globals::kAppName};
   std::string app_icon{};
-  std::chrono::milliseconds expire_timeout{1s};
+  std::int32_t expire_timeout{-1};  // -1 means: use expiration time defined by
+                                    // the notification server.
   std::uint32_t replaces_id{0};
   std::vector<std::string> actions{};
 

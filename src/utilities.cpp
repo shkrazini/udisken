@@ -77,7 +77,7 @@ auto Notify(const Notification& notif) -> bool {
         .onInterface(interface_name)
         .withArguments(notif.app_name, notif.replaces_id, notif.app_icon,
                        notif.summary, notif.body, notif.actions, notif.hints,
-                       static_cast<std::int32_t>(notif.expire_timeout.count()))
+                       notif.expire_timeout)
         .storeResultsTo(notif_id);
   } catch (const sdbus::Error& e) {
     spdlog::error("Error after sending notification: {}", e.what());
