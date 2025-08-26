@@ -12,8 +12,6 @@ Checks: "
   cert-msc51-cpp,
   cert-oop57-cpp,
   cert-oop58-cpp,
-  clang-analyzer-alpha.core.*,
-  clang-analyzer-alpha.cplusplus.*,
   clang-analyzer-core.*,
   clang-analyzer-cplusplus.*,
   clang-analyzer-deadcode.*,
@@ -115,7 +113,5 @@ CheckOptions:
     - { key: readability-identifier-naming.GlobalVariableCase,        value: CamelCase  }
     - { key: readability-identifier-naming.GlobalVariablePrefix,      value: g          }
 
-    - { key: readability-identifier-naming.MemberConstantCase,        value: CamelCase  }
-    - { key: readability-identifier-naming.MemberConstantPrefix,      value: k          }
     - { key: readability-identifier-naming.StaticConstantCase,        value: CamelCase  }
     - { key: readability-identifier-naming.StaticConstantPrefix,      value: k          }
