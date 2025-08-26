@@ -84,8 +84,6 @@ void PrintNotAutomounting(const objects::BlockDevice& blk_device,
 
 }  // namespace
 
-using namespace std::chrono_literals;
-
 namespace {
 
 auto OpenPathWithDefaultApp(const std::string& str) -> int {
