@@ -90,41 +90,8 @@ auto SystemCommandFailed(int stat_val) -> bool {
   return !WIFEXITED(stat_val) || WEXITSTATUS(stat_val) != 0;
 }
 
-}  // namespace
-
-// TODO(blackma9ick): read from fstab, etc., for any additional mount points
-// that UDisks may not know about, and mount to them.
-auto TryAutomount(objects::BlockDevice& blk_device)
-    -> std::optional<std::string> {
-  interfaces::UdisksBlock& blk{blk_device.Block()};
-
-  if (!blk.HintAuto()) {
-    PrintNotAutomounting(blk_device, "automount hint was false");
-
-    return std::nullopt;
-  }
-
-  // Could there even not be a filesystem if HintAuto was false?
-  if (!blk_device.HasFilesystem()) {
-    PrintNotAutomounting(blk_device, "no filesystem found");
-
-    return std::nullopt;
-  }
-
-  // If mount points already exist, no need to automount it.
-  if (!blk_device.Filesystem().MountPoints().empty()) {
-    PrintNotAutomounting(blk_device, "already mounted");
-
-    return std::nullopt;
-  }
-
-  std::optional<std::string> mnt_point{Mount(blk_device.Filesystem())};
-  if (!mnt_point) {
-    return std::nullopt;
-  }
-
-  spdlog::info("Automounted {}", *mnt_point);
-
+auto NotifyMounted(interfaces::UdisksBlock& blk, const std::string& mnt_point)
+    -> bool {
   std::string blk_name{};
   if (!blk.HintName().empty()) {
     blk_name = blk.HintName();
@@ -141,9 +108,9 @@ auto TryAutomount(objects::BlockDevice& blk_device)
   const std::string action_open_fm{"system-file-manager"};
   const std::string action_open_fm_text{"Open in File Manager"};
 
-  notify::Notification notif{
+  const notify::Notification notif{
       .summary{"Mounted drive"},
-      .body{std::format("{} at {}", blk_name, *mnt_point)},
+      .body{std::format("{} at {}", blk_name, mnt_point)},
       .app_icon{blk_icon_name},
       // FIXME(blackma9ick): on KDE Plasma 6.4.4, notifications close/crash
       // instantly if actions are given. Almost certainly a Plasma bug, and
@@ -153,9 +120,10 @@ auto TryAutomount(objects::BlockDevice& blk_device)
       .hints{{{"action_icons", sdbus::Variant{true}},
               {"category", sdbus::Variant{"device.added"}},
               {"sound_name", sdbus::Variant{"device-added-media"}}}}};
-  notify::Notify(notif, [&](std::uint32_t id, std::string action_key) {
+
+  auto open_app_fn{[&](std::uint32_t id, std::string action_key) {
     if (action_key == action_open_fm) {
-      if (int command_value{OpenPathWithDefaultApp(*mnt_point)};
+      if (int command_value{OpenPathWithDefaultApp(mnt_point)};
           SystemCommandFailed(command_value)) {
         spdlog::warn(
             "xdg-open might have failed; check if xdg-utils is installed");
@@ -163,7 +131,44 @@ auto TryAutomount(objects::BlockDevice& blk_device)
 
       notify::CloseNotification(id);
     }
-  });
+  }};
+
+  return notify::Notify(notif, open_app_fn);
+}
+
+}  // namespace
+
+// TODO(blackma9ick): read from fstab, etc., for any additional mount points
+// that UDisks may not know about, and mount to them.
+auto TryAutomount(objects::BlockDevice& blk_device)
+    -> std::optional<std::string> {
+  interfaces::UdisksBlock& blk{blk_device.Block()};
+
+  if (!blk.HintAuto()) {
+    PrintNotAutomounting(blk_device, "automount hint was false");
+
+    return std::nullopt;
+  }
+  // Could there even not be a filesystem if HintAuto was false?
+  if (!blk_device.HasFilesystem()) {
+    PrintNotAutomounting(blk_device, "no filesystem found");
+
+    return std::nullopt;
+  }
+  // If mount points already exist, no need to automount it.
+  if (!GetMountPoints(blk_device.Filesystem()).empty()) {
+    PrintNotAutomounting(blk_device, "already mounted");
+
+    return std::nullopt;
+  }
+
+  auto mnt_point{Mount(blk_device.Filesystem())};
+  if (!mnt_point) {
+    return std::nullopt;
+  }
+
+  spdlog::info("Automounted {}", *mnt_point);
+  NotifyMounted(blk, *mnt_point);
 
   return mnt_point;
 }
