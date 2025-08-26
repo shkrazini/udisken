@@ -28,7 +28,7 @@
 #include <iostream>
 
 auto main(int argc, char* argv[]) -> int {
-  argparse::ArgumentParser program{globals::kAppName, globals::kAppVer};
+  argparse::ArgumentParser program{globals::kAppName, globals::kAppVersion};
   bool no_notify{};
   program.add_argument("--no-notify")
       .help("do not send desktop notifications")
@@ -47,7 +47,8 @@ auto main(int argc, char* argv[]) -> int {
     return EXIT_FAILURE;
   }
 
-  spdlog::info("{} {}", globals::kAppNameUi, globals::kAppVer);
+  // Startup message: UDISKEN (version)
+  spdlog::info("{} {}", globals::kAppNameUi, globals::kAppVersion);
 
   if (globals::kDebug || utils::NonZeroEnvironmentVariable("DEBUG") ||
       verbose) {

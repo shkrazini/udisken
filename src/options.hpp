@@ -32,7 +32,7 @@ constexpr std::string kAppName{UDISKEN_NAME};
 /// that's pretty much "UDISKEN".
 constexpr std::string kAppNameUi{UDISKEN_NAME_UI};
 /// Version of the program.
-constexpr std::string kAppVer{UDISKEN_VERSION};
+constexpr std::string kAppVersion{UDISKEN_VERSION};
 
 /// Whether UDISKEN was compiled in debug mode.
 #ifdef NDEBUG
