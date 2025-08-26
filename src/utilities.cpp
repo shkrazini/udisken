@@ -59,7 +59,23 @@ auto NonZeroEnvironmentVariable(const std::string& var) -> bool {
 
 namespace notify {
 
-// TODO(blackma9ick): add open in file manager actions.
+namespace {
+
+void PrintCapabilities(sdbus::IProxy& notify_proxy) {
+  std::vector<std::string> caps{};
+  notify_proxy.callMethod("GetCapabilities")
+      .onInterface(kNotifInterfaceName)
+      .storeResultsTo(caps);
+
+  spdlog::debug("== Notification server capabilities ==");
+  for (const auto& cap : caps) {
+    spdlog::debug("{}", cap);
+  }
+  spdlog::debug("== End of capabilities ==");
+}
+
+}  // namespace
+
 auto CloseNotification(std::uint32_t id) -> bool {
   // TODO(blackma9ick): make (const) global proxy variable, for use in the whole
   // namespace?
@@ -85,11 +101,19 @@ auto CloseNotification(std::uint32_t id) -> bool {
   return true;
 }
 
-auto Notify(const Notification& notif) -> bool {
+auto Notify(const Notification& notif, ActionInvokedCallback callback) -> bool {
   // TODO(blackma9ick): make (const) global proxy variable, for use in the whole
   // namespace?
   std::unique_ptr<sdbus::IProxy> notify_proxy =
       sdbus::createProxy(kNotifServiceName, kNotifObjectPath);
+
+  PrintCapabilities(*notify_proxy);
+
+  spdlog::debug("Registering notifications actions");
+  notify_proxy->uponSignal("ActionInvoked")
+      .onInterface(kNotifInterfaceName)
+      .call(callback);
+
   std::uint32_t notif_id{};
   spdlog::debug("Sending notification: [{}] {}", notif.summary, notif.body);
   try {

@@ -28,6 +28,7 @@
 #include <spdlog/spdlog.h>
 #include <udisks-sdbus-c++/udisks_errors.hpp>
 
+#include <cstdlib>
 #include <format>
 #include <map>
 #include <string>
@@ -86,6 +87,18 @@ void PrintNotAutomounting(const objects::BlockDevice& blk_device,
 
 using namespace std::chrono_literals;
 
+namespace {
+
+auto OpenPathWithDefaultApp(const std::string& str) -> int {
+  return std::system(std::format("xdg-open file://{}", str).c_str());
+}
+
+auto SystemCommandFailed(int stat_val) -> bool {
+  return !WIFEXITED(stat_val) || WEXITSTATUS(stat_val) != 0;
+}
+
+}  // namespace
+
 // TODO(blackma9ick): read from fstab, etc., for any additional mount points
 // that UDisks may not know about, and mount to them.
 auto TryAutomount(objects::BlockDevice& blk_device)
@@ -129,14 +142,33 @@ auto TryAutomount(objects::BlockDevice& blk_device)
     std::string blk_icon_name{blk.HintIconName().empty()
                                   ? "drive-removable-media"
                                   : blk.HintIconName()};
+
+    const std::string action_open_fm{"system-file-manager"};
+    const std::string action_open_fm_text{"Open in File Manager"};
+
     notify::Notification notif{
         .summary{"Mounted drive"},
         .body{std::format("{} at {}", blk_name, *mnt_point)},
         .app_icon{blk_icon_name},
+        // FIXME(blackma9ick): on KDE Plasma 6.4.4, notifications close/crash
+        // instantly if actions are given. Almost certainly a Plasma bug, and
+        // even it were unsupported capabilities, it should ignore them, and not
+        // crash and burn.
+        .actions{action_open_fm, action_open_fm_text},
         .hints{{{"action_icons", sdbus::Variant{true}},
                 {"category", sdbus::Variant{"device.added"}},
                 {"sound_name", sdbus::Variant{"device-added-media"}}}}};
-    notify::Notify(notif);
+    notify::Notify(notif, [&](std::uint32_t id, std::string action_key) {
+      if (action_key == action_open_fm) {
+        if (int command_value{OpenPathWithDefaultApp(*mnt_point)};
+            SystemCommandFailed(command_value)) {
+          spdlog::warn(
+              "xdg-open might have failed; check if xdg-utils is installed");
+        }
+
+        notify::CloseNotification(id);
+      }
+    });
   }
 
   return mnt_point;

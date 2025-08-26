@@ -23,7 +23,6 @@
 
 #include <sdbus-c++/Types.h>
 
-#include <chrono>
 #include <cstdint>
 #include <map>
 #include <string>
@@ -58,7 +57,7 @@ auto NonZeroEnvironmentVariable(const std::string& var) -> bool;
 
 namespace notify {
 
-using namespace std::chrono_literals;
+using ActionInvokedCallback = std::function<void(std::uint32_t, std::string)>;
 
 /// Thin struct containing the essential properties of a Freedesktop.org
 /// Notification that can be sent to desktop.
@@ -74,6 +73,10 @@ struct Notification {
   std::int32_t expire_timeout{-1};  // -1 means: use expiration time defined by
                                     // the notification server.
   std::uint32_t replaces_id{0};
+  /// Actions are sent over as a list of pairs. Each even element in the list
+  /// (starting at index 0) represents the identifier for the action. Each odd
+  /// element in the list is the localized string that will be displayed to the
+  /// user.
   std::vector<std::string> actions{};
 
   std::map<std::string, sdbus::Variant> hints{};
@@ -99,7 +102,7 @@ auto CloseNotification(std::uint32_t id) -> bool;
 /// @param notification Notification.
 ///
 /// @return Successfully sent the notification.
-auto Notify(const Notification& notif) -> bool;
+auto Notify(const Notification& notif, ActionInvokedCallback callback) -> bool;
 
 }  // namespace notify
 

@@ -25,6 +25,7 @@ Mount automatically your...:
 - [sdbus-c++] 2.1.0 or later
 - [spdlog] 1.15.0 or later
 - [UDisks] 2.10.0 or later
+- `xdg-open(1)` (optional)
 - [argparse] 3.1 or later (building only)
 
 ## Install
