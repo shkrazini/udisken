@@ -72,6 +72,7 @@ Checks: "
   -modernize-use-nodiscard,
   -performance-faster-string-find,
   -performance-unnecessary-value-param,
+  -portability-restrict-system-includes,
   -readability-identifier-length,
   -readability-redundant-member-init,
   "
