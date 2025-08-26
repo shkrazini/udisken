@@ -1,38 +1,31 @@
 ---
 BasedOnStyle: Google
-
 Language: Cpp
 
-# Google style guide does not define an alignment style.
-# We choose to align left.
 DerivePointerAlignment: false
 PointerAlignment: Left
 QualifierAlignment: Left
 
-# Sort header inclusions from "user-code" (top-level) headers to system
-# (low-level) headers. Most reliably detects missing header inclusions.
+# Sort #includes like the LLVM Coding Standards.
 IncludeBlocks: Regroup
 IncludeCategories:
-  # Headers in the same directory
-  # (e.g. "foo.hpp")
+  # Main Module Header
   - Regex: '^"[^/]+\.h.*'
     Priority: 1
 
-  # Project subdirectory headers (e.g. "bar/bar.hpp")
+  # Local/Private Headers
   - Regex: '^".+/[^/]+\.h.*"'
     Priority: 2
 
-  # System library headers (e.g. <gtk/gtk.h>)
+  # System #includes
   - Regex: '^<.+\.h.*'
     Priority: 3
-  # Exception: Guidelines Support Library (GSL)
-  # (e.g. <gsl/gsl>)
+  # Guidelines Support Library (GSL)
   - Regex: "^<gsl/[[:alnum:].]+>"
     Priority: 3
 
-  # Standard library headers (e.g. <vector>)
+  # Standard Library Headers
   - Regex: "^<[[:alnum:].]+>"
     Priority: 4
-  # Exception: string_view
   - Regex: "^<string_view>$"
     Priority: 4
