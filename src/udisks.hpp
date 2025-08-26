@@ -174,7 +174,7 @@ class Drive {
 
   /// Get the drive interface proxy.
   ///
-  /// @returns Reference to the drive interface proxy, not the pointer.
+  /// @return Reference to the drive interface proxy, not the pointer.
   auto GetDrive() -> interfaces::UdisksDrive&;
 
  private:
@@ -205,7 +205,7 @@ class BlockDevice {
   /// Get the block interface proxy; this proxy always exists as long as
   /// the block device is valid.
   ///
-  /// @returns Reference to the block interface proxy, not the pointer.
+  /// @return Reference to the block interface proxy, not the pointer.
   auto Block() -> interfaces::UdisksBlock& { return *block_; }
 
   /// Get the filesystem interface proxy.
@@ -213,7 +213,7 @@ class BlockDevice {
   /// @throws logic_error Tried to access an interface that is not implemented
   /// by the object.
   ///
-  /// @returns Reference to the filesystem interface proxy, not the pointer.
+  /// @return Reference to the filesystem interface proxy, not the pointer.
   auto Filesystem() -> interfaces::UdisksFilesystem&;
   auto HasFilesystem() -> bool { return filesystem_ != nullptr; }
 
@@ -222,7 +222,7 @@ class BlockDevice {
   /// @throws logic_error Tried to access an interface that is not implemented
   /// by the object.
   ///
-  /// @returns Reference to the loop device interface proxy, not the pointer.
+  /// @return Reference to the loop device interface proxy, not the pointer.
   auto Loop() -> interfaces::UdisksLoop&;
   auto HasLoop() -> bool { return loop_ != nullptr; }
 
@@ -231,7 +231,7 @@ class BlockDevice {
   /// @throws logic_error Tried to access an interface that is not implemented
   /// by the object.
   ///
-  /// @returns Reference to the partition interface proxy, not the pointer.
+  /// @return Reference to the partition interface proxy, not the pointer.
   auto Partition() -> interfaces::UdisksPartition&;
   auto HasPartition() -> bool { return partition_ != nullptr; }
 

@@ -93,7 +93,7 @@ static const sdbus::InterfaceName kNotifInterfaceName{kNotifServiceName};
 /// @param id Desktop notification ID, returned by
 /// org.freedesktop.Notifications.Notify.
 ///
-/// @returns Notification did not expire or get manually closed, and closed
+/// @return Notification did not expire or get manually closed, and closed
 /// successfully.
 auto CloseNotification(std::uint32_t id) -> bool;
 
