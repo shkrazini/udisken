@@ -42,7 +42,7 @@ auto main(int argc, char* argv[]) -> int {
   try {
     program.parse_args(argc, argv);
   } catch (const std::exception& e) {
-    spdlog::error("{}", e.what());
+    spdlog::critical("{}", e.what());
     std::cerr << program;
     return EXIT_FAILURE;
   }
