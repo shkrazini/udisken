@@ -60,10 +60,36 @@ auto NonZeroEnvironmentVariable(const std::string& var) -> bool {
 namespace notify {
 
 // TODO(blackma9ick): add open in file manager actions.
-auto Notify(const Notification& notif) -> bool {
+auto CloseNotification(std::uint32_t id) -> bool {
+  // TODO(blackma9ick): make (const) global proxy variable, for use in the whole
+  // namespace?
   std::unique_ptr<sdbus::IProxy> notify_proxy =
       sdbus::createProxy(kNotifServiceName, kNotifObjectPath);
 
+  spdlog::debug("Closing notification with ID {}", id);
+
+  try {
+    notify_proxy->callMethod("CloseNotification")
+        .onInterface(kNotifInterfaceName)
+        .withArguments(id);
+  } catch (const sdbus::Error& e) {
+    // If the notification expired or already got closed, the D-Bus error
+    // message will be empty.
+    if (!e.getMessage().empty()) {
+      spdlog::error("Error when trying to close notification: {}", e.what());
+
+      return false;
+    }
+  }
+
+  return true;
+}
+
+auto Notify(const Notification& notif) -> bool {
+  // TODO(blackma9ick): make (const) global proxy variable, for use in the whole
+  // namespace?
+  std::unique_ptr<sdbus::IProxy> notify_proxy =
+      sdbus::createProxy(kNotifServiceName, kNotifObjectPath);
   std::uint32_t notif_id{};
   spdlog::debug("Sending notification: [{}] {}", notif.summary, notif.body);
   try {
