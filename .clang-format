@@ -6,6 +6,8 @@ DerivePointerAlignment: false
 PointerAlignment: Left
 QualifierAlignment: Left
 
+ShortNamespaceLines: 10
+
 # Sort #includes like the LLVM Coding Standards.
 IncludeBlocks: Regroup
 IncludeCategories:
