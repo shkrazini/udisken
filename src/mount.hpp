@@ -33,10 +33,20 @@ namespace mount {
 
 using MountPoints = std::vector<std::string>;
 
+/// Retrieves mount points from a filesystem and converts them to standard
+/// library types.
+///
+/// @param fs Reference to an UDisks Filesystem proxy.
+///
+/// @return List of strings representing the filesystem's mount points.
 auto GetMountPoints(interfaces::UdisksFilesystem& fs) -> MountPoints;
 void PrintMountPoints(const MountPoints& mnt_points);
+/// Log mount points as verbose output.
+///
+/// @param mnt_points List of strings representing a filesystem's mount points.
 
-/// Automount.
+/// Try to mount a block device's filesystem, to be used when automatically
+/// mounting.
 ///
 /// @return Path to mount point after mounting, or nothing if the
 /// filesystem is already mounted somewhere.
