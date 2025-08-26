@@ -68,13 +68,11 @@ auto Mount(interfaces::UdisksFilesystem& fs) -> std::optional<std::string> {
           fs.getProxy().getObjectPath().c_str());
       spdlog::debug("Current mount points after trying to mount:");
       DebugMountPoints(GetMountPoints(fs));
-
-      return std::nullopt;
     }
 
     spdlog::error("Failed to automount: {}", e.what());
 
-    throw;
+    return std::nullopt;
   }
 }
 
