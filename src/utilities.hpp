@@ -51,7 +51,7 @@ constexpr auto NonZero(std::string_view sv) -> bool;
 /// @param var Name of the environment variable.
 ///
 /// @return True if the environment variable is defined and is non-zero.
-auto NonZeroEnvironmentVariable(const std::string& var) -> bool;
+auto NonZeroEnvVar(const std::string& var) -> bool;
 
 }  // namespace utils
 

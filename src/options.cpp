@@ -27,7 +27,7 @@
 namespace options {
 
 auto NotifyEnabled() -> bool {
-  if (utils::NonZeroEnvironmentVariable("UDISKEN_NO_NOTIFY")) {
+  if (utils::NonZeroEnvVar("UDISKEN_NO_NOTIFY")) {
     spdlog::debug("Notifications disabled by environment.");
 
     return false;

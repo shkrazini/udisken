@@ -50,8 +50,7 @@ auto main(int argc, char* argv[]) -> int {
   // Startup message: UDISKEN (version)
   spdlog::info("{} {}", globals::kAppNameUi, globals::kAppVersion);
 
-  if (globals::kDebug || utils::NonZeroEnvironmentVariable("DEBUG") ||
-      verbose) {
+  if (globals::kDebug || utils::NonZeroEnvVar("DEBUG") || verbose) {
     spdlog::set_level(spdlog::level::debug);
   }
 
