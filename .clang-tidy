@@ -76,20 +76,6 @@ Checks: >
   -readability-identifier-length,
   -readability-redundant-member-init,
 
-# - modernize-use-nodiscard clutters up function signatures. nodiscard should
-#   only used in cases where important return values are easily ignored
-#   caller-side.
-# - concurrency-mt-unsafe triggers even in a single-threaded program, and can
-#   and should be addressed by mutexes/locks anyways (very few mortals are
-#   concurrency gods).
-# - readability-qualified-auto adds noise more often than not.
-# - readability-redundant-member-init has bugs[1][2] and directly conflicts
-#	with -Wmissing(-designated)-field-initializers, which even though has
-# 	questionable semantics, is still of great help to not forget initializing
-# 	new members.
-#   [1]: https://github.com/llvm/llvm-project/issues/90235
-#   [2]: https://github.com/llvm/llvm-project/issues/134440
-
 # Based on Google's naming style.
 CheckOptions:
   readability-identifier-naming.NamespaceCase: lower_case
