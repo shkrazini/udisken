@@ -21,6 +21,7 @@
 
 #include "options.hpp"
 
+#include <sdbus-c++/IProxy.h>
 #include <sdbus-c++/Types.h>
 
 #include <cstdint>
@@ -93,19 +94,22 @@ static const sdbus::InterfaceName kNotifInterfaceName{kNotifServiceName};
 
 /// Close a Desktop notification with its ID.
 ///
+/// @param notify_proxy Proxy to the org.freedesktop.Notifications service.
 /// @param id Desktop notification ID, returned by
 /// org.freedesktop.Notifications.Notify.
 ///
 /// @return Notification did not expire or get manually closed, and closed
 /// successfully.
-auto CloseNotification(std::uint32_t id) -> bool;
+auto CloseNotification(sdbus::IProxy& notify_proxy, std::uint32_t id) -> bool;
 
 /// Send a desktop notification.
 ///
+/// @param notify_proxy Proxy to the org.freedesktop.Notifications service.
 /// @param notification Notification.
 ///
 /// @return Successfully sent the notification.
-auto Notify(const Notification& notif, ActionInvokedCallback callback) -> bool;
+auto Notify(sdbus::IProxy& notify_proxy, const Notification& notif,
+            ActionInvokedCallback callback) -> bool;
 
 }  // namespace notify
 

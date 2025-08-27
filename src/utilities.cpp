@@ -79,16 +79,11 @@ void DebugCapabilities(sdbus::IProxy& notify_proxy) {
 
 }  // namespace
 
-auto CloseNotification(std::uint32_t id) -> bool {
-  // TODO(blackma9ick): make (const) global proxy variable, for use in the whole
-  // namespace?
-  std::unique_ptr<sdbus::IProxy> notify_proxy =
-      sdbus::createProxy(kNotifServiceName, kNotifObjectPath);
-
+auto CloseNotification(sdbus::IProxy& notify_proxy, std::uint32_t id) -> bool {
   spdlog::debug("Closing notification with ID {}", id);
 
   try {
-    notify_proxy->callMethod("CloseNotification")
+    notify_proxy.callMethod("CloseNotification")
         .onInterface(kNotifInterfaceName)
         .withArguments(id);
   } catch (const sdbus::Error& e) {
@@ -104,16 +99,12 @@ auto CloseNotification(std::uint32_t id) -> bool {
   return true;
 }
 
-auto Notify(const Notification& notif, ActionInvokedCallback callback) -> bool {
-  // TODO(blackma9ick): make (const) global proxy variable, for use in the whole
-  // namespace?
-  std::unique_ptr<sdbus::IProxy> notify_proxy =
-      sdbus::createProxy(kNotifServiceName, kNotifObjectPath);
-
-  PrintCapabilities(*notify_proxy);
+auto Notify(sdbus::IProxy& notify_proxy, const Notification& notif,
+            ActionInvokedCallback callback) -> bool {
+  DebugCapabilities(notify_proxy);
 
   spdlog::debug("Registering notifications actions");
-  notify_proxy->uponSignal("ActionInvoked")
+  notify_proxy.uponSignal("ActionInvoked")
       .onInterface(kNotifInterfaceName)
       .call(callback);
 
@@ -123,7 +114,7 @@ auto Notify(const Notification& notif, ActionInvokedCallback callback) -> bool {
     // XXX(blackma9ick): if you get
     // "Notifications.Error.ExcessNotificationGeneration" and you have recently
     // upgraded your packages, make sure to reboot ;)
-    notify_proxy->callMethod("Notify")
+    notify_proxy.callMethod("Notify")
         .onInterface(kNotifInterfaceName)
         .withArguments(notif.app_name, notif.replaces_id, notif.app_icon,
                        notif.summary, notif.body, notif.actions, notif.hints,

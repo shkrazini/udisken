@@ -31,6 +31,7 @@
 #include <cstdlib>
 #include <format>
 #include <map>
+#include <memory>
 #include <optional>
 #include <string>
 #include <string_view>
@@ -121,6 +122,9 @@ auto NotifyMounted(interfaces::UdisksBlock& blk, const std::string& mnt_point)
               {"category", sdbus::Variant{"device.added"}},
               {"sound_name", sdbus::Variant{"device-added-media"}}}}};
 
+  std::shared_ptr<sdbus::IProxy> notify_proxy =
+      sdbus::createProxy(notify::kNotifServiceName, notify::kNotifObjectPath);
+
   auto open_app_fn{[=](std::uint32_t id, std::string action_key) {
     if (action_key == action_open_fm) {
       if (int command_value{OpenPathWithDefaultApp(mnt_point)};
@@ -129,11 +133,11 @@ auto NotifyMounted(interfaces::UdisksBlock& blk, const std::string& mnt_point)
             "xdg-open might have failed; check if xdg-utils is installed");
       }
 
-      notify::CloseNotification(id);
+      notify::CloseNotification(*notify_proxy, id);
     }
   }};
 
-  return notify::Notify(notif, open_app_fn);
+  return notify::Notify(*notify_proxy, notif, open_app_fn);
 }
 
 }  // namespace
