@@ -54,8 +54,7 @@ auto main(int argc, char* argv[]) -> int {
     spdlog::set_level(spdlog::level::debug);
   }
 
-  const std::unique_ptr<sdbus::IConnection> connection{
-      sdbus::createSystemBusConnection()};
+  const auto connection{sdbus::createSystemBusConnection()};
   managers::UdisksManager mgr{*connection};
   spdlog::info("Connected to UDisks version {} on D-Bus", mgr.Version());
   managers::UdisksObjectManager obj_mgr{*connection,
