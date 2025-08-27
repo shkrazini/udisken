@@ -54,7 +54,7 @@ namespace {
 
 auto Mount(interfaces::UdisksFilesystem& fs) -> std::optional<std::string> {
   try {
-    auto mnt_point = fs.Mount({});
+    auto mnt_point{fs.Mount({})};
 
     spdlog::debug("Current mount points:");
     DebugMountPoints(GetMountPoints(fs));

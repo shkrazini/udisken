@@ -35,8 +35,8 @@ namespace udisks_api = org::freedesktop::UDisks2;
 
 namespace udisks {
 
-constexpr auto kInterfaceName = "org.freedesktop.UDisks2";
-constexpr auto kObjectPath = "/org/freedesktop/UDisks2";
+constexpr auto kInterfaceName{"org.freedesktop.UDisks2"};
+constexpr auto kObjectPath{"/org/freedesktop/UDisks2"};
 static const sdbus::ServiceName kServiceName{kInterfaceName};
 
 static const sdbus::ObjectPath kEmptyObjectPath{"/"};

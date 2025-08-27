@@ -149,7 +149,7 @@ UdisksObjectManager::UdisksObjectManager(sdbus::IConnection& connection,
     : ProxyInterfaces(connection, sdbus::ServiceName{udisks::kInterfaceName},
                       sdbus::ObjectPath{udisks::kObjectPath}),
       options_{options} {
-  for (auto managed_objects = GetManagedObjects();
+  for (auto managed_objects{GetManagedObjects()};
        const auto& [object_path, interfaces_and_properties] : managed_objects) {
     onInterfacesAdded(object_path, interfaces_and_properties);
   }
@@ -177,8 +177,8 @@ void UdisksObjectManager::onInterfacesAdded(
     return;
   }
 
-  auto block = std::make_unique<interfaces::UdisksBlock>(
-      getProxy().getConnection(), object_path);
+  auto block{std::make_unique<interfaces::UdisksBlock>(
+      getProxy().getConnection(), object_path)};
 
   std::unique_ptr<interfaces::UdisksFilesystem> filesystem{};
   if (HasInterface<interfaces::UdisksFilesystem>(interfaces_and_properties)) {
