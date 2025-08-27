@@ -31,14 +31,14 @@
 
 namespace utils {
 
-// TEST(blackma9ick): convert sample data.
-auto ConvertArrayArrayByte(const std::vector<std::vector<uint8_t>>& aay)
+auto ConvertArrayArrayByte(const std::vector<std::vector<std::uint8_t>>& aay)
     -> std::vector<std::string> {
   return aay | std::views::transform([](const auto& vec) {
            return std::string{std::from_range, vec};
          }) |
          std::ranges::to<std::vector<std::string>>();
 }
+// TEST(blackma9ick): convert sample data.
 
 constexpr auto NonZero(std::string_view sv) -> bool {
   return !sv.empty() && sv.find_first_not_of("0") != std::string_view::npos;

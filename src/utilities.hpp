@@ -35,7 +35,7 @@ namespace utils {
 ///
 /// @param aay The array of array of bytes.
 [[nodiscard("Returns the converted vector")]]
-auto ConvertArrayArrayByte(const std::vector<std::vector<uint8_t>>& aay)
+auto ConvertArrayArrayByte(const std::vector<std::vector<std::uint8_t>>& aay)
     -> std::vector<std::string>;
 
 /// Checks if the string view has a non-zero value.
