@@ -58,6 +58,12 @@ auto NonZeroEnvVar(const std::string& var) -> bool;
 /// Send Freedesktop.org desktop notifications.
 namespace notify {
 
+/// Callback function type, for when a notification action is invoked.
+///
+/// Function returns nothing, and take two parameters:
+/// - the ID of the notification that the action was invoked on (type:
+/// std::uint32_t);
+/// - the invoked action key (i.e. name) (type: std::string).
 using ActionInvokedCallback = std::function<void(std::uint32_t, std::string)>;
 
 /// Thin struct containing the essential properties of a Freedesktop.org
@@ -74,10 +80,6 @@ struct Notification {
   std::int32_t expire_timeout{-1};  // -1 means: use expiration time defined by
                                     // the notification server.
   std::uint32_t replaces_id{0};
-  /// Actions are sent over as a list of pairs. Each even element in the list
-  /// (starting at index 0) represents the identifier for the action. Each odd
-  /// element in the list is the localized string that will be displayed to the
-  /// user.
   std::vector<std::string> actions{};
 
   std::map<std::string, sdbus::Variant> hints{};
