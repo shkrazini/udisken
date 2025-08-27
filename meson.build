@@ -1,7 +1,7 @@
 project(
   'udisken',
   'cpp',
-  version : '0.0.1',
+  version : '0.1',
   license : 'Apache-2.0',
   meson_version : '>=1.4.0',
   default_options : [
