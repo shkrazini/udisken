@@ -66,6 +66,7 @@ Checks: >
   -llvm-namespace-comment,
   -misc-non-private-member-variables-in-classes,
   -modernize-use-nodiscard,
+  -modernize-use-trailing-return-type,
   -performance-faster-string-find,
   -performance-unnecessary-value-param,
   -portability-restrict-system-includes,
@@ -76,6 +77,9 @@ Checks: >
 
 # Based on Google's naming style.
 CheckOptions:
+  # Non-existent in clang-tidy 20.1.8.
+  modernize-use-trailing-return-type.TransformFunctions: false
+
   readability-identifier-naming.NamespaceCase: lower_case
   readability-identifier-naming.ClassCase: CamelCase
   readability-identifier-naming.StructCase: CamelCase

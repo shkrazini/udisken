@@ -40,7 +40,7 @@ auto ConvertArrayArrayByte(const std::vector<std::vector<std::uint8_t>>& aay)
 }
 // TEST(blackma9ick): convert sample data.
 
-constexpr auto NonZero(std::string_view sv) -> bool {
+constexpr bool NonZero(std::string_view sv) {
   return !sv.empty() && sv.find_first_not_of("0") != std::string_view::npos;
 }
 
@@ -50,7 +50,7 @@ static_assert(NonZero("010"));
 static_assert(!NonZero(""));
 static_assert(!NonZero("0"));
 
-auto NonZeroEnvVar(const std::string& var) -> bool {
+bool NonZeroEnvVar(const std::string& var) {
   auto* const var_value{std::getenv(var.c_str())};
   return var_value != nullptr && NonZero(var_value);
 }
@@ -79,7 +79,7 @@ void DebugCapabilities(sdbus::IProxy& notify_proxy) {
 
 }  // namespace
 
-auto CloseNotification(sdbus::IProxy& notify_proxy, std::uint32_t id) -> bool {
+bool CloseNotification(sdbus::IProxy& notify_proxy, std::uint32_t id) {
   spdlog::debug("Closing notification with ID {}", id);
 
   try {
@@ -99,8 +99,8 @@ auto CloseNotification(sdbus::IProxy& notify_proxy, std::uint32_t id) -> bool {
   return true;
 }
 
-auto Notify(sdbus::IProxy& notify_proxy, const Notification& notif,
-            ActionInvokedCallback callback) -> bool {
+bool Notify(sdbus::IProxy& notify_proxy, const Notification& notif,
+            ActionInvokedCallback callback) {
   DebugCapabilities(notify_proxy);
 
   spdlog::debug("Registering notifications actions");

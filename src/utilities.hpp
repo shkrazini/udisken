@@ -45,14 +45,14 @@ auto ConvertArrayArrayByte(const std::vector<std::vector<std::uint8_t>>& aay)
 ///
 /// @return True if string view is non-empty (regardless of the original
 /// string's content), and its content contains characters other than '0'.
-constexpr auto NonZero(std::string_view sv) -> bool;
+constexpr bool NonZero(std::string_view sv);
 
 /// Checks if the environment variable is defined and has a non-zero value.
 ///
 /// @param var Name of the environment variable.
 ///
 /// @return True if the environment variable is defined and is non-zero.
-auto NonZeroEnvVar(const std::string& var) -> bool;
+bool NonZeroEnvVar(const std::string& var);
 
 }  // namespace utils
 
@@ -100,7 +100,7 @@ static const sdbus::InterfaceName kNotifInterfaceName{kNotifServiceName};
 ///
 /// @return Notification did not expire or get manually closed, and closed
 /// successfully.
-auto CloseNotification(sdbus::IProxy& notify_proxy, std::uint32_t id) -> bool;
+bool CloseNotification(sdbus::IProxy& notify_proxy, std::uint32_t id);
 
 /// Send a desktop notification.
 ///
@@ -108,8 +108,8 @@ auto CloseNotification(sdbus::IProxy& notify_proxy, std::uint32_t id) -> bool;
 /// @param notification Notification.
 ///
 /// @return Successfully sent the notification.
-auto Notify(sdbus::IProxy& notify_proxy, const Notification& notif,
-            ActionInvokedCallback callback) -> bool;
+bool Notify(sdbus::IProxy& notify_proxy, const Notification& notif,
+            ActionInvokedCallback callback);
 
 }  // namespace notify
 

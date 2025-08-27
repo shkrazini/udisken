@@ -27,7 +27,7 @@
 
 #include <iostream>
 
-auto main(int argc, char* argv[]) -> int {
+int main(int argc, char* argv[]) {
   argparse::ArgumentParser program{globals::kAppName, globals::kAppVersion};
   bool no_notify{};
   program.add_argument("--no-notify")

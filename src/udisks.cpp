@@ -81,11 +81,11 @@ Drive::Drive(std::unique_ptr<interfaces::UdisksDrive> drive)
   }
 }
 
-auto Drive::ObjectPath() const -> const sdbus::ObjectPath& {
+const sdbus::ObjectPath& Drive::ObjectPath() const {
   return drive_->getProxy().getObjectPath();
 }
 
-auto Drive::GetDrive() -> interfaces::UdisksDrive& { return *drive_; }
+interfaces::UdisksDrive& Drive::GetDrive() { return *drive_; }
 
 BlockDevice::BlockDevice(
     std::unique_ptr<interfaces::UdisksBlock> block,
@@ -106,11 +106,11 @@ BlockDevice::BlockDevice(
   }
 }
 
-auto BlockDevice::ObjectPath() const -> const sdbus::ObjectPath& {
+const sdbus::ObjectPath& BlockDevice::ObjectPath() const {
   return block_->getProxy().getObjectPath();
 }
 
-auto BlockDevice::Filesystem() -> interfaces::UdisksFilesystem& {
+interfaces::UdisksFilesystem& BlockDevice::Filesystem() {
   if (!HasFilesystem()) {
     throw std::logic_error("object does not implement interface");
   }
@@ -118,7 +118,7 @@ auto BlockDevice::Filesystem() -> interfaces::UdisksFilesystem& {
   return *filesystem_;
 }
 
-auto BlockDevice::Loop() -> interfaces::UdisksLoop& {
+interfaces::UdisksLoop& BlockDevice::Loop() {
   if (!HasLoop()) {
     throw std::logic_error("object does not implement interface");
   }
@@ -126,7 +126,7 @@ auto BlockDevice::Loop() -> interfaces::UdisksLoop& {
   return *loop_;
 }
 
-auto BlockDevice::Partition() -> interfaces::UdisksPartition& {
+interfaces::UdisksPartition& BlockDevice::Partition() {
   if (!HasPartition()) {
     throw std::logic_error("object does not implement interface");
   }
@@ -162,7 +162,7 @@ UdisksObjectManager::UdisksObjectManager(sdbus::IConnection& connection,
 namespace {
 
 template <class UdisksInterface>
-auto HasInterface(InterfacesAndProperties& inp) -> bool {
+bool HasInterface(InterfacesAndProperties& inp) {
   return inp.contains(sdbus::InterfaceName{UdisksInterface::INTERFACE_NAME});
 }
 

@@ -39,7 +39,7 @@ using MountPoints = std::vector<std::string>;
 /// @param fs Reference to an UDisks Filesystem proxy.
 ///
 /// @return List of strings representing the filesystem's mount points.
-auto GetMountPoints(interfaces::UdisksFilesystem& fs) -> MountPoints;
+MountPoints GetMountPoints(interfaces::UdisksFilesystem& fs);
 /// Log mount points as verbose output.
 ///
 /// @param mnt_points List of strings representing a filesystem's mount points.

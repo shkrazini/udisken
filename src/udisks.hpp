@@ -59,10 +59,10 @@ class UdisksBlock final
   UdisksBlock(sdbus::IConnection& connection,
               const sdbus::ObjectPath& object_path);
 
-  UdisksBlock(UdisksBlock&&) = delete;
   UdisksBlock(const UdisksBlock&) = delete;
-  auto operator=(UdisksBlock&&) -> UdisksBlock& = delete;
-  auto operator=(const UdisksBlock&) -> UdisksBlock& = delete;
+  UdisksBlock(UdisksBlock&&) = delete;
+  UdisksBlock& operator=(const UdisksBlock&) = delete;
+  UdisksBlock& operator=(UdisksBlock&&) = delete;
 
   ~UdisksBlock() noexcept { unregisterProxy(); };
 };
@@ -84,8 +84,8 @@ class UdisksDrive final
 
   UdisksDrive(const UdisksDrive&) = delete;
   UdisksDrive(UdisksDrive&&) = delete;
-  auto operator=(const UdisksDrive&) -> UdisksDrive& = delete;
-  auto operator=(UdisksDrive&&) -> UdisksDrive& = delete;
+  UdisksDrive& operator=(const UdisksDrive&) = delete;
+  UdisksDrive& operator=(UdisksDrive&&) = delete;
 
   ~UdisksDrive() noexcept { unregisterProxy(); }
 };
@@ -105,10 +105,10 @@ class UdisksFilesystem final
   UdisksFilesystem(sdbus::IConnection& connection,
                    const sdbus::ObjectPath& object_path);
 
-  UdisksFilesystem(UdisksFilesystem&&) = delete;
   UdisksFilesystem(const UdisksFilesystem&) = delete;
-  auto operator=(UdisksFilesystem&&) -> UdisksFilesystem& = delete;
-  auto operator=(const UdisksFilesystem&) -> UdisksFilesystem& = delete;
+  UdisksFilesystem(UdisksFilesystem&&) = delete;
+  UdisksFilesystem& operator=(const UdisksFilesystem&) = delete;
+  UdisksFilesystem& operator=(UdisksFilesystem&&) = delete;
 
   ~UdisksFilesystem() noexcept { unregisterProxy(); }
 };
@@ -126,10 +126,10 @@ class UdisksLoop : public sdbus::ProxyInterfaces<udisks_api::Loop_proxy> {
   UdisksLoop(sdbus::IConnection& connection,
              const sdbus::ObjectPath& objectPath);
 
-  UdisksLoop(UdisksLoop&&) = delete;
   UdisksLoop(const UdisksLoop&) = delete;
-  auto operator=(UdisksLoop&&) -> UdisksLoop& = delete;
-  auto operator=(const UdisksLoop&) -> UdisksLoop& = delete;
+  UdisksLoop(UdisksLoop&&) = delete;
+  UdisksLoop& operator=(const UdisksLoop&) = delete;
+  UdisksLoop& operator=(UdisksLoop&&) = delete;
 
   ~UdisksLoop() noexcept { unregisterProxy(); }
 };
@@ -148,10 +148,10 @@ class UdisksPartition
   UdisksPartition(sdbus::IConnection& connection,
                   const sdbus::ObjectPath& objectPath);
 
-  UdisksPartition(UdisksPartition&&) = delete;
   UdisksPartition(const UdisksPartition&) = delete;
-  auto operator=(UdisksPartition&&) -> UdisksPartition& = delete;
-  auto operator=(const UdisksPartition&) -> UdisksPartition& = delete;
+  UdisksPartition(UdisksPartition&&) = delete;
+  UdisksPartition& operator=(const UdisksPartition&) = delete;
+  UdisksPartition& operator=(UdisksPartition&&) = delete;
 
   ~UdisksPartition() noexcept { unregisterProxy(); }
 };
@@ -170,12 +170,12 @@ class Drive {
   /// non-null.
   Drive(std::unique_ptr<interfaces::UdisksDrive> drive);
 
-  auto ObjectPath() const -> const sdbus::ObjectPath&;
+  const sdbus::ObjectPath& ObjectPath() const;
 
   /// Get the drive interface proxy.
   ///
   /// @return Reference to the drive interface proxy, not the pointer.
-  auto GetDrive() -> interfaces::UdisksDrive&;
+  interfaces::UdisksDrive& GetDrive();
 
  private:
   /// Corresponding Drive interface for this block device.
@@ -200,13 +200,13 @@ class BlockDevice {
       std::unique_ptr<interfaces::UdisksLoop> loop = nullptr,
       std::unique_ptr<interfaces::UdisksPartition> partition = nullptr);
 
-  auto ObjectPath() const -> const sdbus::ObjectPath&;
+  const sdbus::ObjectPath& ObjectPath() const;
 
   /// Get the block interface proxy; this proxy always exists as long as
   /// the block device is valid.
   ///
   /// @return Reference to the block interface proxy, not the pointer.
-  auto Block() -> interfaces::UdisksBlock& { return *block_; }
+  interfaces::UdisksBlock& Block() { return *block_; }
 
   /// Get the filesystem interface proxy.
   ///
@@ -214,8 +214,8 @@ class BlockDevice {
   /// by the object.
   ///
   /// @return Reference to the filesystem interface proxy, not the pointer.
-  auto Filesystem() -> interfaces::UdisksFilesystem&;
-  auto HasFilesystem() -> bool { return filesystem_ != nullptr; }
+  interfaces::UdisksFilesystem& Filesystem();
+  bool HasFilesystem() { return filesystem_ != nullptr; }
 
   /// Get the loop device interface proxy.
   ///
@@ -223,8 +223,8 @@ class BlockDevice {
   /// by the object.
   ///
   /// @return Reference to the loop device interface proxy, not the pointer.
-  auto Loop() -> interfaces::UdisksLoop&;
-  auto HasLoop() -> bool { return loop_ != nullptr; }
+  interfaces::UdisksLoop& Loop();
+  bool HasLoop() { return loop_ != nullptr; }
 
   /// Get the partition interface proxy.
   ///
@@ -232,8 +232,8 @@ class BlockDevice {
   /// by the object.
   ///
   /// @return Reference to the partition interface proxy, not the pointer.
-  auto Partition() -> interfaces::UdisksPartition&;
-  auto HasPartition() -> bool { return partition_ != nullptr; }
+  interfaces::UdisksPartition& Partition();
+  bool HasPartition() { return partition_ != nullptr; }
 
  private:
   /// Corresponding drive object for this block device. If it exists, it is
@@ -268,8 +268,8 @@ class UdisksManager final
 
   UdisksManager(const UdisksManager&) = delete;
   UdisksManager(UdisksManager&&) = delete;
-  auto operator=(const UdisksManager&) -> UdisksManager& = delete;
-  auto operator=(UdisksManager&&) -> UdisksManager& = delete;
+  UdisksManager& operator=(const UdisksManager&) = delete;
+  UdisksManager& operator=(UdisksManager&&) = delete;
 
   ~UdisksManager() noexcept { unregisterProxy(); }
 
@@ -292,10 +292,10 @@ class UdisksObjectManager final
   explicit UdisksObjectManager(sdbus::IConnection& connection,
                                options::Options options);
 
-  UdisksObjectManager(UdisksObjectManager&&) = delete;
   UdisksObjectManager(const UdisksObjectManager&) = delete;
-  auto operator=(UdisksObjectManager&&) -> UdisksObjectManager& = delete;
-  auto operator=(const UdisksObjectManager&) -> UdisksObjectManager& = delete;
+  UdisksObjectManager(UdisksObjectManager&&) = delete;
+  UdisksObjectManager& operator=(const UdisksObjectManager&) = delete;
+  UdisksObjectManager& operator=(UdisksObjectManager&&) = delete;
 
   ~UdisksObjectManager() noexcept { unregisterProxy(); }
 
