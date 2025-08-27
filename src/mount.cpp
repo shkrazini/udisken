@@ -45,8 +45,8 @@ MountPoints GetMountPoints(interfaces::UdisksFilesystem& fs) {
 }
 
 void DebugMountPoints(const MountPoints& mnt_points) {
-  for (const auto& current_mnt_points : mnt_points) {
-    spdlog::debug("- {}", current_mnt_points);
+  for (const auto& mnt_point : mnt_points) {
+    spdlog::debug("- {}", mnt_point);
   }
 }
 
