@@ -14,9 +14,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/// Utilities, mostly functions depending on enabled features.
+/// Send Freedesktop.org desktop notifications from here.
 
-#include "utilities.hpp"
+#include "notify.hpp"
 
 #include <sdbus-c++/Error.h>
 #include <sdbus-c++/IProxy.h>

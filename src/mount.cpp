@@ -18,8 +18,8 @@
 
 #include "mount.hpp"
 
+#include "notify.hpp"
 #include "udisks.hpp"
-#include "utilities.hpp"
 
 #include <sdbus-c++/Error.h>
 #include <sdbus-c++/IConnection.h>

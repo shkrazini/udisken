@@ -1,9 +1,9 @@
 udisken_sources = [
   'main.cpp',
   'mount.cpp',
+  'notify.cpp',
   'options.cpp',
   'udisks.cpp',
-  'utilities.cpp',
 ]
 
 executable(

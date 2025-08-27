@@ -14,10 +14,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/// Utilities, mostly functions depending on enabled features.
+/// Send Freedesktop.org desktop notifications from here.
 
-#ifndef UDISKEN_UTILITIES_HPP_
-#define UDISKEN_UTILITIES_HPP_
+#ifndef UDISKEN_NOTIFY_HPP_
+#define UDISKEN_NOTIFY_HPP_
 
 #include "options.hpp"
 
@@ -86,4 +86,4 @@ bool Notify(sdbus::IProxy& notify_proxy, const Notification& notif,
 
 }  // namespace notify
 
-#endif  // UDISKEN_UTILITIES_HPP_
+#endif  // UDISKEN_NOTIFY_HPP_

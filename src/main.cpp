@@ -18,7 +18,6 @@
 
 #include "options.hpp"
 #include "udisks.hpp"
-#include "utilities.hpp"
 
 #include <argparse/argparse.hpp>
 #include <sdbus-c++/IConnection.h>
