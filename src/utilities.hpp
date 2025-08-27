@@ -55,6 +55,7 @@ auto NonZeroEnvVar(const std::string& var) -> bool;
 
 }  // namespace utils
 
+/// Send Freedesktop.org desktop notifications.
 namespace notify {
 
 using ActionInvokedCallback = std::function<void(std::uint32_t, std::string)>;

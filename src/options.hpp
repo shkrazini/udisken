@@ -23,6 +23,7 @@
 
 #include <string>
 
+/// Status options enabled at compile-time for UDISKEN.
 namespace globals {
 
 /// Name of the program, as seen by other programs and machines;
@@ -43,6 +44,7 @@ constexpr bool kDebug{true};
 
 }  // namespace globals
 
+/// Options enabled at runtime for UDISKEN.
 namespace options {
 
 struct Options {
