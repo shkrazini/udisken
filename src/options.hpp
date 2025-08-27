@@ -47,11 +47,14 @@ constexpr bool kDebug{true};
 /// Options enabled at runtime for UDISKEN.
 namespace options {
 
+/// Struct housing enabled options for runtime features.
+/// Use this to know which functions you are allowed to perform at runtime.
 struct Options {
+  /// Should we send Desktop notifications?
   bool notify{true};
 };
 
-/// Are desktop notifications enabled by the environment.
+/// Are desktop notifications enabled by the environment?
 ///
 /// @return False if UDISKEN_NO_NOTIFY is non-zero. True otherwise.
 auto NotifyEnabled() -> bool;
