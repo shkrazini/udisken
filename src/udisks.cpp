@@ -166,7 +166,7 @@ auto HasInterface(InterfacesAndProperties& inp) -> bool {
   return inp.contains(sdbus::InterfaceName{UdisksInterface::INTERFACE_NAME});
 }
 
-}  // namespace
+}
 
 void UdisksObjectManager::onInterfacesAdded(
     const sdbus::ObjectPath& object_path,
