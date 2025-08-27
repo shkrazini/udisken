@@ -31,14 +31,6 @@
 
 namespace utils {
 
-/// Converts an array of array of bytes (D-Bus equivalent type: a{a{y}})
-/// to a vector of strings.
-///
-/// @param aay The array of array of bytes.
-[[nodiscard("Returns the converted vector")]]
-auto ConvertArrayArrayByte(const std::vector<std::vector<std::uint8_t>>& aay)
-    -> std::vector<std::string>;
-
 /// Checks if the string view has a non-zero value.
 ///
 /// @param sv Typical string view.
