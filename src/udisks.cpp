@@ -35,43 +35,6 @@
 #include <utility>
 #include <vector>
 
-namespace interfaces {
-
-UdisksBlock::UdisksBlock(sdbus::IConnection& connection,
-                         const sdbus::ObjectPath& object_path)
-    : ProxyInterfaces(connection, sdbus::ServiceName{udisks::kInterfaceName},
-                      object_path) {
-  registerProxy();
-}
-
-UdisksDrive::UdisksDrive(sdbus::IConnection& connection,
-                         const sdbus::ObjectPath& object_path)
-    : ProxyInterfaces(connection, udisks::kServiceName, object_path) {
-  registerProxy();
-}
-
-UdisksFilesystem::UdisksFilesystem(sdbus::IConnection& connection,
-                                   const sdbus::ObjectPath& object_path)
-    : ProxyInterfaces(connection, udisks::kServiceName, object_path) {
-  registerProxy();
-}
-
-UdisksLoop::UdisksLoop(sdbus::IConnection& connection,
-                       const sdbus::ObjectPath& objectPath)
-    : ProxyInterfaces<Loop_proxy>(connection, udisks::kServiceName,
-                                  objectPath) {
-  registerProxy();
-}
-
-UdisksPartition::UdisksPartition(sdbus::IConnection& connection,
-                                 const sdbus::ObjectPath& objectPath)
-    : ProxyInterfaces<Partition_proxy>(connection, udisks::kServiceName,
-                                       objectPath) {
-  registerProxy();
-}
-
-}  // namespace interfaces
-
 namespace objects {
 
 Drive::Drive(std::unique_ptr<interfaces::UdisksDrive> drive)

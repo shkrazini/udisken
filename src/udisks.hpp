@@ -25,13 +25,14 @@
 #include <sdbus-c++/IConnection.h>
 #include <sdbus-c++/ProxyInterfaces.h>
 #include <sdbus-c++/Types.h>
-#include <udisks-sdbus-c++/udisks_proxy.hpp>
+#include <udisks-sdbus-c++/udisks_proxy_wrappers.hpp>
 
 #include <map>
 #include <memory>
 #include <vector>
 
 namespace udisks_api = org::freedesktop::UDisks2;
+namespace interfaces = udisks_api::proxies;
 
 namespace udisks {
 
@@ -42,121 +43,6 @@ static const sdbus::ServiceName kServiceName{kInterfaceName};
 static const sdbus::ObjectPath kEmptyObjectPath{"/"};
 
 }  // namespace udisks
-
-namespace interfaces {
-
-/// Proxy to a UDisks block interface.
-///
-/// UdisksBlockDevice always implements this interface.
-class UdisksBlock final
-    : public sdbus::ProxyInterfaces<udisks_api::Block_proxy> {
- public:
-  /// Construct a block proxy.
-  ///
-  /// @param connection System bus connection. Should be the same as used
-  /// to construct the manager proxy (UdisksManager).
-  /// @param object_path Object path to a UDisks block interface.
-  UdisksBlock(sdbus::IConnection& connection,
-              const sdbus::ObjectPath& object_path);
-
-  UdisksBlock(const UdisksBlock&) = delete;
-  UdisksBlock(UdisksBlock&&) = delete;
-  UdisksBlock& operator=(const UdisksBlock&) = delete;
-  UdisksBlock& operator=(UdisksBlock&&) = delete;
-
-  ~UdisksBlock() noexcept { unregisterProxy(); };
-};
-
-/// Proxy to a UDisks disk drive interface.
-///
-/// UdisksBlock might have an associated drive object and interface, if the
-/// block device has an underlying disk drive (e.g., it is not a loop device).
-class UdisksDrive final
-    : public sdbus::ProxyInterfaces<udisks_api::Drive_proxy> {
- public:
-  /// Construct a drive proxy.
-  ///
-  /// @param connection System bus connection. Should be the same as used
-  /// to construct the manager proxy (UdisksManager).
-  /// @param object_path Object path to a UDisks drive interface.
-  UdisksDrive(sdbus::IConnection& connection,
-              const sdbus::ObjectPath& object_path);
-
-  UdisksDrive(const UdisksDrive&) = delete;
-  UdisksDrive(UdisksDrive&&) = delete;
-  UdisksDrive& operator=(const UdisksDrive&) = delete;
-  UdisksDrive& operator=(UdisksDrive&&) = delete;
-
-  ~UdisksDrive() noexcept { unregisterProxy(); }
-};
-
-/// Proxy to a UDisks mountable filesystem interface, contained in a
-/// UdisksBlockDevice.
-///
-/// UdisksBlockDevice may implement this interface.
-class UdisksFilesystem final
-    : public sdbus::ProxyInterfaces<udisks_api::Filesystem_proxy> {
- public:
-  /// Construct a filesystem proxy.
-  ///
-  /// @param connection System bus connection. Should be the same as used
-  /// to construct the manager proxy (UdisksManager).
-  /// @param object_path Object path to a UDisks Filesystem interface.
-  UdisksFilesystem(sdbus::IConnection& connection,
-                   const sdbus::ObjectPath& object_path);
-
-  UdisksFilesystem(const UdisksFilesystem&) = delete;
-  UdisksFilesystem(UdisksFilesystem&&) = delete;
-  UdisksFilesystem& operator=(const UdisksFilesystem&) = delete;
-  UdisksFilesystem& operator=(UdisksFilesystem&&) = delete;
-
-  ~UdisksFilesystem() noexcept { unregisterProxy(); }
-};
-
-/// Proxy to a UDisks loop device interface.
-///
-/// UdisksBlockDevice may implement this interface.
-class UdisksLoop : public sdbus::ProxyInterfaces<udisks_api::Loop_proxy> {
- public:
-  /// Construct a loop proxy.
-  ///
-  /// @param connection System bus connection. Should be the same as used
-  /// to construct the manager proxy (UdisksManager).
-  /// @param object_path Object path to a UDisks loop interface.
-  UdisksLoop(sdbus::IConnection& connection,
-             const sdbus::ObjectPath& objectPath);
-
-  UdisksLoop(const UdisksLoop&) = delete;
-  UdisksLoop(UdisksLoop&&) = delete;
-  UdisksLoop& operator=(const UdisksLoop&) = delete;
-  UdisksLoop& operator=(UdisksLoop&&) = delete;
-
-  ~UdisksLoop() noexcept { unregisterProxy(); }
-};
-
-/// Proxy to a UDisks partition interface.
-///
-/// UdisksBlockDevice may implement this interface.
-class UdisksPartition
-    : public sdbus::ProxyInterfaces<udisks_api::Partition_proxy> {
- public:
-  /// Construct a partition proxy.
-  ///
-  /// @param connection System bus connection. Should be the same as used
-  /// to construct the manager proxy (UdisksManager).
-  /// @param object_path Object path to a UDisks partition interface.
-  UdisksPartition(sdbus::IConnection& connection,
-                  const sdbus::ObjectPath& objectPath);
-
-  UdisksPartition(const UdisksPartition&) = delete;
-  UdisksPartition(UdisksPartition&&) = delete;
-  UdisksPartition& operator=(const UdisksPartition&) = delete;
-  UdisksPartition& operator=(UdisksPartition&&) = delete;
-
-  ~UdisksPartition() noexcept { unregisterProxy(); }
-};
-
-}  // namespace interfaces
 
 namespace objects {
 
