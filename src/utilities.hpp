@@ -29,25 +29,6 @@
 #include <string>
 #include <vector>
 
-namespace utils {
-
-/// Checks if the string view has a non-zero value.
-///
-/// @param sv Typical string view.
-///
-/// @return True if string view is non-empty (regardless of the original
-/// string's content), and its content contains characters other than '0'.
-constexpr bool NonZero(std::string_view sv);
-
-/// Checks if the environment variable is defined and has a non-zero value.
-///
-/// @param var Name of the environment variable.
-///
-/// @return True if the environment variable is defined and is non-zero.
-bool NonZeroEnvVar(const std::string& var);
-
-}  // namespace utils
-
 /// Send Freedesktop.org desktop notifications.
 namespace notify {
 

@@ -24,28 +24,8 @@
 #include <spdlog/spdlog.h>
 
 #include <cstdint>
-#include <cstdlib>
 #include <string>
 #include <vector>
-
-namespace utils {
-
-constexpr bool NonZero(std::string_view sv) {
-  return !sv.empty() && sv.find_first_not_of("0") != std::string_view::npos;
-}
-
-static_assert(NonZero("1"));
-static_assert(NonZero("101"));
-static_assert(NonZero("010"));
-static_assert(!NonZero(""));
-static_assert(!NonZero("0"));
-
-bool NonZeroEnvVar(const std::string& var) {
-  auto* const var_value{std::getenv(var.c_str())};
-  return var_value != nullptr && NonZero(var_value);
-}
-
-}  // namespace utils
 
 namespace notify {
 
