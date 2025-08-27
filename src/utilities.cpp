@@ -61,6 +61,9 @@ namespace notify {
 
 namespace {
 
+/// Print the notification server's capabilities as verbose output.
+/// See Freedesktop.org Notifications documentation:
+/// <https://specifications.freedesktop.org/notification-spec/latest/>
 void DebugCapabilities(sdbus::IProxy& notify_proxy) {
   std::vector<std::string> caps{};
   notify_proxy.callMethod("GetCapabilities")
