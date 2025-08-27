@@ -61,7 +61,7 @@ namespace notify {
 
 namespace {
 
-void PrintCapabilities(sdbus::IProxy& notify_proxy) {
+void DebugCapabilities(sdbus::IProxy& notify_proxy) {
   std::vector<std::string> caps{};
   notify_proxy.callMethod("GetCapabilities")
       .onInterface(kNotifInterfaceName)
