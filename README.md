@@ -1,8 +1,8 @@
 # UDISKEN
 
 > [!NOTE]
-> UDISKEN will only receive bug fixes for now, as I am working on other
-> projects. A few features are still planned, such as unlocking (see the note below).
+> UDISKEN is not quite finished. A few features are planned, such as unlocking
+> (see the note below). They will be implemented once I'm experienced with Qt.
 
 A small Linux desktop removable media mounting daemon, that uses little memory.
 (\~26x fewer memory used than [udiskie] on author's setup:
