@@ -1,6 +1,6 @@
 [Unit]
 Description=UDISKEN Removable Media Mounting Daemon
-Documentation=https://github.com/blackma9ick/udisken/blob/main/README.md
+Documentation=https://codeberg.org/blackma9ick/udisken/blob/main/README.md
 Requires=dbus.service
 
 [Service]

@@ -7,7 +7,7 @@
 > [!NOTE]
 > Unlocking encrypted disks is not supported yet.
 > Some preliminary work has been done in the
-> [unlock](https://github.com/blackma9ick/udisken/tree/unlock)
+> [unlock](https://codeberg.org/blackma9ick/udisken/tree/unlock)
 > branch.
 
 A small Linux desktop removable media mounting daemon, that uses little memory.
@@ -138,7 +138,7 @@ For more information, see [udisks-sdbus-c++].
 ### Build
 
 ```sh
-git clone https://github.com/blackma9ick/udisken
+git clone https://codeberg.org/blackma9ick/udisken
 cd udisken
 meson wrap update-db
 meson setup build
