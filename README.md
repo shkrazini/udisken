@@ -4,12 +4,6 @@
 > UDISKEN will only receive bug fixes for now, as I am working on other
 > projects. A few features are still planned, such as unlocking (see the note below).
 
-> [!NOTE]
-> Unlocking encrypted disks is not supported yet.
-> Some preliminary work has been done in the
-> [unlock](https://codeberg.org/blackma9ick/udisken/tree/unlock)
-> branch.
-
 A small Linux desktop removable media mounting daemon, that uses little memory.
 (\~26x fewer memory used than [udiskie] on author's setup:
 from \~80 MiB to \~3 MiB)
@@ -19,6 +13,12 @@ Mount automatically your...:
 - USB drive
 - CD or DVD disk
 - loop devices
+
+> [!NOTE]
+> Unlocking encrypted disks is not supported yet.
+> Some preliminary work has been done in the
+> [unlock](https://codeberg.org/blackma9ick/udisken/tree/unlock)
+> branch.
 
 ## Requires
 
