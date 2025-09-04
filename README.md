@@ -69,12 +69,24 @@ Disabling notifications:
 udisken --no-notify
 ```
 
+Disabling log timestamp (useful for journal systems, `journalctl`):
+
+```sh
+udisken --no-log-timestamp
+```
+
 UDISKEN also reads from some environment variables.
 
 Disabling notifications:
 
 ```sh
 UDISKEN_NO_NOTIFY=1 udisken
+```
+
+Disabling log timestamp (useful for journal systems, `journalctl`):
+
+```sh
+UDISKEN_NO_LOG_TIMESTAMP=1 udisken
 ```
 
 **Other configuration**, such as _enabling or disabling automounting per drive_,

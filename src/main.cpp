@@ -28,6 +28,11 @@
 
 int main(int argc, char* argv[]) {
   argparse::ArgumentParser program{globals::kAppName, globals::kAppVersion};
+  bool no_log_timestamp{};
+  program.add_argument("--no-log-timestamp")
+      .help("do not display timestamp when logging")
+      .flag()
+      .store_into(no_log_timestamp);
   bool no_notify{};
   program.add_argument("--no-notify")
       .help("do not send desktop notifications")
@@ -46,12 +51,17 @@ int main(int argc, char* argv[]) {
     return EXIT_FAILURE;
   }
 
-  // Startup message: UDISKEN (version)
-  spdlog::info("{} {}", globals::kAppNameUi, globals::kAppVersion);
+  if (options::NonZeroEnvVar("UDISKEN_NO_LOG_TIMESTAMP") || no_log_timestamp) {
+    // Enable coloring log level, display log level and normal text only.
+    spdlog::set_pattern("[%^%l%$] %v");
+  }
 
   if (globals::kDebug || options::NonZeroEnvVar("DEBUG") || verbose) {
     spdlog::set_level(spdlog::level::debug);
   }
+
+  // Startup message: UDISKEN (version)
+  spdlog::info("{} {}", globals::kAppNameUi, globals::kAppVersion);
 
   const auto connection{sdbus::createSystemBusConnection()};
   managers::UdisksManager mgr{*connection};

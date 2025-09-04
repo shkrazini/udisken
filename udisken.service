@@ -5,7 +5,7 @@ Requires=dbus.service
 
 [Service]
 Type=exec
-ExecStart=/usr/bin/udisken
+ExecStart=/usr/bin/udisken --no-log-timestamp
 
 [Install]
 WantedBy=local-fs.target usb-gadget.target
