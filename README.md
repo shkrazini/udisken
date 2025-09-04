@@ -75,6 +75,12 @@ Disabling log timestamp (useful for journal systems, `journalctl`):
 udisken --no-log-timestamp
 ```
 
+Enabling verbose mode:
+
+```sh
+udisken -d # or --verbose
+```
+
 UDISKEN also reads from some environment variables.
 
 Disabling notifications:
@@ -87,6 +93,12 @@ Disabling log timestamp (useful for journal systems, `journalctl`):
 
 ```sh
 UDISKEN_NO_LOG_TIMESTAMP=1 udisken
+```
+
+Enabling verbose mode:
+
+```sh
+DEBUG=1 udisken
 ```
 
 **Other configuration**, such as _enabling or disabling automounting per drive_,
