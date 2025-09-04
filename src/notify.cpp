@@ -81,9 +81,8 @@ bool Notify(sdbus::IProxy& notify_proxy, const Notification& notif,
   std::uint32_t notif_id{};
   spdlog::debug("Sending notification: [{}] {}", notif.summary, notif.body);
   try {
-    // XXX(blackma9ick): if you get
-    // "Notifications.Error.ExcessNotificationGeneration" and you have recently
-    // upgraded your packages, make sure to reboot ;)
+    // XXX: if you get "Notifications.Error.ExcessNotificationGeneration" and
+    // you have recently upgraded your packages, make sure to reboot ;)
     notify_proxy.callMethod("Notify")
         .onInterface(kNotifInterfaceName)
         .withArguments(notif.app_name, notif.replaces_id, notif.app_icon,

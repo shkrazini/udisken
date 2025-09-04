@@ -56,7 +56,7 @@ auto ConvertArrayArrayByte(const std::vector<std::vector<std::uint8_t>>& aay)
          }) |
          std::ranges::to<std::vector<std::string>>();
 }
-// TEST(blackma9ick): convert sample data.
+// TEST: convert sample data.
 
 }  // namespace
 
@@ -97,8 +97,8 @@ bool NotifyMounted(udisks_api::proxies::UdisksBlock& blk,
     blk_name = blk.IdLabel();
   } else {
     blk_name = "Drive";
-  }  // TODO(blackma9ick): also lookup UDisks2.Drive.Model
-     // TODO(blackma9ick): To do that, consider storing the interfaces
+  }  // TODO: also lookup UDisks2.Drive.Model
+     // TODO: To do that, consider storing the interfaces
      // somewhere and access them (start by reverting e5d18f78b47e).
   std::string blk_icon_name{blk.HintIconName().empty() ? "drive-removable-media"
                                                        : blk.HintIconName()};
@@ -110,7 +110,7 @@ bool NotifyMounted(udisks_api::proxies::UdisksBlock& blk,
       .summary{"Mounted drive"},
       .body{std::format("{} at {}", blk_name, mnt_point)},
       .app_icon{blk_icon_name},
-      // FIXME(blackma9ick): on KDE Plasma 6.4.4, notifications close/crash
+      // FIXME: on KDE Plasma 6.4.4, notifications close/crash
       // instantly if actions are given. Almost certainly a Plasma bug, and
       // even it were unsupported capabilities, it should ignore them, and not
       // crash and burn.
@@ -165,7 +165,7 @@ auto Mount(udisks_api::proxies::UdisksFilesystem& fs)
 
 }  // namespace
 
-// TODO(blackma9ick): read from fstab, etc., for any additional mount points
+// TODO: read from fstab, etc., for any additional mount points
 // that UDisks may not know about, and mount to them.
 auto TryAutomount(objects::BlockDevice& blk_device)
     -> std::optional<std::string> {
