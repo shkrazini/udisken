@@ -1,5 +1,8 @@
 // UDISKEN: A small Linux automounter.
 //
+// SPDX-FileCopyrightText: 2025 Sofian-Hedi Krazini <blackma9ick@proton.me>
+// SPDX-License-Identifier: Apache-2.0
+//
 // Copyright (C) 2025 Sofian-Hedi Krazini
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -39,7 +42,8 @@ using MountPoints = std::vector<std::string>;
 /// @param fs Reference to an UDisks Filesystem proxy.
 ///
 /// @return List of strings representing the filesystem's mount points.
-MountPoints GetMountPoints(org::freedesktop::UDisks2::proxies::UdisksFilesystem& fs);
+MountPoints GetMountPoints(
+    org::freedesktop::UDisks2::proxies::UdisksFilesystem& fs);
 /// Log mount points as verbose output.
 ///
 /// @param mnt_points List of strings representing a filesystem's mount points.

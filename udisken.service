@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2025 Sofian-Hedi Krazini <blackma9ick@proton.me>
+# SPDX-License-Identifier: 0BSD
+
 [Unit]
 Description=UDISKEN Removable Media Mounting Daemon
 Documentation=https://codeberg.org/blackma9ick/udisken/blob/main/README.md

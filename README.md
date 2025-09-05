@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2025 Sofian-Hedi Krazini <blackma9ick@proton.me>
+SPDX-License-Identifier: CC0-1.0
+-->
+
 # UDISKEN
 
 > [!NOTE]
@@ -171,10 +176,15 @@ meson compile -C build
 
 ## Copyright
 
-Licensed under the [Apache License, Version 2.0](./LICENSE).
+Source and header files are licensed under the
+[Apache License, Version 2.0](./LICENSES/Apache-2.0.txt).
+Please remember to include the [NOTICE](./NOTICE)
+file in your fork, as required by the Apache License. Thanks!
 
-Please remember to include the [NOTICE](./NOTICE) file in your fork, as required
-by the Apache License. Thanks!
+Other files are licensed under the
+[BSD Zero Clause License](./LICENSES/0BSD.txt).
+
+This README is marked [CC0 1.0 Universal](./LICENSES/CC0-1.0.txt).
 
 ---
 

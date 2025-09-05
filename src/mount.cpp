@@ -1,5 +1,8 @@
 // UDISKEN: A small Linux automounter.
 //
+// SPDX-FileCopyrightText: 2025 Sofian-Hedi Krazini <blackma9ick@proton.me>
+// SPDX-License-Identifier: Apache-2.0
+//
 // Copyright (C) 2025 Sofian-Hedi Krazini
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,6 +22,7 @@
 #include "mount.hpp"
 
 #include "notify.hpp"
+#include "options.hpp"
 #include "udisks.hpp"
 
 #include <sdbus-c++/Error.h>
@@ -195,7 +199,9 @@ auto TryAutomount(objects::BlockDevice& blk_device)
   }
 
   spdlog::info("Automounted {}", *mnt_point);
-  NotifyMounted(blk, *mnt_point);
+  if (options::NotifyEnabled()) {
+    NotifyMounted(blk, *mnt_point);
+  }
 
   return mnt_point;
 }

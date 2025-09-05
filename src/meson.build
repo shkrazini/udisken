@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2025 Sofian-Hedi Krazini <blackma9ick@proton.me>
+# SPDX-License-Identifier: 0BSD
+
 udisken_sources = [
   'main.cpp',
   'mount.cpp',
