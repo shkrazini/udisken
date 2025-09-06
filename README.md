@@ -181,10 +181,16 @@ Source and header files are licensed under the
 Please remember to include the [NOTICE](./NOTICE)
 file in your fork, as required by the Apache License. Thanks!
 
+This README is marked [CC0 1.0 Universal](./LICENSES/CC0-1.0.txt).
+
+UDISKEN Icon is based on Adwaita Icon Theme by the [GNOME Project] originally
+licensed under [CC-BY-SA-3.0](https://creativecommons.org/licenses/by-sa/3.0/),
+modified and licensed under [CC-BY-SA-4.0](./LICENSES/CC-BY-SA-4.0.txt).
+UDISKEN Icon uses [Inter], licensed under the
+[SIL Open Font License 1.1](https://openfontlicense.org/open-font-license-official-text).
+
 Other files are licensed under the
 [BSD Zero Clause License](./LICENSES/0BSD.txt).
-
-This README is marked [CC0 1.0 Universal](./LICENSES/CC0-1.0.txt).
 
 ---
 
@@ -193,6 +199,8 @@ My first real project; others were either underdeveloped or abandoned.
 [argparse]: https://github.com/p-ranav/argparse
 [data/org.freedesktop.UDisks2.xml]: https://github.com/storaged-project/udisks/blob/master/data/org.freedesktop.UDisks2.xml
 [fstab(5)]: https://man.archlinux.org/man/fstab.5
+[GNOME Project]: https://www.gnome.org
+[Inter]: https://rsms.me/inter
 [Meson]: https://mesonbuild.com/SimpleStart.html#installing-meson
 [sdbus-c++]: https://github.com/Kistler-Group/sdbus-cpp
 [spdlog]: https://github.com/gabime/spdlog
