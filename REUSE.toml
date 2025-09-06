@@ -1,6 +1,16 @@
 version = 1
 
 [[annotations]]
+path = ".vscode/launch.json"
+SPDX-FileCopyrightText = "2025 Sofian-Hedi Krazini <blackma9ick@proton.me>"
+SPDX-License-Identifier = "0BSD"
+
+[[annotations]]
+path = "dbus/org.freedesktop.UDisks2.xml"
+SPDX-FileCopyrightText = "2011 David Zeuthen <zeuthen@gmail.com>"
+SPDX-License-Identifier = "LGPL-2.0-or-later"
+
+[[annotations]]
 path = "img/*"
 SPDX-FileCopyrightText = [
 	"2010-2025 GNOME Project",
