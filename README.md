@@ -176,10 +176,8 @@ meson compile -C build
 
 ## Copyright
 
-Source and header files are licensed under the
-[Apache License, Version 2.0](./LICENSES/Apache-2.0.txt).
-Please remember to include the [NOTICE](./NOTICE)
-file in your fork, as required by the Apache License. Thanks!
+Source and header files are licensed under the [GNU General Public License
+Version 3](./LICENSES/GPL-3.0-or-later.txt).
 
 This README is marked [CC0 1.0 Universal](./LICENSES/CC0-1.0.txt).
 
