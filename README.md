@@ -3,7 +3,7 @@ SPDX-FileCopyrightText: 2025 Sofian-Hedi Krazini <blackma9ick@proton.me>
 SPDX-License-Identifier: CC0-1.0
 -->
 
-# UDISKEN
+# ![UDISKEN](./img/logo.png)
 
 > [!NOTE]
 > UDISKEN is not quite finished. A few features are planned, such as unlocking
@@ -183,11 +183,12 @@ file in your fork, as required by the Apache License. Thanks!
 
 This README is marked [CC0 1.0 Universal](./LICENSES/CC0-1.0.txt).
 
-UDISKEN Icon is based on Adwaita Icon Theme by the [GNOME Project] originally
-licensed under [CC-BY-SA-3.0](https://creativecommons.org/licenses/by-sa/3.0/),
-modified and licensed under [CC-BY-SA-4.0](./LICENSES/CC-BY-SA-4.0.txt).
-UDISKEN Icon uses [Inter], licensed under the
-[SIL Open Font License 1.1](https://openfontlicense.org/open-font-license-official-text).
+UDISKEN Icon and UDISKEN Logo is based on Adwaita Icon Theme by the [GNOME
+Project] originally licensed under
+[CC-BY-SA-3.0](https://creativecommons.org/licenses/by-sa/3.0/), modified and
+licensed under [CC-BY-SA-4.0](./LICENSES/CC-BY-SA-4.0.txt).
+UDISKEN Icon and UDISKEN Logo uses [Inter], licensed under the [SIL Open Font
+License 1.1](https://openfontlicense.org/open-font-license-official-text).
 
 Other files are licensed under the
 [BSD Zero Clause License](./LICENSES/0BSD.txt).
