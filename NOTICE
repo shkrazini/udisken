@@ -31,6 +31,11 @@ We greatly appreciate the following works and people:
 - spdlog by Gabi Melman, licensed under the MIT License with NOTE.
   Copyright (c) 2016 Gabi Melman
 
+- UDisks library by David Zeuthen, and Red Hat, Inc., licensed under the GNU
+  Library General Public License Version 2.
+  Copyright (C) 2007-2011 David Zeuthen <zeuthen@gmail.com>
+  Copyright (C) 2007-2011 Red Hat, Inc.
+
 LICENSES
 ================================================================================
 
