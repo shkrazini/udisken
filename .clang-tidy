@@ -65,6 +65,7 @@ Checks: >
   -concurrency-mt-unsafe,
   -cppcoreguidelines-avoid-magic-numbers,
   -google-explicit-constructor,
+  -google-readability-todo,
   -hicpp-explicit-conversions,
   -llvm-namespace-comment,
   -misc-non-private-member-variables-in-classes,
