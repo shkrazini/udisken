@@ -28,7 +28,7 @@
 #include <sdbus-c++/IConnection.h>
 #include <sdbus-c++/ProxyInterfaces.h>
 #include <sdbus-c++/Types.h>
-#include <udisks-sdbus-c++/udisks_proxy.hpp>
+#include <udisks-sdbus-cpp/udisks_proxy.hpp>
 
 #include <string>
 #include <vector>
@@ -44,7 +44,7 @@ using MountPoints = std::vector<std::string>;
 ///
 /// @return List of strings representing the filesystem's mount points.
 MountPoints GetMountPoints(
-    org::freedesktop::UDisks2::proxies::UdisksFilesystem& fs);
+    udisks_sd::proxy_wrappers::UdisksFilesystem& fs);
 /// Log mount points as verbose output.
 ///
 /// @param mnt_points List of strings representing a filesystem's mount points.

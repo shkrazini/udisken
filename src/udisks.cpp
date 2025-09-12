@@ -31,7 +31,7 @@
 #include <sdbus-c++/ProxyInterfaces.h>
 #include <sdbus-c++/Types.h>
 #include <spdlog/spdlog.h>
-#include <udisks-sdbus-c++/udisks_errors.hpp>
+#include <udisks-sdbus-cpp/udisks_errors.hpp>
 
 #include <map>
 #include <memory>
@@ -39,11 +39,9 @@
 #include <utility>
 #include <vector>
 
-namespace udisks_api = org::freedesktop::UDisks2;
-
 namespace objects {
 
-Drive::Drive(std::unique_ptr<udisks_api::proxies::UdisksDrive> drive)
+Drive::Drive(std::unique_ptr<udisks_sd::proxy_wrappers::UdisksDrive> drive)
     : drive_{std::move(drive)} {
   if (!drive_) {
     throw std::invalid_argument("drive pointer must not be null");
@@ -54,13 +52,15 @@ const sdbus::ObjectPath& Drive::ObjectPath() const {
   return drive_->getProxy().getObjectPath();
 }
 
-auto Drive::GetDrive() -> udisks_api::proxies::UdisksDrive& { return *drive_; }
+auto Drive::GetDrive() -> udisks_sd::proxy_wrappers::UdisksDrive& {
+  return *drive_;
+}
 
 BlockDevice::BlockDevice(
-    std::unique_ptr<udisks_api::proxies::UdisksBlock> block,
-    std::unique_ptr<udisks_api::proxies::UdisksFilesystem> filesystem,
-    std::unique_ptr<udisks_api::proxies::UdisksLoop> loop,
-    std::unique_ptr<udisks_api::proxies::UdisksPartition> partition)
+    std::unique_ptr<udisks_sd::proxy_wrappers::UdisksBlock> block,
+    std::unique_ptr<udisks_sd::proxy_wrappers::UdisksFilesystem> filesystem,
+    std::unique_ptr<udisks_sd::proxy_wrappers::UdisksLoop> loop,
+    std::unique_ptr<udisks_sd::proxy_wrappers::UdisksPartition> partition)
     : block_{std::move(block)},
       filesystem_{std::move(filesystem)},
       loop_{std::move(loop)},
@@ -71,7 +71,7 @@ BlockDevice::BlockDevice(
 
   if (block_->Drive() != udisks::kEmptyObjectPath) {
     drive_ = std::make_unique<Drive>(
-        std::make_unique<udisks_api::proxies::UdisksDrive>(
+        std::make_unique<udisks_sd::proxy_wrappers::UdisksDrive>(
             block_->getProxy().getConnection(), block_->Drive()));
   }
 }
@@ -80,7 +80,7 @@ const sdbus::ObjectPath& BlockDevice::ObjectPath() const {
   return block_->getProxy().getObjectPath();
 }
 
-auto BlockDevice::Filesystem() -> udisks_api::proxies::UdisksFilesystem& {
+auto BlockDevice::Filesystem() -> udisks_sd::proxy_wrappers::UdisksFilesystem& {
   if (!HasFilesystem()) {
     throw std::logic_error("object does not implement interface");
   }
@@ -88,7 +88,7 @@ auto BlockDevice::Filesystem() -> udisks_api::proxies::UdisksFilesystem& {
   return *filesystem_;
 }
 
-auto BlockDevice::Loop() -> udisks_api::proxies::UdisksLoop& {
+auto BlockDevice::Loop() -> udisks_sd::proxy_wrappers::UdisksLoop& {
   if (!HasLoop()) {
     throw std::logic_error("object does not implement interface");
   }
@@ -96,7 +96,7 @@ auto BlockDevice::Loop() -> udisks_api::proxies::UdisksLoop& {
   return *loop_;
 }
 
-auto BlockDevice::Partition() -> udisks_api::proxies::UdisksPartition& {
+auto BlockDevice::Partition() -> udisks_sd::proxy_wrappers::UdisksPartition& {
   if (!HasPartition()) {
     throw std::logic_error("object does not implement interface");
   }
@@ -143,32 +143,32 @@ void UdisksObjectManager::onInterfacesAdded(
     InterfacesAndProperties interfaces_and_properties) {
   spdlog::debug("New object: {}", object_path.c_str());
 
-  if (!HasInterface<udisks_api::proxies::UdisksBlock>(
+  if (!HasInterface<udisks_sd::proxy_wrappers::UdisksBlock>(
           interfaces_and_properties)) {
     return;
   }
 
-  auto block{std::make_unique<udisks_api::proxies::UdisksBlock>(
+  auto block{std::make_unique<udisks_sd::proxy_wrappers::UdisksBlock>(
       getProxy().getConnection(), object_path)};
 
-  std::unique_ptr<udisks_api::proxies::UdisksFilesystem> filesystem{};
-  if (HasInterface<udisks_api::proxies::UdisksFilesystem>(
+  std::unique_ptr<udisks_sd::proxy_wrappers::UdisksFilesystem> filesystem{};
+  if (HasInterface<udisks_sd::proxy_wrappers::UdisksFilesystem>(
           interfaces_and_properties)) {
-    filesystem = std::make_unique<udisks_api::proxies::UdisksFilesystem>(
+    filesystem = std::make_unique<udisks_sd::proxy_wrappers::UdisksFilesystem>(
         getProxy().getConnection(), object_path);
   }
 
-  std::unique_ptr<udisks_api::proxies::UdisksLoop> loop{};
-  if (HasInterface<udisks_api::proxies::UdisksLoop>(
+  std::unique_ptr<udisks_sd::proxy_wrappers::UdisksLoop> loop{};
+  if (HasInterface<udisks_sd::proxy_wrappers::UdisksLoop>(
           interfaces_and_properties)) {
-    loop = std::make_unique<udisks_api::proxies::UdisksLoop>(
+    loop = std::make_unique<udisks_sd::proxy_wrappers::UdisksLoop>(
         getProxy().getConnection(), object_path);
   }
 
-  std::unique_ptr<udisks_api::proxies::UdisksPartition> partition{};
-  if (HasInterface<udisks_api::proxies::UdisksPartition>(
+  std::unique_ptr<udisks_sd::proxy_wrappers::UdisksPartition> partition{};
+  if (HasInterface<udisks_sd::proxy_wrappers::UdisksPartition>(
           interfaces_and_properties)) {
-    partition = std::make_unique<udisks_api::proxies::UdisksPartition>(
+    partition = std::make_unique<udisks_sd::proxy_wrappers::UdisksPartition>(
         getProxy().getConnection(), object_path);
   }
 

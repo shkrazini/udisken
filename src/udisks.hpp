@@ -29,7 +29,7 @@
 #include <sdbus-c++/IConnection.h>
 #include <sdbus-c++/ProxyInterfaces.h>
 #include <sdbus-c++/Types.h>
-#include <udisks-sdbus-c++/udisks_proxy_wrappers.hpp>
+#include <udisks-sdbus-cpp/udisks_proxy_wrappers.hpp>
 
 #include <map>
 #include <memory>
@@ -55,18 +55,18 @@ class Drive {
   ///
   /// @param drive Pointer to the drive interface for this object. Must be
   /// non-null.
-  Drive(std::unique_ptr<org::freedesktop::UDisks2::proxies::UdisksDrive> drive);
+  Drive(std::unique_ptr<udisks_sd::proxy_wrappers::UdisksDrive> drive);
 
   const sdbus::ObjectPath& ObjectPath() const;
 
   /// Get the drive interface proxy.
   ///
   /// @return Reference to the drive interface proxy, not the pointer.
-  auto GetDrive() -> org::freedesktop::UDisks2::proxies::UdisksDrive&;
+  auto GetDrive() -> udisks_sd::proxy_wrappers::UdisksDrive&;
 
  private:
   /// Corresponding Drive interface for this block device.
-  std::unique_ptr<org::freedesktop::UDisks2::proxies::UdisksDrive> drive_;
+  std::unique_ptr<udisks_sd::proxy_wrappers::UdisksDrive> drive_;
 };
 
 /// Block device object, upon which most UDISKEN actions take effect.
@@ -82,12 +82,12 @@ class BlockDevice {
   ///
   /// Unique_ptrs passed to this constructor will be moved to!
   BlockDevice(
-      std::unique_ptr<org::freedesktop::UDisks2::proxies::UdisksBlock> block,
-      std::unique_ptr<org::freedesktop::UDisks2::proxies::UdisksFilesystem>
+      std::unique_ptr<udisks_sd::proxy_wrappers::UdisksBlock> block,
+      std::unique_ptr<udisks_sd::proxy_wrappers::UdisksFilesystem>
           filesystem = nullptr,
-      std::unique_ptr<org::freedesktop::UDisks2::proxies::UdisksLoop> loop =
+      std::unique_ptr<udisks_sd::proxy_wrappers::UdisksLoop> loop =
           nullptr,
-      std::unique_ptr<org::freedesktop::UDisks2::proxies::UdisksPartition>
+      std::unique_ptr<udisks_sd::proxy_wrappers::UdisksPartition>
           partition = nullptr);
 
   const sdbus::ObjectPath& ObjectPath() const;
@@ -96,7 +96,7 @@ class BlockDevice {
   /// the block device is valid.
   ///
   /// @return Reference to the block interface proxy, not the pointer.
-  auto Block() -> org::freedesktop::UDisks2::proxies::UdisksBlock& {
+  auto Block() -> udisks_sd::proxy_wrappers::UdisksBlock& {
     return *block_;
   }
 
@@ -106,7 +106,7 @@ class BlockDevice {
   /// by the object.
   ///
   /// @return Reference to the filesystem interface proxy, not the pointer.
-  auto Filesystem() -> org::freedesktop::UDisks2::proxies::UdisksFilesystem&;
+  auto Filesystem() -> udisks_sd::proxy_wrappers::UdisksFilesystem&;
   bool HasFilesystem() { return filesystem_ != nullptr; }
 
   /// Get the loop device interface proxy.
@@ -115,7 +115,7 @@ class BlockDevice {
   /// by the object.
   ///
   /// @return Reference to the loop device interface proxy, not the pointer.
-  auto Loop() -> org::freedesktop::UDisks2::proxies::UdisksLoop&;
+  auto Loop() -> udisks_sd::proxy_wrappers::UdisksLoop&;
   bool HasLoop() { return loop_ != nullptr; }
 
   /// Get the partition interface proxy.
@@ -124,7 +124,7 @@ class BlockDevice {
   /// by the object.
   ///
   /// @return Reference to the partition interface proxy, not the pointer.
-  auto Partition() -> org::freedesktop::UDisks2::proxies::UdisksPartition&;
+  auto Partition() -> udisks_sd::proxy_wrappers::UdisksPartition&;
   bool HasPartition() { return partition_ != nullptr; }
 
  private:
@@ -132,15 +132,15 @@ class BlockDevice {
   /// automatically created.
   std::unique_ptr<Drive> drive_ = nullptr;
   /// Proxy to the block interface of this block device object.
-  std::unique_ptr<org::freedesktop::UDisks2::proxies::UdisksBlock> block_;
+  std::unique_ptr<udisks_sd::proxy_wrappers::UdisksBlock> block_;
   /// Proxy to the filesystem present on the block device.
-  std::unique_ptr<org::freedesktop::UDisks2::proxies::UdisksFilesystem>
+  std::unique_ptr<udisks_sd::proxy_wrappers::UdisksFilesystem>
       filesystem_ = nullptr;
   /// Proxy to the loop device on the block device.
-  std::unique_ptr<org::freedesktop::UDisks2::proxies::UdisksLoop> loop_ =
+  std::unique_ptr<udisks_sd::proxy_wrappers::UdisksLoop> loop_ =
       nullptr;
   /// Proxy to the partition on the block device.
-  std::unique_ptr<org::freedesktop::UDisks2::proxies::UdisksPartition>
+  std::unique_ptr<udisks_sd::proxy_wrappers::UdisksPartition>
       partition_ = nullptr;
 };
 

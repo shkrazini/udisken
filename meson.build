@@ -76,11 +76,11 @@ spdlog_dep = dependency(
 
 dbus_interface = files('dbus/org.freedesktop.UDisks2.xml')
 udisks_sdbus_cpp_proj = subproject(
-  'udisks-sdbus-c++',
+  'udisks-sdbus-cpp',
     default_options : [
       'udisks_dbus_interface=' + dbus_interface[0].full_path(),
     ],
-    version : '=2.10-2'
+    version : '=2.10-1'
 )
 udisks_sdbus_cpp_dep = udisks_sdbus_cpp_proj.get_variable('udisks_sdbus_cpp_dep')
 

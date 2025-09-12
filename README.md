@@ -205,6 +205,6 @@ My first real project; others were either underdeveloped or abandoned.
 [spdlog]: https://github.com/gabime/spdlog
 [udiskie]: https://github.com/coldfix/udiskie
 [UDisks]: https://github.com/storaged-project/udisks
-[udisks-sdbus-c++]: https://github.com/blackma9ick/udisks-sdbus-cpp
+[udisks-sdbus-c++]: https://codeberg.org/blackma9ick/udisks-sdbus-cpp
 [udisksctl(1)]: https://man.archlinux.org/man/udisksctl.1.en
 [zsh-completions]: https://github.com/zsh-users/zsh-completions

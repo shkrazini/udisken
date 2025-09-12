@@ -10,4 +10,4 @@ subprojects/**
 !subprojects/spdlog.wrap
 !subprojects/wrapdb.json
 # ...except our own subprojects
-!subprojects/udisks-sdbus-c++
+!subprojects/udisks-sdbus-cpp
