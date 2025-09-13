@@ -22,7 +22,7 @@ Mount automatically your...:
 > [!NOTE]
 > Unlocking encrypted disks is not supported yet.
 > Some preliminary work has been done in the
-> [unlock](https://codeberg.org/blackma9ick/udisken/tree/unlock)
+> [unlock](https://codeberg.org/blackma9ick/udisken/src/branch/unlock)
 > branch.
 
 ## Requires
