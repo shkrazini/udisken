@@ -10,8 +10,8 @@ SPDX-License-Identifier: CC0-1.0
 > (see the note below). They will be implemented once I'm experienced with Qt.
 
 A small Linux desktop removable media mounting daemon, that uses little memory.
-(\~26x fewer memory used than [udiskie] on author's setup:
-from \~80 MiB to \~3 MiB)
+(\~13x fewer memory used than [udiskie] on author's setup: from \~80 MiB to \~6
+MiB)
 
 Mount automatically your...:
 
