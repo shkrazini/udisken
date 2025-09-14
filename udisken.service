@@ -14,10 +14,13 @@ LockPersonality=true
 MemoryDenyWriteExecute=true
 NoNewPrivileges=true
 PrivateDevices=true
-PrivateNetwork=true   # Could break communication with D-Bus.
-PrivateTmp=false   # Ditto.
+# Could break communication with D-Bus.
+PrivateNetwork=true
+# Ditto.
+PrivateTmp=false
 PrivateUsers=false
-ProtectHome=false   # Might need /run/user
+# Might need /run/user
+ProtectHome=false
 ProtectProc=invisible
 ProtectSystem=full
 RestrictRealtime=true
