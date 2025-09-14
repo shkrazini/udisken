@@ -65,7 +65,6 @@ argparse_dep = dependency(
 sdbus_cpp_dep = dependency(
   'sdbus-c++',
   version : ['>=2.1.0', '<3.0.0'], # Follows Semantic Versioning.
-  static : false, # LGPL
 )
 
 spdlog_dep = dependency(
