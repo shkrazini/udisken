@@ -5,10 +5,23 @@
 Description=UDISKEN Removable Media Mounting Daemon
 Documentation=https://codeberg.org/blackma9ick/udisken/blob/main/README.md
 Requires=dbus.service
+JoinsNamespaceOf=dbus.service
 
 [Service]
 Type=exec
 ExecStart=/usr/bin/udisken --no-log-timestamp
+LockPersonality=true
+MemoryDenyWriteExecute=true
+NoNewPrivileges=true
+PrivateDevices=true
+PrivateNetwork=true   # Could break communication with D-Bus.
+PrivateTmp=false   # Ditto.
+PrivateUsers=false
+ProtectHome=false   # Might need /run/user
+ProtectProc=invisible
+ProtectSystem=full
+RestrictRealtime=true
+RestrictSUIDSGID=true
 
 [Install]
 WantedBy=local-fs.target usb-gadget.target
