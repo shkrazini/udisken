@@ -28,6 +28,7 @@
 #include <spdlog/common.h>
 #include <spdlog/spdlog.h>
 
+#include <cstdlib>
 #include <iostream>
 
 int main(int argc, char* argv[]) {
