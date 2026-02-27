@@ -22,7 +22,7 @@ Mount automatically your...:
 > [!NOTE]
 > Unlocking encrypted disks is not supported yet.
 > Some preliminary work has been done in the
-> [unlock](https://codeberg.org/blackma9ick/udisken/src/branch/unlock)
+> [unlock](https://github.com/shkrazini/udisken/src/branch/unlock)
 > branch.
 
 ## Requires
@@ -167,7 +167,7 @@ For more information, see [udisks-sdbus-c++].
 ### Build
 
 ```sh
-git clone https://codeberg.org/blackma9ick/udisken
+git clone https://github.com/shkrazini/udisken
 cd udisken
 meson wrap update-db
 meson setup build
@@ -207,6 +207,6 @@ My first real project; others were either underdeveloped or abandoned.
 [spdlog]: https://github.com/gabime/spdlog
 [udiskie]: https://github.com/coldfix/udiskie
 [UDisks]: https://github.com/storaged-project/udisks
-[udisks-sdbus-c++]: https://codeberg.org/blackma9ick/udisks-sdbus-cpp
+[udisks-sdbus-c++]: https://github.com/shkrazini/udisks-sdbus-cpp
 [udisksctl(1)]: https://man.archlinux.org/man/udisksctl.1.en
 [zsh-completions]: https://github.com/zsh-users/zsh-completions
