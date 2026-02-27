@@ -193,10 +193,6 @@ License 1.1](https://openfontlicense.org/open-font-license-official-text).
 Other files are licensed under the
 [BSD Zero Clause License](./LICENSES/0BSD.txt).
 
----
-
-My first real project; others were either underdeveloped or abandoned.
-
 [argparse]: https://github.com/p-ranav/argparse
 [data/org.freedesktop.UDisks2.xml]: https://github.com/storaged-project/udisks/blob/master/data/org.freedesktop.UDisks2.xml
 [fstab(5)]: https://man.archlinux.org/man/fstab.5

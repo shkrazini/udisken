@@ -3,4 +3,4 @@
 
 [submodule "subprojects/udisks-sdbus-cpp"]
 	path = subprojects/udisks-sdbus-cpp
-	url = https://codeberg.org/blackma9ick/udisks-sdbus-cpp
+	url = https://github.com/shkrazini/udisks-sdbus-cpp
