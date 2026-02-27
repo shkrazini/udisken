@@ -1,6 +1,6 @@
 // UDISKEN: A small Linux automounter.
 //
-// SPDX-FileCopyrightText: 2025 Sofian-Hedi Krazini <blackma9ick@proton.me>
+// SPDX-FileCopyrightText: 2025 Sofian-Hedi Krazini <sofian-hedi.krazini@proton.me>
 // SPDX-License-Identifier: GPL-3.0-or-later
 //
 // Copyright (C) 2025 Sofian-Hedi Krazini

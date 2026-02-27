@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2025 Sofian-Hedi Krazini <blackma9ick@proton.me>
+# SPDX-FileCopyrightText: 2025 Sofian-Hedi Krazini <sofian-hedi.krazini@proton.me>
 # SPDX-License-Identifier: 0BSD
 
 project(

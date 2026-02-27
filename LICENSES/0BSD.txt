@@ -1,4 +1,4 @@
-Copyright (C) 2025 by Sofian-Hedi Krazini <blackma9ick@proton.me>
+Copyright (C) 2025 by Sofian-Hedi Krazini <sofian-hedi.krazini@proton.me>
 
 Permission to use, copy, modify, and/or distribute this software for any purpose
 with or without fee is hereby granted.

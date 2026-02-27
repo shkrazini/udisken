@@ -1,5 +1,5 @@
 <!--
-SPDX-FileCopyrightText: 2025 Sofian-Hedi Krazini <blackma9ick@proton.me>
+SPDX-FileCopyrightText: 2025 Sofian-Hedi Krazini <sofian-hedi.krazini@proton.me>
 SPDX-License-Identifier: CC0-1.0
 -->
 
