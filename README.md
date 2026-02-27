@@ -176,6 +176,8 @@ meson compile -C build
 
 ## Copyright
 
+Copyright © 2025-2026 Sofian-Hedi Krazini
+
 Source and header files are licensed under the [GNU General Public License
 Version 3](./LICENSES/GPL-3.0-or-later.txt).
 
